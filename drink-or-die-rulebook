@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drink or Die - Rulebook</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 60px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+        
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1e1b4b;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+            transition: all 0.3s;
+        }
+        
+        .print-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(251, 191, 36, 0.6);
+        }
+        
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+            color: #1e1b4b;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            color: #7c3aed;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            color: #1e1b4b;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #fbbf24;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            color: #5b21b6;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        .card-type {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 5px 5px 5px 0;
+        }
+        
+        .empty {
+            background: #e2e8f0;
+            color: #475569;
+        }
+        
+        .poison {
+            background: #e9d5ff;
+            color: #7c3aed;
+        }
+        
+        .deadly {
+            background: #fecaca;
+            color: #dc2626;
+        }
+        
+        .healing {
+            background: #fef3c7;
+            color: #f59e0b;
+        }
+        
+        .gadget-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .gadget-item {
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 15px;
+            background: #f8fafc;
+        }
+        
+        .gadget-header {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #1e1b4b;
+            margin-bottom: 8px;
+        }
+        
+        .gadget-icon {
+            font-size: 2rem;
+            margin-right: 10px;
+        }
+        
+        .gadget-desc {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+        
+        .priority {
+            display: inline-block;
+            background: #fbbf24;
+            color: #1e1b4b;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        
+        .example-box {
+            background: #fef3c7;
+            border-left: 5px solid #fbbf24;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+        
+        .example-title {
+            font-weight: bold;
+            color: #92400e;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .important-box {
+            background: #fee2e2;
+            border-left: 5px solid #dc2626;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+        
+        .important-title {
+            font-weight: bold;
+            color: #991b1b;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+        }
+        
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #1e1b4b;
+            color: white;
+            font-weight: bold;
+        }
+        
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 20px;
+                max-width: 100%;
+            }
+            
+            .print-button {
+                display: none;
+            }
+            
+            h2 {
+                page-break-before: always;
+            }
+            
+            h2:first-of-type {
+                page-break-before: auto;
+            }
+            
+            .gadget-item, .example-box, .important-box {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+    
+    <div class="container">
+        <h1>🍷 DRINK OR DIE 💀</h1>
+        <p class="subtitle">A Game of Hidden Hands and Deadly Potions</p>
+        
+        <h2>📖 Overview</h2>
+        <p><strong>Drink or Die</strong> is a strategic card game for 2-6 players where you must give potions to yourself or others while never knowing which cards are in your own hand. Others can see your cards, but you cannot! Use clues, gadgets, and deduction to maximize your score and survive.</p>
+        
+        <p><strong>Game Duration:</strong> 15-30 minutes<br>
+        <strong>Players:</strong> 2-6<br>
+        <strong>Ages:</strong> 12+</p>
+        
+        <h2>🎯 Objective</h2>
+        <p>Score the most points by the end of 2 rounds. Give yourself healing potions, avoid poison, and use gadgets strategically to manipulate the cards in play.</p>
+        
+        <h2>🃏 Components</h2>
+        <h3>Card Deck (Common Deck)</h3>
+        <p>One set of 10 cards per player is added to a common deck, shuffled together:</p>
+        <ul>
+            <li><span class="card-type empty">5 × Empty</span> - Worth 0 points. Receiver gets to choose 1 gadget.</li>
+            <li><span class="card-type poison">2 × Poison</span> - Worth -1 point</li>
+            <li><span class="card-type deadly">1 × Deadly Poison</span> - Worth -3 points</li>
+            <li><span class="card-type healing">2 × Healing</span> - Worth +2 points</li>
+        </ul>
+        
+        <p><strong>Example:</strong> In a 3-player game, the deck contains 30 cards total (3 sets × 10 cards), all shuffled together randomly.</p>
+        
+        <h3>Gadget Cards (8 unique gadgets)</h3>
+        <p>Players earn gadgets by receiving Empty cards. Each gadget can be played once and is then discarded.</p>
+        
+        <div class="gadget-grid">
+            <div class="gadget-item">
+                <div class="gadget-header">
+                    <span class="gadget-icon">⚗️</span>Distiller
+                    <span class="priority">Priority 3</span>
+                </div>
+                <div class="gadget-desc">Discard the played card. No one receives points. Nullifies Amplifier and Catalyst effects.</div>
+            </div>
+            
+            <div class="gadget-item">
+                <div class="gadget-header">
+                    <span class="gadget-icon">⚡</span>Amplifier
+                    <span class="priority">Priority 4</span>
+                </div>
+                <div class="gadget-desc">Double the card's effect. Empty stays 0. (-1→-2, -3→-6, +2→+4)</div>
+            </div>
+            
+            <div class="gadget-item">
+                <div class="gadget-header">
+                    <span class="gadget-icon">💥</span>Catalyst
+                    <span class="priority">Priority 4</span>
+                </div>
+                <div class="gadget-desc">Player who uses this chooses another player (before card reveal) who also receives the same effect.</div>
+            </div>
+            
+            <div class="gadget-item">
+                <div class="gadget-header">
+                    <span class="gadget-icon">🔄</span>Swap
+                    <span class="priority">Priority 2</span>
+                </div>
+                <div class="gadget-desc">Exchange the played card with the first card from the deck. Old card goes to bottom of deck.</div>
+            </div>
+            
+            <div class="gadget-item">
+                <div class="gadget-header">
+                    <span class="gadget-icon">🪞</span>Reflect
+                    <span class="priority">Priority 4</span>
+                </div>
+                <div class="gadget-desc">Send the card back to the person who gave it.</div>
+            </div>
+            
+            <div class="gadget-item">
+                <div class="gadget-header">
+                    <span class="gadget-icon">❌</span>Gadget Breaker
+                    <span class="priority">Priority 1</span>
+                </div>
+                <div class="gadget-desc">Destroy ALL other gadgets played this turn. They have no effect.</div>
+            </div>
+            
+            <div class="gadget-item">
+                <div class="gadget-header">
+                    <span class="gadget-icon">⏩</span>Double Turn
+                    <span class="priority">Priority 5</span>
+                </div>
+                <div class="gadget-desc">Player who uses this takes 2 consecutive turns.</div>
+            </div>
+            
+            <div class="gadget-item">
+                <div class="gadget-header">
+                    <span class="gadget-icon">🛡️</span>Immuno-Defensive
+                    <span class="priority">Priority 4</span>
+                </div>
+                <div class="gadget-desc">All negative effects become 0. All positive effects become +1. Empty stays 0.</div>
+            </div>
+        </div>
+        
+        <h2>🎲 Setup</h2>
+        <ol>
+            <li>Each player starts with <strong>0 points</strong></li>
+            <li>Each player gets <strong>4 clue tokens</strong> 🔮🔮🔮🔮</li>
+            <li>Combine all card sets into one common deck (10 cards × number of players)</li>
+            <li>Shuffle the common deck thoroughly</li>
+            <li>Deal 5 cards face-up to each player from the shuffled deck</li>
+            <li>Each player can see everyone else's cards but not their own</li>
+        </ol>
+        
+        <div class="important-box">
+            <div class="important-title">⚠️ Critical Rule</div>
+            <p><strong>You can see other players' cards, but you cannot see your own cards!</strong> This is the core mechanic of the game. Cards are dealt randomly from the common deck.</p>
+        </div>
+        
+        <h2>📊 Game Structure</h2>
+        <p>The game consists of <strong>2 rounds</strong>, each with <strong>2 turns</strong>:</p>
+        <ul>
+            <li><strong>Round 1, Turn 1:</strong> All players play 5 cards</li>
+            <li><strong>Round 1, Turn 2:</strong> Shuffle remaining deck and deal 5 new cards to everyone</li>
+            <li><strong>Round 2, Turn 1:</strong> Shuffle remaining deck and deal 5 cards</li>
+            <li><strong>Round 2, Turn 2:</strong> Shuffle remaining deck and deal 5 cards</li>
+        </ul>
+        
+        <p><strong>Total cards played: 20 per player</strong> (5 cards × 2 turns × 2 rounds)</p>
+        <p><strong>Clue tokens (4 per round) reset at the start of each round</strong>, not between turns within a round.</p>
+        
+        <h2>🎮 How to Play</h2>
+        
+        <h3>FREE Initial Clue</h3>
+        <p><strong>At the start of each turn, you automatically receive a FREE clue about your hand quality.</strong> This does not cost a clue token.</p>
+        
+        <p>You'll be told: <em>Very Positive (≥+3), Positive (+1 to +2), Neutral (0), Negative (-1 to -2), or Very Negative (≤-3)</em></p>
+        
+        <h3>Phase 1: Information Gathering (Optional)</h3>
+        <p>On your turn, you may spend clue tokens 🔮 to ask questions about your hand. You have <strong>4 tokens per round</strong> that persist across both turns.</p>
+        
+        <ol>
+            <li><strong>Check Hand Quality:</strong> "What is my overall hand quality?"
+                <ul>
+                    <li>Same as the free initial clue</li>
+                </ul>
+            </li>
+            <li><strong>Check Single Card:</strong> "Is card #X empty or a potion?"
+                <ul>
+                    <li>Answer: "Empty" or "Potion" (does not distinguish Poison/Deadly/Healing)</li>
+                </ul>
+            </li>
+            <li><strong>Compare Two Cards:</strong> "Are cards #X and #Y the same type?"
+                <ul>
+                    <li>Answer: "Same type" or "Different types"</li>
+                    <li>Empty vs Potion = Different. Poison vs Healing = Same (both potions)</li>
+                </ul>
+            </li>
+        </ol>
+        
+        <div class="example-box">
+            <div class="example-title">📝 Example</div>
+            <p><strong>Your hand:</strong> Empty, Poison, Deadly, Healing, Empty</p>
+            <p><strong>Free Initial Clue:</strong> "Negative" (0-1-3+2+0 = -2)</p>
+            <p><strong>You spend 1 token:</strong> "Is card #3 empty or potion?"<br>
+            <strong>Answer:</strong> "Potion" (it's Deadly)</p>
+            <p><strong>Tokens remaining:</strong> 3 for this round</p>
+        </div>
+        
+        <h3>Phase 2: Target Selection</h3>
+        <p>Choose a target player. You can target yourself or another player.</p>
+        
+        <h3>Phase 3: Gadget Placement</h3>
+        <p><strong>IMPORTANT RULES:</strong></p>
+        <ul>
+            <li><strong>Normal case:</strong> ONLY the active player and their target can place gadgets</li>
+            <li><strong>Self-target case:</strong> If the active player targets THEMSELVES, then ALL players can place gadgets</li>
+            <li>All gadgets are placed face-down simultaneously</li>
+            <li>Players decide to use gadgets BEFORE seeing which card will be played</li>
+            <li>Each player can place at most 1 gadget per turn</li>
+        </ul>
+        
+        <div class="important-box">
+            <div class="important-title">🎴 Gadget Timing</div>
+            <p>You must decide whether to use a gadget BEFORE the card is revealed. This creates strategic tension and bluffing opportunities!</p>
+        </div>
+        
+        <h3>Phase 4: Card Selection</h3>
+        <p>The active player selects which card from their hand to give to the target.</p>
+        
+        <h3>Phase 5: Reveal and Resolution</h3>
+        <ol>
+            <li>All placed gadgets are revealed simultaneously</li>
+            <li>The selected card is revealed</li>
+            <li>Gadgets are applied in <strong>priority order</strong> (not placement order)</li>
+            <li>The final effect is applied to the target's score</li>
+        </ol>
+        
+        <h2>⚙️ Gadget Resolution</h2>
+        
+        <h3>Priority System</h3>
+        <p>Gadgets resolve in priority order (lower number = higher priority):</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Priority</th>
+                    <th>Gadget</th>
+                    <th>Effect</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>1</strong></td>
+                    <td>❌ Gadget Breaker</td>
+                    <td>Destroys ALL other gadgets. They have no effect.</td>
+                </tr>
+                <tr>
+                    <td><strong>2</strong></td>
+                    <td>🔄 Swap</td>
+                    <td>Changes the card before other effects apply</td>
+                </tr>
+                <tr>
+                    <td><strong>3</strong></td>
+                    <td>⚗️ Distiller</td>
+                    <td>Discards card. Nullifies Amplifier and Catalyst.</td>
+                </tr>
+                <tr>
+                    <td><strong>4</strong></td>
+                    <td>⚡ Amplifier, 💥 Catalyst, 🪞 Reflect, 🛡️ Immuno</td>
+                    <td>Modify the effect or target</td>
+                </tr>
+                <tr>
+                    <td><strong>5</strong></td>
+                    <td>⏩ Double Turn</td>
+                    <td>Grants extra turn after resolution</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Key Interactions</h3>
+        <ul>
+            <li><strong>Gadget Breaker destroys ALL:</strong> If Breaker is played, every other gadget has no effect</li>
+            <li><strong>Distiller nullifies damage modifiers:</strong> If Distiller is used, Amplifier and Catalyst have no effect</li>
+            <li><strong>Swap happens early:</strong> Swap changes the card before Amplifier/Reflect/etc. apply</li>
+            <li><strong>Catalyst requires choice:</strong> Player using Catalyst must choose the additional target BEFORE the card is revealed</li>
+        </ul>
+        
+        <div class="example-box">
+            <div class="example-title">📝 Complex Example</div>
+            <p><strong>Situation:</strong> Alice gives a Deadly Poison (-3) to Bob</p>
+            <p><strong>Gadgets Placed:</strong></p>
+            <ul>
+                <li>Alice: Amplifier ⚡</li>
+                <li>Bob: Reflect 🪞</li>
+                <li>Charlie: Gadget Breaker ❌</li>
+            </ul>
+            <p><strong>Resolution (by priority):</strong></p>
+            <ol>
+                <li><strong>Priority 1 - Gadget Breaker:</strong> Charlie's Breaker destroys Amplifier and Reflect</li>
+                <li>Amplifier: DESTROYED (no effect)</li>
+                <li>Reflect: DESTROYED (no effect)</li>
+            </ol>
+            <p><strong>Result:</strong> Bob receives -3 points (base Deadly effect, no modifications)</p>
+        </div>
+        
+        <div class="example-box">
+            <div class="example-title">📝 Example Without Breaker</div>
+            <p><strong>Situation:</strong> Alice gives Poison (-1) to herself</p>
+            <p><strong>Gadgets Placed (all players can play since self-target):</strong></p>
+            <ul>
+                <li>Alice: Amplifier ⚡</li>
+                <li>Bob: Immuno-Defensive 🛡️</li>
+            </ul>
+            <p><strong>Resolution (by priority):</strong></p>
+            <ol>
+                <li><strong>Priority 4 - Amplifier:</strong> -1 → -2</li>
+                <li><strong>Priority 4 - Immuno:</strong> -2 → 0 (negative becomes 0)</li>
+            </ol>
+            <p><strong>Result:</strong> Alice receives 0 points</p>
+        </div>
+        
+        <h2>🎁 Earning Gadgets</h2>
+        <p>When you RECEIVE an Empty card:</p>
+        <ol>
+            <li>Choose from 2 randomly offered gadgets</li>
+            <li>Add it to your gadget collection</li>
+            <li>You can use it on any future turn (even in a later round)</li>
+        </ol>
+        
+        <div class="important-box">
+            <div class="important-title">💡 Strategy Tip</div>
+            <p>Empty cards are worth 0 points but give powerful gadgets. Sometimes it's strategic to give yourself Empty cards early to build a gadget arsenal for later rounds!</p>
+        </div>
+        
+        <h2>🏆 Winning the Game</h2>
+        <p>After 2 rounds (4 total turns), the player with the <strong>highest score wins</strong>!</p>
+        
+        <p>In case of a tie, the tied player with the most gadgets remaining wins. If still tied, all tied players share the victory.</p>
+        
+        <h2>🧠 Strategy Tips</h2>
+        <ul>
+            <li><strong>Manage your 4 clue tokens:</strong> They last the entire round. Plan when to use them.</li>
+            <li><strong>Use the free initial clue:</strong> It gives you a baseline before spending tokens.</li>
+            <li><strong>Self-targeting is powerful:</strong> Everyone can react with gadgets when you target yourself.</li>
+            <li><strong>Gadget Breaker is king:</strong> It has Priority 1 and destroys everything else.</li>
+            <li><strong>Distiller vs Amplifier:</strong> Distiller (Priority 3) nullifies Amplifier (Priority 4).</li>
+            <li><strong>Swap is unpredictable:</strong> With Priority 2, it changes the card before modifiers apply.</li>
+            <li><strong>Save Double Turn for big moments:</strong> Getting 2 turns in a row can be game-changing.</li>
+            <li><strong>Bluff with gadget placement:</strong> Placing a gadget face-down creates uncertainty.</li>
+        </ul>
+        
+        <h2>❓ FAQ</h2>
+        
+        <p><strong>Q: Do clue tokens refresh between Turn 1 and Turn 2?</strong><br>
+        A: No! You get 4 tokens at the start of each round. They must last for both turns.</p>
+        
+        <p><strong>Q: What if multiple gadgets have the same priority?</strong><br>
+        A: They resolve in placement order (but this rarely matters since most priority-4 gadgets don't conflict).</p>
+        
+        <p><strong>Q: Can I save gadgets for later rounds?</strong><br>
+        A: Yes! Gadgets stay with you until used.</p>
+        
+        <p><strong>Q: What if I forget which cards I have?</strong><br>
+        A: Use your clue tokens! That's what they're for.</p>
+        
+        <p><strong>Q: Can I look at my own cards?</strong><br>
+        A: No! If you accidentally see them, shuffle and have another player arrange them face-out.</p>
+        
+        <p><strong>Q: What happens if Swap is used but the deck is empty?</strong><br>
+        A: Swap has no effect. The original card stays.</p>
+        
+        <p><strong>Q: If I use Catalyst, when do I choose the additional target?</strong><br>
+        A: You must choose BEFORE the card is revealed (during gadget placement phase).</p>
+        
+        <p><strong>Q: Does Gadget Breaker destroy itself?</strong><br>
+        A: No. It destroys all OTHER gadgets.</p>
+        
+        <p><strong>Q: What if everyone targets themselves every turn?</strong><br>
+        A: This creates maximum chaos since everyone can play gadgets! It's a valid but risky strategy.</p>
+        
+        <h2>📜 Credits</h2>
+        <p><strong>Game Design:</strong> Inspired by Hanabi, hidden information mechanics, and social deduction<br>
+        <strong>Version:</strong> 2.0<br>
+        <strong>Players:</strong> 2-6<br>
+        <strong>Duration:</strong> 15-30 minutes<br>
+        <strong>Rounds:</strong> 2 rounds, 2 turns each</p>
+        
+        <div style="text-align: center; margin-top: 60px; padding-top: 30px; border-top: 2px solid #e2e8f0; color: #64748b;">
+            <p><strong>🍷 Drink or Die 💀</strong></p>
+            <p style="font-size: 0.9rem;">May your potions be healing and your enemies' deadly.</p>
+        </div>
+    </div>
+</body>
+</html>
