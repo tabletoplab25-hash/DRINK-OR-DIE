@@ -1,0 +1,357 @@
+
+
+
+Index · HTML
+Copia
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drink or Die - Hidden Hand Card Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #5b21b6 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .logo {
+            font-size: 5em;
+            margin-bottom: 20px;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            font-size: 4em;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            text-shadow: 0 5px 20px rgba(251, 191, 36, 0.3);
+            font-weight: bold;
+        }
+
+        .tagline {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.3em;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .menu-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            animation: fadeInUp 0.8s ease-out;
+            border: 2px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .menu-card:nth-child(1) { animation-delay: 0.1s; }
+        .menu-card:nth-child(2) { animation-delay: 0.2s; }
+        .menu-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .menu-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(251, 191, 36, 0.4);
+            border-color: #fbbf24;
+        }
+
+        .menu-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            display: block;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+        }
+
+        .menu-card h2 {
+            background: linear-gradient(135deg, #7c3aed, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .menu-card p {
+            color: #666;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+
+        .potion-strip {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 50px;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+
+        .potion-vial {
+            width: 40px;
+            height: 60px;
+            border-radius: 10px 10px 20px 20px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+
+        .potion-vial::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 15px;
+            height: 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 5px 5px 0 0;
+        }
+
+        .potion-vial.empty { 
+            background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+        }
+        .potion-vial.poison { 
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+            animation: bubblePurple 2s ease-in-out infinite;
+        }
+        .potion-vial.deadly { 
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            animation: bubbleRed 2.5s ease-in-out infinite;
+        }
+        .potion-vial.healing { 
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            animation: bubbleGold 1.8s ease-in-out infinite;
+        }
+
+        .footer {
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+            margin-top: 40px;
+            font-size: 0.9em;
+            animation: fadeIn 1s ease-out 0.7s both;
+        }
+
+        .game-info {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+            color: white;
+            text-align: center;
+            animation: fadeIn 1s ease-out 0.9s both;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .game-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .info-item {
+            padding: 10px;
+        }
+
+        .info-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fbbf24;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes bubblePurple {
+            0%, 100% {
+                box-shadow: 0 5px 15px rgba(124, 58, 237, 0.5);
+            }
+            50% {
+                box-shadow: 0 8px 25px rgba(124, 58, 237, 0.8);
+            }
+        }
+
+        @keyframes bubbleRed {
+            0%, 100% {
+                box-shadow: 0 5px 15px rgba(220, 38, 38, 0.5);
+            }
+            50% {
+                box-shadow: 0 8px 25px rgba(220, 38, 38, 0.8);
+            }
+        }
+
+        @keyframes bubbleGold {
+            0%, 100% {
+                box-shadow: 0 5px 15px rgba(251, 191, 36, 0.5);
+            }
+            50% {
+                box-shadow: 0 8px 25px rgba(251, 191, 36, 0.8);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+                letter-spacing: 4px;
+            }
+
+            .logo {
+                font-size: 3em;
+            }
+
+            .tagline {
+                font-size: 1em;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-card {
+                padding: 30px 20px;
+            }
+
+            .game-info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-section">
+            <div class="logo">🍷💀</div>
+            <h1>DRINK OR DIE</h1>
+            <p class="tagline">A Game of Hidden Hands and Deadly Potions</p>
+        </div>
+
+        <div class="menu-grid">
+            <a href="drink-or-die.html" class="menu-card">
+                <span class="menu-icon">🎮</span>
+                <h2>Play Game</h2>
+                <p>Launch the web app and start playing online. Experience hidden information gameplay with 2-6 players.</p>
+            </a>
+
+            <a href="drink-or-die-rulebook.html" class="menu-card">
+                <span class="menu-icon">📖</span>
+                <h2>Rulebook</h2>
+                <p>Learn complete rules with examples, gadget priorities, and advanced strategies. Print as PDF.</p>
+            </a>
+
+            <a href="drink_or_die_gadget_cards.png" class="menu-card" download>
+                <span class="menu-icon">🎴</span>
+                <h2>Print & Play</h2>
+                <p>Download printable gadget cards (300 DPI, poker size). Cut, play, and enjoy!</p>
+            </a>
+        </div>
+
+        <div class="game-info">
+            <strong>Game Overview</strong>
+            <div class="game-info-grid">
+                <div class="info-item">
+                    <div class="info-label">Players</div>
+                    <div class="info-value">2-6</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Duration</div>
+                    <div class="info-value">15-30 min</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Age</div>
+                    <div class="info-value">12+</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Rounds</div>
+                    <div class="info-value">2</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="potion-strip">
+            <div class="potion-vial empty" title="Empty - 0 points"></div>
+            <div class="potion-vial poison" title="Poison - -1 point"></div>
+            <div class="potion-vial deadly" title="Deadly - -3 points"></div>
+            <div class="potion-vial healing" title="Healing - +2 points"></div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Drink or Die</strong> © 2025 | You see others' cards, but never your own</p>
+            <p style="margin-top: 10px; font-size: 0.85em;">Use clues, deploy gadgets, and outsmart your opponents to survive!</p>
+        </div>
+    </div>
+</body>
+</html>
