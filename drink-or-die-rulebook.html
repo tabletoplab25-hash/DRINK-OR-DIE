@@ -1,8 +1,8 @@
-      <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>drink-or-die-rulebook</title>
+<title>Drink or Die — Rulebook</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 @page { size: A4; margin: 18mm 20mm; }
@@ -155,8 +155,24 @@ li { margin:4px 0; }
 <h3>After someone drinks</h3>
 <p>The player who drank <b>creates the next potion</b> by placing 2 cards (1 face-down + 1 face-up). If they have fewer than 2 cards, the next player with enough cards creates it instead. Play continues until all players have drunk once.</p>
 
-<h3>End of round &amp; end of game</h3>
-<p>When all players have drunk, the round ends. Each player <b>refills to 6 cards</b> from the draw pile. The starting player rotates clockwise. The game ends when the draw pile runs out and the final round is completed.</p>
+<h3>End of round</h3>
+<p>When all players have drunk, the round ends. Each player <b>refills to 6 cards</b> from the draw pile. The starting player for the next round rotates clockwise.</p>
+
+<h3>End of game: the Final Round</h3>
+<p>When the draw pile runs out during the refill phase, the <b>Final Round</b> begins. Gather any cards that were removed during setup and shuffle them. Deal from this pool so that each player has exactly <b>4 cards</b> in hand.</p>
+
+<p>The Final Round plays exactly like a normal round with two key differences:</p>
+<ol>
+  <li><b>Starting a potion:</b> the creator places only <b>1 card</b> (either face-down or face-up — their choice), instead of the usual 2.</li>
+  <li><b>Hand size:</b> players start with 4 cards instead of 6. The 4-card forced drink rule is applied instead the 6.</li>
+</ol>
+
+<p>Once every player has drunk in the Final Round, the game ends and players calculate their final scores.</p>
+
+<div class="ex">
+  <h4>Example: Entering the Final Round</h4>
+  <p>At the end of round 7, the draw pile has only 9 cards left but 4 players need 24 cards to refill to 6. The draw pile is exhausted mid-refill — this triggers the Final Round. The 10 cards removed at setup are shuffled and used to top up everyone to 4 cards each. Alice starts by placing a single <span class="ci cf">🔥 2</span> face-down into the cauldron. Play proceeds normally from there.</p>
+</div>
 
 <!-- ========== PAGE 3: THE BALANCE SYSTEM ========== -->
 
@@ -355,6 +371,7 @@ li { margin:4px 0; }
       <li>Drinker creates the next potion</li>
       <li>Round ends when all have drunk</li>
       <li>Refill to 6 cards each round</li>
+      <li>Final Round: hand = 4, potion starts with 1 card</li>
     </ul>
   </div>
   <div>
@@ -371,6 +388,30 @@ li { margin:4px 0; }
     Excess Nature creates new imbalance!</p>
   </div>
 </div>
+
+<h2 class="page-break">9. Variant: 5 Players</h2>
+
+<p>When playing with 5 players, all 90 cards are used (no cards are removed during setup). The following adjustments apply:</p>
+
+<table class="tbl">
+  <tr><th>Rule</th><th>2–4 Players</th><th>5 Players</th></tr>
+  <tr><td>Cards in deck</td><td>~40–80 (see scaling)</td><td>All 90</td></tr>
+  <tr><td>Hand size</td><td>6 cards</td><td><b>5 cards</b></td></tr>
+  <tr><td>Final Round trigger</td><td>Deck empty, refill to 4</td><td>Deck cannot give everyone <b>3 cards</b></td></tr>
+  <tr><td>Final Round hand size</td><td>4 cards</td><td><b>3 cards</b></td></tr>
+  <tr><td>Potion start (normal)</td><td>2 cards (1🂠 + 1🃏)</td><td>2 cards (1🂠 + 1🃏)</td></tr>
+  <tr><td>Potion start (final)</td><td>1 card</td><td>1 card</td></tr>
+</table>
+
+<h3>Why the smaller hand?</h3>
+<p>With 5 players, 90 cards must stretch across more rounds. A hand of 5 cards means 25 cards are dealt each refill (vs 24 for 4 players with 6-card hands), keeping the game balanced while ensuring enough rounds of play. The Final Round triggers when the remaining cards (deck + removed) cannot fill every player to 3 cards, ensuring the last round still has meaningful decisions.</p>
+
+<div class="ex">
+  <h4>Example: 5-player Final Round</h4>
+  <p>At end of round 5, the deck has 4 cards left. After dealing, some players have 3–5 cards. Since the deck is now empty and there are no removed cards to draw from, the game checks: can everyone reach 3 cards? If not, this is the Final Round. Players keep what they have (minimum 3 if possible), and the potion starts with a single card.</p>
+</div>
+
+<p>All other rules (6-card forced drink, balance rule, scoring, post-drink participation) remain identical.</p>
 
 <div class="footer">Drink or Die — A game of potions, bluff & alchemy — 2–5 players — 20–40 minutes</div>
 
