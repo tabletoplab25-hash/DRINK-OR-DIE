@@ -36,8 +36,8 @@ h1,.cinzel{font-family:'Cinzel',serif}
 .pts{font-family:'Cinzel',serif;font-size:.82rem;color:var(--gold)}
 .ctr{background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:14px;text-align:center;min-height:135px}
 .ct{font-family:'Cinzel',serif;font-size:.95rem;color:var(--muted);margin-bottom:8px;letter-spacing:2px}
-.cb{font-size:.78rem;color:#4a4238;margin-left:6px}
-.cc{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;min-height:88px;align-items:center}
+.cbl{font-size:.78rem;color:#4a4238;margin-left:6px}
+.ccs{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;min-height:88px;align-items:center}
 .ce{color:#3a3428;font-style:italic}
 .bd{font-family:'Cinzel',serif;font-size:.95rem;padding:9px 28px;margin-top:10px;background:linear-gradient(135deg,#065f46,#064e3b);color:#a7f3d0;border:2px solid var(--green);border-radius:8px;cursor:pointer;transition:all .3s;letter-spacing:1px}
 .bd:hover{background:linear-gradient(135deg,#3ddc84,#065f46);box-shadow:0 0 22px rgba(61,220,132,.25)}
@@ -82,17 +82,15 @@ h1,.cinzel{font-family:'Cinzel',serif}
   <button class="btn" onclick="startGame()">Start Game</button>
   <p style="color:#4a4238;margin-top:14px;font-size:.85rem">You vs Morgana, Merlin & Circe — 90 cards</p>
   <div class="rules">
-    <b>How to play:</b> Create potions (1 face-down + 1 face-up). Players take turns adding a card or drinking. Whoever drinks takes all cards, then creates the next potion.<br>
-    <b>6-card limit:</b> If the cauldron reaches 6 cards, the next player MUST drink!<br>
-    <b>Balance:</b> Face-down and face-up counts must stay within 1 of each other.<br>
-    <b>Round ends</b> when everyone has drunk. Refill to 6 cards.<br>
-    <b>Scoring:</b> Raw = 🔥+🧊+✨+💀 minus 🌿. Then penalty = |imbalance − 🌿| × 3. Nature costs 1 pt but reduces imbalance that costs 3 per point!
+    <b>How to play:</b> Create potions (1 face-down + 1 face-up). All players take turns adding a card or drinking. Whoever drinks takes all cards, then creates the next potion. Drunk players still add cards!<br>
+    <b>6-card limit:</b> If the cauldron reaches 6, next non-drunk player must drink.<br>
+    <b>Scoring:</b> Raw = 🔥+🧊+✨+💀 minus 🌿. Penalty = |imbalance − 🌿| × 3. Nature costs 1 pt but saves 3 per point of imbalance!
   </div>
 </div>
 <div id="game" class="screen">
   <div class="top-bar"><div class="ri" id="ri"></div><div class="tm" id="tm"></div></div>
   <div class="air" id="air"></div>
-  <div class="ctr"><div class="ct">🧪 The Cauldron <span class="cb" id="cbal"></span></div><div class="cc" id="ccards"></div><div id="dw"></div></div>
+  <div class="ctr"><div class="ct">🧪 The Cauldron <span class="cbl" id="cbal"></span></div><div class="ccs" id="ccards"></div><div id="dw"></div></div>
   <div class="mc" id="myc"></div>
   <div><div class="hl" id="hl"></div><div class="hc" id="hcards"></div></div>
   <div class="log" id="logb"></div>
@@ -104,165 +102,419 @@ h1,.cinzel{font-family:'Cinzel',serif}
 </div>
 
 <script>
-const EL={fire:{n:"Fire",e:"🔥",o:"ice",c:"#e74c3c",b:"#2d0a0a"},ice:{n:"Ice",e:"🧊",o:"fire",c:"#4ba3e8",b:"#0a1a2d"},light:{n:"Light",e:"✨",o:"shadow",c:"#f0d04a",b:"#2d2a0a"},shadow:{n:"Shadow",e:"💀",o:"light",c:"#a86edb",b:"#1a0a2d"},nature:{n:"Nature",e:"🌿",o:null,c:"#3ddc84",b:"#0a2d15"}};
-const PC=4,HS=6,NM=["You","Morgana 🧙‍♀️","Merlin 🧙","Circe 🔮"];
+const EL={
+  fire:{n:"Fire",e:"🔥",c:"#e74c3c",b:"#2d0a0a"},
+  ice:{n:"Ice",e:"🧊",c:"#4ba3e8",b:"#0a1a2d"},
+  light:{n:"Light",e:"✨",c:"#f0d04a",b:"#2d2a0a"},
+  shadow:{n:"Shadow",e:"💀",c:"#a86edb",b:"#1a0a2d"},
+  nature:{n:"Nature",e:"🌿",c:"#3ddc84",b:"#0a2d15"}
+};
+const PC=4, HS=6, NM=["You","Morgana 🧙‍♀️","Merlin 🧙","Circe 🔮"];
 let G={};
 
-// === Deck ===
-function mkDeck(){const d=[];for(const e of["fire","ice","light","shadow","nature"])for(const[v,n]of[[1,6],[2,6],[3,6]])for(let i=0;i<n;i++)d.push({el:e,v,id:e+v+"_"+i});return d;}
-function shuf(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=0|Math.random()*(i+1);[r[i],r[j]]=[r[j],r[i]];}return r;}
+/* ===== DECK ===== */
+function mkDeck(){
+  const d=[];
+  for(const e of["fire","ice","light","shadow","nature"])
+    for(const v of[1,2,3])
+      for(let i=0;i<6;i++) d.push({el:e,v,id:e+v+"_"+i});
+  return d; // 90 cards
+}
+function shuf(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=0|Math.random()*(i+1);const t=r[i];r[i]=r[j];r[j]=t;}return r;}
 
-// === Score ===
-function calc(cld){if(!cld.length)return{raw:0,delta:0,nat:0,dF:0,total:0,sums:{}};const s={fire:0,ice:0,light:0,shadow:0,nature:0};for(const c of cld)s[c.el]+=c.v;const raw=s.fire+s.ice+s.light+s.shadow-s.nature;const delta=Math.abs(s.fire-s.ice)+Math.abs(s.light-s.shadow);const nat=s.nature;const dF=Math.abs(delta-nat);return{raw,delta,nat,dF,total:raw-dF*3,sums:s};}
-
-// === AI ===
-function aiDec(hand,cenC,myC,cc,uc){if(!hand.length)return{act:"d"};const cur=calc(myC),pot=calc([...myC,...cenC]),imp=pot.total-cur.total;if(cenC.length>=2&&(imp>=3||(cenC.length>=4&&imp>=1)||(cenC.length>=6&&imp>=0)||cenC.length>=8))return{act:"d"};let bi=0,bs=-1e9;for(let i=0;i<hand.length;i++){const h=calc([...myC,hand[i]]),sc=cur.total-h.total+(4-hand[i].v)*.3+Math.random()*1.5;if(sc>bs){bs=sc;bi=i;}}const mC=uc>cc,mU=cc>uc,cv=mU?false:mC?true:Math.random()>.5;return{act:"a",ci:bi,cv};}
-
-// === Helpers ===
-function nxt(f){for(let i=1;i<=PC;i++){const n=(f+i)%PC;if(G.h[n].length>0)return n;}return-1;}
-function nxtDr(f){for(let i=1;i<=PC;i++){const n=(f+i)%PC;if(!G.dr[n])return n;}return-1;}
-function aL(m){G.log.push(m);if(G.log.length>30)G.log=G.log.slice(-30);}
-function ss(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
-function cbH(){return'<div class="card card-b"><div class="card-bi">?</div></div>';}
-function cfH(c){return'<div class="card">'+ciH(c)+'</div>';}
-function ciH(c){const e=EL[c.el];return`<div class="cf" style="background:${e.b};border-color:${e.c}"><span class="em">${e.e}</span><span class="vl" style="color:${e.c}">${c.v}</span><span class="nm" style="color:${e.c}">${e.n}</span></div>`;}
-function cpH(sums){let h='';if(!sums)return h;for(const[e,v]of Object.entries(sums))if(v>0)h+=`<span class="chip" style="border-color:${EL[e].c};background:${EL[e].b}">${EL[e].e} ${v}</span>`;return h;}
-
-// === Force drink (6 cards rule) ===
-function forceDr(fromP){
-  const nx=nxtDr(fromP);if(nx===-1){ren();return;}
-  const cards=G.cn.map(c=>c.card);G.cl[nx]=[...G.cl[nx],...cards];G.dr[nx]=!0;
-  aL(`6 cards! ${NM[nx]} is forced to drink! [${cards.map(c=>EL[c.el].e+c.v).join(' ')}]`);
-  G.cn=[];G.nn=!0;ren();setTimeout(()=>aftDr(nx),600);
+/* ===== SCORE: Raw = elem - nature, penalty = |delta-nature|*3 ===== */
+function calc(cld){
+  if(!cld||!cld.length)return{raw:0,delta:0,nat:0,dF:0,total:0,sums:{}};
+  const s={fire:0,ice:0,light:0,shadow:0,nature:0};
+  for(const c of cld) if(c&&c.el) s[c.el]+=c.v;
+  const raw=s.fire+s.ice+s.light+s.shadow-s.nature;
+  const delta=Math.abs(s.fire-s.ice)+Math.abs(s.light-s.shadow);
+  const dF=Math.abs(delta-s.nature);
+  return{raw,delta,nat:s.nature,dF,total:raw-dF*3,sums:s};
 }
 
-// === Start ===
-function startGame(){G={dk:[],h:[[],[],[],[]],cl:[[],[],[],[]],cn:[],cp:0,st:0,dr:[!1,!1,!1,!1],nn:!0,log:[],rn:1,ani:!1,fc:null,crM:!1,crP:-1};const a=shuf(mkDeck()),r=[...a];for(let p=0;p<PC;p++)G.h[p]=r.splice(0,HS);G.dk=r;aL("Game starts! Create the first potion.");ss('game');ren();}
-
-// === After drink ===
-function aftDr(dp){
-  if(G.dr.every(d=>d)){ren();setTimeout(endR,600);return;}
-  if(G.h[dp].length>=2){G.crM=!0;G.crP=dp;G.nn=!0;G.cp=dp;ren();if(dp!==0)setTimeout(()=>aiCr(dp),700);return;}
-  // Find next player with >=2 cards (prefer non-drunk, but anyone works for creating)
-  for(let i=1;i<=PC;i++){const n=(dp+i)%PC;if(G.h[n].length>=2){G.crM=!0;G.crP=n;G.nn=!0;G.cp=n;ren();if(n!==0)setTimeout(()=>aiCr(n),700);return;}}
-  // Nobody can create - end round
-  setTimeout(endR,600);
-}
-
-// === AI create potion ===
-function aiCr(p){
-  G.ani=!0;ren();const h=G.h[p];if(h.length<2){G.ani=!1;ren();return;}
-  const i1=0|Math.random()*h.length;let i2=0|Math.random()*(h.length-1);if(i2>=i1)i2++;
-  const c1=h[i1],c2=h[i2];[i1,i2].sort((a,b)=>b-a).forEach(i=>h.splice(i,1));
-  const cv=Math.random()>.5;G.cn=[{card:c1,cov:cv,by:p},{card:c2,cov:!cv,by:p}];
-  G.nn=!1;G.crM=!1;G.ani=!1;
-  aL(`${NM[p]} brews: ${cv?"🂠":EL[c1.el].e+c1.v} + ${!cv?"🂠":EL[c2.el].e+c2.v}`);
-  const nx=nxt(p);if(nx===-1||nx===0){G.cp=0;ren();return;}G.cp=nx;ren();if(nx!==0)setTimeout(()=>aiT(nx),700);
-}
-
-// === AI turn ===
-function aiT(p){
-  if(p===0){ren();return;}
-  if(G.h[p].length===0){G.ani=!1;const nx=nxt(p);if(nx===-1||nx===0){G.cp=0;ren();return;}G.cp=nx;ren();if(nx!==0)setTimeout(()=>aiT(nx),700);return;}
-  G.ani=!0;ren();
-  const h=G.h[p],cc=G.cn.filter(c=>c.cov).length,uc=G.cn.filter(c=>!c.cov).length;
-  const isDrunk=G.dr[p];
-  // Drunk players can only add, non-drunk can add or drink
-  let dec;
-  if(isDrunk){dec={act:"a"};}else{dec=aiDec(h,G.cn.map(c=>c.card),G.cl[p],cc,uc);}
-  if(!isDrunk&&(dec.act==="d"||(h.length===0&&G.cn.length>0))){
-    const cards=G.cn.map(c=>c.card);G.cl[p]=[...G.cl[p],...cards];G.dr[p]=!0;
-    aL(`${NM[p]} drinks! [${cards.map(c=>EL[c.el].e+c.v).join(' ')}]`);
-    G.cn=[];G.nn=!0;G.ani=!1;aftDr(p);
-  }else{
-    // Add card — pick best if we didn't already decide
-    if(!dec.ci&&dec.ci!==0){const d2=aiDec(h,G.cn.map(c=>c.card),G.cl[p],cc,uc);dec.ci=d2.ci;dec.cv=d2.cv;}
-    if(dec.ci>=h.length)dec.ci=0;
-    const card=h[dec.ci];h.splice(dec.ci,1);let cv=dec.cv;
-    const cc2=G.cn.filter(c=>c.cov).length,uc2=G.cn.filter(c=>!c.cov).length;
-    if(uc2>cc2)cv=!0;if(cc2>uc2)cv=!1;
-    G.cn.push({card,cov:cv,by:p});aL(`${NM[p]} adds ${cv?'face-down 🂠':EL[card.el].e+card.v}`);G.ani=!1;
-    if(G.cn.length>=6){forceDr(p);return;}
-    const nx=nxt(p);if(nx===-1||nx===0){G.cp=0;ren();return;}G.cp=nx;ren();if(nx!==0)setTimeout(()=>aiT(nx),700);
+/* ===== AI DECISION ===== */
+function aiPick(hand,cenCards,myCld){
+  if(!hand||!hand.length)return{act:"d"};
+  const cur=calc(myCld), pot=calc([...myCld,...cenCards]);
+  const imp=pot.total-cur.total;
+  // Want to drink?
+  if(cenCards.length>=2&&(imp>=3||(cenCards.length>=4&&imp>=1)||(cenCards.length>=6&&imp>=0)||cenCards.length>=8))
+    return{act:"d"};
+  // Pick card to add
+  let bi=0,bs=-1e9;
+  for(let i=0;i<hand.length;i++){
+    const h=calc([...myCld,hand[i]]);
+    const sc=cur.total-h.total+(4-hand[i].v)*0.3+Math.random()*1.5;
+    if(sc>bs){bs=sc;bi=i;}
   }
+  return{act:"a",ci:Math.min(bi,hand.length-1)};
 }
 
-// === Player: create potion ===
+/* ===== HELPERS ===== */
+function nxtWithCards(from){
+  for(let i=1;i<=PC;i++){const n=(from+i)%PC;if(G.h[n].length>0)return n;}
+  return-1;
+}
+function nxtNotDrunk(from){
+  for(let i=1;i<=PC;i++){const n=(from+i)%PC;if(!G.dr[n])return n;}
+  return-1;
+}
+function aL(m){G.log.push(m);if(G.log.length>30)G.log=G.log.slice(-30);}
+function showScr(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+function desc(c){return(c&&c.el)?EL[c.el].e+c.v:'?';}
+function covUncCount(){return{cc:G.cn.filter(c=>c.cov).length,uc:G.cn.filter(c=>!c.cov).length};}
+function pickCovUnc(pref){
+  const{cc,uc}=covUncCount();
+  if(uc>cc)return true;   // must covered
+  if(cc>uc)return false;  // must uncovered
+  return pref!==undefined?pref:(Math.random()>0.5);
+}
+
+/* ===== HTML helpers ===== */
+function cbH(){return'<div class="card card-b"><div class="card-bi">?</div></div>';}
+function cfH(c){if(!c||!c.el)return'';const e=EL[c.el];return`<div class="card"><div class="cf" style="background:${e.b};border-color:${e.c}"><span class="em">${e.e}</span><span class="vl" style="color:${e.c}">${c.v}</span><span class="nm" style="color:${e.c}">${e.n}</span></div></div>`;}
+function ciH(c){if(!c||!c.el)return'<div class="cf" style="background:#111;border-color:#333"><span class="em">?</span></div>';const e=EL[c.el];return`<div class="cf" style="background:${e.b};border-color:${e.c}"><span class="em">${e.e}</span><span class="vl" style="color:${e.c}">${c.v}</span><span class="nm" style="color:${e.c}">${e.n}</span></div>`;}
+function cpH(sums){let h='';if(!sums)return h;for(const[e,v]of Object.entries(sums))if(v>0&&EL[e])h+=`<span class="chip" style="border-color:${EL[e].c};background:${EL[e].b}">${EL[e].e} ${v}</span>`;return h;}
+
+/* ===== PASS TURN TO NEXT ===== */
+function passTurn(from){
+  const nx=nxtWithCards(from);
+  if(nx===-1||nx===0){G.cp=0;G.ani=false;ren();return;}
+  G.cp=nx;G.ani=false;ren();
+  setTimeout(()=>aiTurn(nx),700);
+}
+
+/* ===== DRINK (shared logic) ===== */
+function doDrink(p){
+  const cards=G.cn.filter(c=>c&&c.card).map(c=>c.card);
+  G.cl[p]=[...G.cl[p],...cards];
+  G.dr[p]=true;
+  aL(`${NM[p]} drinks! [${cards.map(desc).join(' ')}]`);
+  G.cn=[]; G.nn=true; G.ani=false;
+}
+
+/* ===== FORCE DRINK (6-card rule) ===== */
+function forceDrink(fromP){
+  const p=nxtNotDrunk(fromP);
+  if(p===-1){ren();setTimeout(endRound,600);return;}
+  aL(`⚠️ 6 cards! ${NM[p]} must drink!`);
+  doDrink(p);
+  afterDrink(p);
+}
+
+/* ===== AFTER SOMEONE DRINKS ===== */
+function afterDrink(drinkerP){
+  if(G.dr.every(d=>d)){ren();setTimeout(endRound,600);return;}
+  const minCards=G.final?1:2;
+  if(G.h[drinkerP].length>=minCards){
+    G.crM=true;G.crP=drinkerP;G.nn=true;G.cp=drinkerP;ren();
+    if(drinkerP!==0)setTimeout(()=>aiCreatePotion(drinkerP),700);
+    return;
+  }
+  for(let i=1;i<=PC;i++){
+    const n=(drinkerP+i)%PC;
+    if(G.h[n].length>=minCards){
+      G.crM=true;G.crP=n;G.nn=true;G.cp=n;ren();
+      if(n!==0)setTimeout(()=>aiCreatePotion(n),700);
+      return;
+    }
+  }
+  setTimeout(endRound,600);
+}
+
+/* ===== AI: CREATE POTION ===== */
+function aiCreatePotion(p){
+  G.ani=true;ren();
+  const h=G.h[p];
+  
+  if(G.final){
+    // Final round: place 1 card only
+    if(!h||h.length<1){G.ani=false;ren();return;}
+    const ci=0|Math.random()*h.length;
+    const card=h[ci];
+    if(!card){G.ani=false;ren();return;}
+    h.splice(ci,1);
+    const cv=Math.random()>0.5;
+    G.cn=[{card,cov:cv,by:p}];
+    G.nn=false;G.crM=false;G.ani=false;
+    aL(`${NM[p]} brews: ${cv?"🂠":desc(card)}`);
+    passTurn(p);
+    return;
+  }
+  
+  // Normal round: place 2 cards
+  if(!h||h.length<2){G.ani=false;ren();return;}
+  const i1=0|Math.random()*h.length;
+  let i2=0|Math.random()*(h.length-1);
+  if(i2>=i1)i2++;
+  if(i2>=h.length)i2=0;
+  if(i1===i2)i2=(i1+1)%h.length;
+  const c1=h[i1],c2=h[i2];
+  if(!c1||!c2){G.ani=false;ren();return;}
+  [i1,i2].sort((a,b)=>b-a).forEach(i=>h.splice(i,1));
+  const cv=Math.random()>0.5;
+  G.cn=[{card:c1,cov:cv,by:p},{card:c2,cov:!cv,by:p}];
+  G.nn=false;G.crM=false;G.ani=false;
+  aL(`${NM[p]} brews: ${cv?"🂠":desc(c1)} + ${!cv?"🂠":desc(c2)}`);
+  passTurn(p);
+}
+
+/* ===== AI: NORMAL TURN (add or drink) ===== */
+function aiTurn(p){
+  if(p===0){G.ani=false;ren();return;}
+  // No cards? Skip.
+  if(!G.h[p]||G.h[p].length===0){passTurn(p);return;}
+  // No potion on table? Something wrong, bail.
+  if(G.nn||G.cn.length===0){G.ani=false;G.cp=0;ren();return;}
+
+  G.ani=true;ren();
+  const h=G.h[p];
+  const cenCards=G.cn.map(c=>c.card).filter(Boolean);
+
+  // Non-drunk: can choose drink or add
+  if(!G.dr[p]){
+    const dec=aiPick(h,cenCards,G.cl[p]);
+    if(dec.act==="d"){
+      doDrink(p);
+      afterDrink(p);
+      return;
+    }
+  }
+
+  // Add a card (drunk or chose to add)
+  const dec=aiPick(h,cenCards,G.cl[p]);
+  let ci=(dec.ci!==undefined&&dec.ci>=0&&dec.ci<h.length)?dec.ci:0;
+  const card=h[ci];
+  if(!card){G.ani=false;passTurn(p);return;}
+  h.splice(ci,1);
+
+  const cv=pickCovUnc();
+  G.cn.push({card,cov:cv,by:p});
+  aL(`${NM[p]} adds ${cv?'face-down 🂠':desc(card)}`);
+  G.ani=false;
+
+  // 6-card rule
+  if(G.cn.length>=6){forceDrink(p);return;}
+  passTurn(p);
+}
+
+/* ===== START GAME ===== */
+function startGame(){
+  G={dk:[],h:[[],[],[],[]],cl:[[],[],[],[]],cn:[],
+    cp:0,st:0,dr:[false,false,false,false],
+    nn:true,log:[],rn:1,ani:false,fc:null,crM:false,crP:-1,
+    final:false,removed:[]};
+  const all=shuf(mkDeck());
+  // Deal 6 to each player, keep rest as deck. With 4 players from 90: 24 dealt, 66 in deck
+  const rem=[...all];
+  for(let p=0;p<PC;p++) G.h[p]=rem.splice(0,HS);
+  G.dk=rem;
+  aL("Game starts! Create the first potion.");
+  showScr('game');ren();
+}
+
+/* ===== PLAYER: CREATE POTION ===== */
 function onPS(idx){
-  if(G.ani)return;const ok=(G.crM&&G.crP===0)||(G.cp===0&&G.nn&&!G.dr[0]);
+  if(G.ani)return;
+  const ok=(G.crM&&G.crP===0)||(G.cp===0&&G.nn&&!G.dr[0]);
+  
+  if(G.final){
+    // Final round: select 1 card, fc stores it, then player uses onFCr buttons
+    if(!ok||G.h[0].length<1)return;
+    G.fc=idx;ren();
+    return;
+  }
+  
+  // Normal round: 2 cards
   if(!ok||G.h[0].length<2)return;
-  if(G.fc===null){G.fc=idx;ren();return;}if(G.fc===idx){G.fc=null;ren();return;}
-  const c1=G.h[0][G.fc],c2=G.h[0][idx];[G.fc,idx].sort((a,b)=>b-a).forEach(i=>G.h[0].splice(i,1));
-  G.cn=[{card:c1,cov:!0,by:0},{card:c2,cov:!1,by:0}];G.nn=!1;G.fc=null;G.crM=!1;
-  aL(`You brew: 🂠 + ${EL[c2.el].e}${c2.v}`);
-  const nx=nxt(0);if(nx===-1||nx===0){G.cp=0;ren();return;}G.cp=nx;ren();if(nx!==0)setTimeout(()=>aiT(nx),700);
+  if(G.fc===null){G.fc=idx;ren();return;}
+  if(G.fc===idx){G.fc=null;ren();return;}
+  const c1=G.h[0][G.fc],c2=G.h[0][idx];
+  if(!c1||!c2)return;
+  [G.fc,idx].sort((a,b)=>b-a).forEach(i=>G.h[0].splice(i,1));
+  G.cn=[{card:c1,cov:true,by:0},{card:c2,cov:false,by:0}];
+  G.nn=false;G.fc=null;G.crM=false;
+  aL(`You brew: 🂠 + ${desc(c2)}`);
+  passTurn(0);
 }
 
-// === Player: add card ===
+/* ===== PLAYER: FINAL ROUND CREATE (choose cov/unc) ===== */
+function onFCr(cov){
+  if(G.fc===null||G.fc>=G.h[0].length)return;
+  const card=G.h[0][G.fc];
+  if(!card)return;
+  G.h[0].splice(G.fc,1);
+  G.cn=[{card,cov,by:0}];
+  G.nn=false;G.fc=null;G.crM=false;
+  aL(`You brew: ${cov?'🂠':desc(card)}`);
+  passTurn(0);
+}
+
+/* ===== PLAYER: ADD CARD ===== */
 function onA(idx,cov){
   if(G.cp!==0||G.ani||G.nn||!G.cn.length)return;
-  if(!G.dr[0]&&false)return; // player can always add if it's their turn
-  const cc=G.cn.filter(c=>c.cov).length,uc=G.cn.filter(c=>!c.cov).length;
+  if(idx<0||idx>=G.h[0].length)return;
+  const{cc,uc}=covUncCount();
   if(uc>cc&&!cov){aL("Must play face-down!");ren();return;}
   if(cc>uc&&cov){aL("Must play face-up!");ren();return;}
-  const card=G.h[0][idx];G.h[0].splice(idx,1);G.cn.push({card,cov,by:0});
-  aL(`You add ${cov?'face-down 🂠':EL[card.el].e+card.v}`);
-  if(G.cn.length>=6){forceDr(0);return;}
-  const nx=nxt(0);if(nx!==-1&&nx!==0){G.cp=nx;ren();setTimeout(()=>aiT(nx),700);}else{G.cp=0;ren();}
+  const card=G.h[0][idx];
+  if(!card)return;
+  G.h[0].splice(idx,1);
+  G.cn.push({card,cov,by:0});
+  aL(`You add ${cov?'face-down 🂠':desc(card)}`);
+  if(G.cn.length>=6){forceDrink(0);return;}
+  passTurn(0);
 }
 
-// === Player: drink ===
+/* ===== PLAYER: DRINK ===== */
 function onD(){
   if(G.cp!==0||G.ani||G.dr[0]||!G.cn.length||G.nn)return;
-  const cards=G.cn.map(c=>c.card);G.cl[0]=[...G.cl[0],...cards];G.dr[0]=!0;
-  aL(`You drink! [${cards.map(c=>EL[c.el].e+c.v).join(' ')}]`);G.cn=[];G.nn=!0;aftDr(0);
+  doDrink(0);
+  afterDrink(0);
 }
 
-// === End round ===
-function endR(){
-  for(let p=0;p<PC;p++)while(G.h[p].length<HS&&G.dk.length>0)G.h[p].push(G.dk.pop());
-  const tot=G.dk.length+G.h.reduce((a,h)=>a+h.length,0);
-  if(tot===0){aL("Game over!");showGO();return;}
-  G.dr=[!1,!1,!1,!1];G.nn=!0;G.fc=null;G.crM=!1;G.crP=-1;
-  const ns=(G.st+1)%PC;G.st=ns;G.cp=ns;G.rn++;aL(`--- Round ${G.rn} --- Deck: ${G.dk.length}`);ren();
-  if(ns!==0){G.crM=!0;G.crP=ns;setTimeout(()=>aiCr(ns),700);}
+/* ===== END ROUND ===== */
+function endRound(){
+  const FHS=4; // final hand size
+  
+  if(G.final){
+    // Final round just ended → game over
+    aL("Game over!");showGO();return;
+  }
+  
+  // Normal refill to 6
+  for(let p=0;p<PC;p++)
+    while(G.h[p].length<HS&&G.dk.length>0) G.h[p].push(G.dk.pop());
+  
+  // Check if deck ran out during refill
+  if(G.dk.length===0){
+    // Enter FINAL ROUND
+    G.final=true;
+    // Collect all cards still in players' hands into a temporary pool + removed cards
+    // Actually: the removed cards are what we use to top up to 4
+    // "removed" cards = cards not used at start. But we didn't remove any with 4 players/90 cards.
+    // The rule says: if deck empties during deal, use removed cards to fill to 4.
+    // With 90 cards / 4 players, no cards are removed. So we just top up from nothing?
+    // Let's interpret: any cards that couldn't be dealt (deck ran out mid-refill) means
+    // we gather ALL remaining undealt potential and redistribute so everyone has exactly 4.
+    // If players have MORE than 4, they keep what they have.
+    // If players have LESS than 4, we can't do anything (no source).
+    // Actually re-reading: "pescano le carte da quelle rimosse all'inizio della partita"
+    // This implies some cards WERE removed. Let's support variable player count removal.
+    // For now: use G.removed to top up to 4.
+    const pool=shuf([...G.removed]);
+    for(let p=0;p<PC;p++)
+      while(G.h[p].length<FHS&&pool.length>0) G.h[p].push(pool.pop());
+    
+    G.dr=[false,false,false,false];G.nn=true;G.fc=null;G.crM=false;G.crP=-1;
+    const ns=(G.st+1)%PC;
+    G.st=ns;G.cp=ns;G.rn++;
+    aL(`🏁 FINAL ROUND! Hands: ${FHS} cards. Potion starts with 1 card.`);
+    ren();
+    if(ns!==0){G.crM=true;G.crP=ns;setTimeout(()=>aiCreatePotion(ns),700);}
+    return;
+  }
+  
+  // Normal next round
+  G.dr=[false,false,false,false];G.nn=true;G.fc=null;G.crM=false;G.crP=-1;
+  const ns=(G.st+1)%PC;
+  G.st=ns;G.cp=ns;G.rn++;
+  aL(`--- Round ${G.rn} --- Deck: ${G.dk.length}`);
+  ren();
+  if(ns!==0){G.crM=true;G.crP=ns;setTimeout(()=>aiCreatePotion(ns),700);}
 }
 
-// === Game over ===
+/* ===== GAME OVER ===== */
 function showGO(){
-  const sc=G.cl.map((c,i)=>({p:i,s:calc(c)})).sort((a,b)=>b.s.total-a.s.total);let h='';
-  sc.forEach((x,r)=>{h+=`<div class="fr ${r===0?'w':''} ${x.p===0?'me':''}"><span class="fk">${r===0?'👑':'#'+(r+1)}</span><span class="fn">${NM[x.p]}</span><div class="fd"><span>Raw: ${x.s.raw}</span><span>Δ: ${x.s.delta}−🌿${x.s.nat}=${x.s.dF}</span><span>Pen: −${x.s.dF*3}</span></div><span class="fp">${x.s.total} pts</span></div>`;});
-  document.getElementById('fsc').innerHTML=h;ss('gameover');
+  const sc=G.cl.map((c,i)=>({p:i,s:calc(c)})).sort((a,b)=>b.s.total-a.s.total);
+  let h='';
+  sc.forEach((x,r)=>{
+    h+=`<div class="fr ${r===0?'w':''} ${x.p===0?'me':''}">
+      <span class="fk">${r===0?'👑':'#'+(r+1)}</span>
+      <span class="fn">${NM[x.p]}</span>
+      <div class="fd"><span>Raw: ${x.s.raw}</span><span>Δ: ${x.s.delta}−🌿${x.s.nat}=${x.s.dF}</span><span>Pen: −${x.s.dF*3}</span></div>
+      <span class="fp">${x.s.total} pts</span>
+    </div>`;
+  });
+  document.getElementById('fsc').innerHTML=h;showScr('gameover');
 }
 
-// === Render ===
+/* ===== RENDER ===== */
 function ren(){
-  const myT=G.cp===0&&!G.ani,isCr=G.crM&&G.crP===0,canCr=isCr||(myT&&G.nn&&!G.dr[0]);
+  const myT=G.cp===0&&!G.ani;
+  const isCr=G.crM&&G.crP===0;
+  const canCr=isCr||(myT&&G.nn&&!G.dr[0]);
   const canDr=myT&&G.cn.length>0&&!G.nn&&!G.dr[0];
   const canAd=myT&&!G.nn&&G.cn.length>0&&G.h[0].length>0;
-  const drunkButAdding=G.dr[0]&&canAd;
-  const cc=G.cn.filter(c=>c.cov).length,uc=G.cn.filter(c=>!c.cov).length,mC=uc>cc,mU=cc>uc;
+  const{cc,uc}=covUncCount();
+  const mC=uc>cc, mU=cc>uc;
 
-  document.getElementById('ri').textContent=`Round ${G.rn} — Deck: ${G.dk.length}`;
-  let msg=G.ani?"The wizards are thinking...":(isCr&&G.dr[0])?"You drank! Now brew for the others (1st=🂠, 2nd=🃏)":drunkButAdding?`You drank but still add cards! ${mC?"(must 🂠)":mU?"(must 🃏)":"(🂠/🃏)"}`:G.dr[0]&&!canAd?"You drank! Waiting for round to end...":canCr?(G.h[0].length>=2?"Select 2 cards: 1st=face-down 🂠, 2nd=face-up 🃏":"Waiting..."):canAd?`${G.cn.length>=5?'⚠️ 5 cards! Next add forces a drink! ':''}Add card ${mC?"(must 🂠)":mU?"(must 🃏)":"(🂠/🃏)"}${canDr?' or drink 🍷':''}`:"Waiting...";
+  document.getElementById('ri').textContent=`${G.final?'🏁 FINAL ':''}Round ${G.rn} — Deck: ${G.dk.length}`;
+
+  const minCr=G.final?1:2;
+  let msg=G.ani?"The wizards are thinking...":
+    (isCr&&G.dr[0])?(G.final?"You drank! Brew a potion (pick 1 card: 🂠 or 🃏)":"You drank! Now brew for the others (1st=🂠, 2nd=🃏)"):
+    (G.dr[0]&&canAd)?`You drank but still add cards! ${mC?"(must 🂠)":mU?"(must 🃏)":"(🂠/🃏)"}`:
+    (G.dr[0]&&!canAd)?"You drank! Waiting for round to end...":
+    canCr?(G.h[0].length>=minCr?(G.final?"Pick 1 card to start the potion (🂠 or 🃏)":"Select 2 cards: 1st=face-down 🂠, 2nd=face-up 🃏"):"Waiting..."):
+    canAd?`${G.cn.length>=5?'⚠️ 5 cards! ':''}Add card ${mC?"(must 🂠)":mU?"(must 🃏)":"(🂠/🃏)"}${canDr?' or drink 🍷':''}`:"Waiting...";
   document.getElementById('tm').textContent=msg;
 
-  let aiH='';for(let p=1;p<PC;p++){const s=calc(G.cl[p]);aiH+=`<div class="ab ${G.cp===p?'act':''} ${G.dr[p]?'out':''}"><div class="an">${NM[p]}</div><div class="am"><span>🃏 ${G.h[p].length}</span>${G.dr[p]?'<span class="dr">Drank!</span>':''}</div><div class="chips">${cpH(s.sums)}</div><span class="pts">${s.total} pts</span></div>`;}
+  // AI boxes
+  let aiH='';
+  for(let p=1;p<PC;p++){
+    const s=calc(G.cl[p]);
+    aiH+=`<div class="ab ${G.cp===p?'act':''} ${G.dr[p]?'out':''}">
+      <div class="an">${NM[p]}</div>
+      <div class="am"><span>🃏 ${G.h[p].length}</span>${G.dr[p]?'<span class="dr">Drank!</span>':''}</div>
+      <div class="chips">${cpH(s.sums)}</div>
+      <span class="pts">${s.total} pts</span>
+    </div>`;
+  }
   document.getElementById('air').innerHTML=aiH;
 
+  // Center
   document.getElementById('cbal').textContent=G.cn.length?`(${cc}🂠 / ${uc}🃏)`:'';
-  let cenH='';if(!G.cn.length)cenH=`<div class="ce">${G.nn?'Brew a new potion!':'Empty'}</div>`;else for(const c of G.cn)cenH+=c.cov?cbH():cfH(c.card);
+  let cenH='';
+  if(!G.cn.length) cenH=`<div class="ce">${G.nn?'Brew a new potion!':'Empty'}</div>`;
+  else for(const c of G.cn) cenH+=c.cov?cbH():cfH(c.card);
   document.getElementById('ccards').innerHTML=cenH;
   document.getElementById('dw').innerHTML=canDr?'<button class="bd" onclick="onD()">🍷 Drink the Potion!</button>':'';
 
+  // My cauldron
   const ms=calc(G.cl[0]);
-  document.getElementById('myc').innerHTML=`<div class="ml">Your Cauldron</div><div class="chips">${cpH(ms.sums)}</div><div class="sr"><span>Raw: ${ms.raw} (elem−🌿${ms.nat})</span><span>Δ: ${ms.delta}−🌿${ms.nat}=${ms.dF}</span><span>Penalty: −${ms.dF*3}</span></div><div class="st">Total: ${ms.total}</div>`;
+  document.getElementById('myc').innerHTML=`
+    <div class="ml">Your Cauldron</div>
+    <div class="chips">${cpH(ms.sums)}</div>
+    <div class="sr"><span>Raw: ${ms.raw} (elem−🌿${ms.nat})</span><span>Δ: ${ms.delta}−🌿${ms.nat}=${ms.dF}</span><span>Pen: −${ms.dF*3}</span></div>
+    <div class="st">Total: ${ms.total}</div>`;
 
+  // Hand
   document.getElementById('hl').textContent=`Your Hand (${G.h[0].length} cards)`;
-  let hH='';for(let i=0;i<G.h[0].length;i++){const c=G.h[0][i],sel=G.fc===i?'sel':'',clk=canCr?`onclick="onPS(${i})"`:'';let btns='';if(canAd){if(!mU)btns+=`<button class="cbt cv" onclick="onA(${i},true)">🂠</button>`;if(!mC)btns+=`<button class="cbt uv" onclick="onA(${i},false)">🃏</button>`;}hH+=`<div class="hs"><div class="card ${sel} ${clk?'clk':''}" ${clk}>${ciH(c)}</div>${btns?`<div class="cbs">${btns}</div>`:''}</div>`;}
+  const finalCrSel=G.final&&canCr&&G.fc!==null; // final round create, card selected
+  let hH='';
+  for(let i=0;i<G.h[0].length;i++){
+    const c=G.h[0][i];
+    if(!c)continue;
+    const sel=G.fc===i?'sel':'';
+    const clk=canCr?`onclick="onPS(${i})"`:'';
+    let btns='';
+    if(canAd){
+      if(!mU)btns+=`<button class="cbt cv" onclick="onA(${i},true)">🂠</button>`;
+      if(!mC)btns+=`<button class="cbt uv" onclick="onA(${i},false)">🃏</button>`;
+    }
+    // Final round create: show cov/unc buttons on selected card
+    if(finalCrSel&&G.fc===i){
+      btns=`<button class="cbt cv" onclick="onFCr(true)">🂠</button><button class="cbt uv" onclick="onFCr(false)">🃏</button>`;
+    }
+    hH+=`<div class="hs"><div class="card ${sel} ${clk?'clk':''}" ${clk}>${ciH(c)}</div>${btns?`<div class="cbs">${btns}</div>`:''}</div>`;
+  }
   document.getElementById('hcards').innerHTML=hH;
 
-  const ll=G.log.slice(-8);let lH='';for(let i=0;i<ll.length;i++)lH+=`<div class="ll" style="opacity:${(.4+i/12).toFixed(2)}">${ll[i]}</div>`;
+  // Log
+  const ll=G.log.slice(-8);let lH='';
+  for(let i=0;i<ll.length;i++) lH+=`<div class="ll" style="opacity:${(.4+i/12).toFixed(2)}">${ll[i]}</div>`;
   document.getElementById('logb').innerHTML=lH;
 }
 </script>
