@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Drink or Die — Printable Cards</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 10mm; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Cinzel',serif; background:#fff; }
+
+.page {
+  width: 190mm;
+  height: 277mm;
+  display: grid;
+  grid-template-columns: repeat(3, 63.5mm);
+  grid-template-rows: repeat(3, 88.9mm);
+  gap: 0mm;
+  justify-content: center;
+  align-content: center;
+  page-break-after: always;
+  margin: 0 auto;
+}
+
+.card {
+  width: 63.5mm;
+  height: 88.9mm;
+  border: 0.5px solid #999;
+  border-radius: 3.5mm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 3.5mm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2mm;
+  position: relative;
+}
+
+/* Corner values */
+.corner-tl, .corner-br {
+  position: absolute;
+  font-size: 11pt;
+  font-weight: 900;
+  line-height: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+.corner-tl { top: 3mm; left: 3.5mm; }
+.corner-br { bottom: 3mm; right: 3.5mm; transform: rotate(180deg); }
+.corner-emoji { font-size: 9pt; }
+.corner-val { font-size: 13pt; font-weight: 900; }
+
+/* Center content */
+.card-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1mm;
+}
+.card-emoji { font-size: 36pt; }
+.card-value { font-size: 32pt; font-weight: 900; }
+.card-name { font-size: 8pt; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; }
+
+/* Element-specific borders */
+.card-border {
+  position: absolute;
+  top: 2mm; left: 2mm; right: 2mm; bottom: 2mm;
+  border: 1.5px solid;
+  border-radius: 2.5mm;
+  pointer-events: none;
+}
+
+/* Element colors */
+.el-fire .card-inner { background: #2d0a0a; }
+.el-fire .card-border { border-color: #e74c3c; }
+.el-fire .corner-tl, .el-fire .corner-br, .el-fire .card-value, .el-fire .card-name { color: #e74c3c; }
+
+.el-ice .card-inner { background: #0a1a2d; }
+.el-ice .card-border { border-color: #4ba3e8; }
+.el-ice .corner-tl, .el-ice .corner-br, .el-ice .card-value, .el-ice .card-name { color: #4ba3e8; }
+
+.el-light .card-inner { background: #2d2a0a; }
+.el-light .card-border { border-color: #d4b030; }
+.el-light .corner-tl, .el-light .corner-br, .el-light .card-value, .el-light .card-name { color: #d4b030; }
+
+.el-shadow .card-inner { background: #1a0a2d; }
+.el-shadow .card-border { border-color: #a86edb; }
+.el-shadow .corner-tl, .el-shadow .corner-br, .el-shadow .card-value, .el-shadow .card-name { color: #a86edb; }
+
+.el-nature .card-inner { background: #0a2d15; }
+.el-nature .card-border { border-color: #3ddc84; }
+.el-nature .corner-tl, .el-nature .corner-br, .el-nature .card-value, .el-nature .card-name { color: #3ddc84; }
+
+/* Print settings */
+@media print {
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+  .instructions { display: none; }
+}
+
+.instructions {
+  text-align: center; padding: 16px; color: #666; font-family: sans-serif; font-size: 11pt;
+  border-bottom: 1px solid #ddd; margin-bottom: 10px;
+}
+.instructions b { color: #333; }
+</style>
+</head>
+<body>
+
+<div class="instructions">
+  <b>Drink or Die — Printable Cards</b> | 90 cards (10 pages of 9) | Poker size: 63.5 × 88.9 mm<br>
+  Print at 100% scale on A4, then cut along the borders. For best results, print on cardstock.
+</div>
+
+<script>
+const elements = [
+  { id:'fire', name:'Fire', emoji:'🔥' },
+  { id:'ice', name:'Ice', emoji:'🧊' },
+  { id:'light', name:'Light', emoji:'✨' },
+  { id:'shadow', name:'Shadow', emoji:'💀' },
+  { id:'nature', name:'Nature', emoji:'🌿' },
+];
+
+// Build all 90 cards: 18 per element (6×1, 6×2, 6×3)
+const cards = [];
+for (const el of elements) {
+  for (const v of [1,2,3]) {
+    for (let i = 0; i < 6; i++) {
+      cards.push({ el, v });
+    }
+  }
+}
+
+// Generate HTML
+let html = '';
+for (let i = 0; i < cards.length; i++) {
+  if (i % 9 === 0) html += '<div class="page">';
+  
+  const c = cards[i];
+  html += `
+    <div class="card el-${c.el.id}">
+      <div class="card-inner">
+        <div class="card-border"></div>
+        <div class="corner-tl">
+          <span class="corner-emoji">${c.el.emoji}</span>
+          <span class="corner-val">${c.v}</span>
+        </div>
+        <div class="corner-br">
+          <span class="corner-emoji">${c.el.emoji}</span>
+          <span class="corner-val">${c.v}</span>
+        </div>
+        <div class="card-center">
+          <span class="card-emoji">${c.el.emoji}</span>
+          <span class="card-value">${c.v}</span>
+          <span class="card-name">${c.el.name}</span>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  if (i % 9 === 8 || i === cards.length - 1) html += '</div>';
+}
+
+document.body.insertAdjacentHTML('beforeend', html);
+</script>
+
+</body>
+</html>
