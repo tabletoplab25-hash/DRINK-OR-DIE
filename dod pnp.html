@@ -25,7 +25,7 @@ body { font-family:'Cinzel',serif; background:#fff; }
 .card {
   width: 63.5mm;
   height: 88.9mm;
-  border: 0.5px solid #999;
+  border: 1px solid #aaa;
   border-radius: 3.5mm;
   display: flex;
   flex-direction: column;
@@ -33,6 +33,7 @@ body { font-family:'Cinzel',serif; background:#fff; }
   justify-content: center;
   position: relative;
   overflow: hidden;
+  background: #fff;
 }
 
 .card-inner {
@@ -43,25 +44,32 @@ body { font-family:'Cinzel',serif; background:#fff; }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2mm;
+  gap: 1mm;
   position: relative;
+}
+
+/* Inner colored border */
+.card-border {
+  position: absolute;
+  top: 2.5mm; left: 2.5mm; right: 2.5mm; bottom: 2.5mm;
+  border: 2px solid;
+  border-radius: 2.5mm;
+  pointer-events: none;
 }
 
 /* Corner values */
 .corner-tl, .corner-br {
   position: absolute;
-  font-size: 11pt;
-  font-weight: 900;
   line-height: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0;
 }
-.corner-tl { top: 3mm; left: 3.5mm; }
-.corner-br { bottom: 3mm; right: 3.5mm; transform: rotate(180deg); }
-.corner-emoji { font-size: 9pt; }
-.corner-val { font-size: 13pt; font-weight: 900; }
+.corner-tl { top: 4mm; left: 4.5mm; }
+.corner-br { bottom: 4mm; right: 4.5mm; transform: rotate(180deg); }
+.corner-emoji { font-size: 22pt; }
+.corner-val { font-size: 26pt; font-weight: 900; }
 
 /* Center content */
 .card-center {
@@ -70,41 +78,26 @@ body { font-family:'Cinzel',serif; background:#fff; }
   align-items: center;
   gap: 1mm;
 }
-.card-emoji { font-size: 36pt; }
-.card-value { font-size: 32pt; font-weight: 900; }
-.card-name { font-size: 8pt; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; }
+.card-emoji { font-size: 48pt; }
+.card-value { font-size: 42pt; font-weight: 900; }
+.card-name { font-size: 9pt; letter-spacing: 2.5px; text-transform: uppercase; font-weight: 700; }
 
-/* Element-specific borders */
-.card-border {
-  position: absolute;
-  top: 2mm; left: 2mm; right: 2mm; bottom: 2mm;
-  border: 1.5px solid;
-  border-radius: 2.5mm;
-  pointer-events: none;
-}
+/* Element colors - text/border only, white background */
+.el-fire .card-border { border-color: #d32f2f; }
+.el-fire .corner-tl, .el-fire .corner-br, .el-fire .card-value, .el-fire .card-name { color: #d32f2f; }
 
-/* Element colors */
-.el-fire .card-inner { background: #2d0a0a; }
-.el-fire .card-border { border-color: #e74c3c; }
-.el-fire .corner-tl, .el-fire .corner-br, .el-fire .card-value, .el-fire .card-name { color: #e74c3c; }
+.el-ice .card-border { border-color: #1976d2; }
+.el-ice .corner-tl, .el-ice .corner-br, .el-ice .card-value, .el-ice .card-name { color: #1976d2; }
 
-.el-ice .card-inner { background: #0a1a2d; }
-.el-ice .card-border { border-color: #4ba3e8; }
-.el-ice .corner-tl, .el-ice .corner-br, .el-ice .card-value, .el-ice .card-name { color: #4ba3e8; }
+.el-light .card-border { border-color: #c8a000; }
+.el-light .corner-tl, .el-light .corner-br, .el-light .card-value, .el-light .card-name { color: #c8a000; }
 
-.el-light .card-inner { background: #2d2a0a; }
-.el-light .card-border { border-color: #d4b030; }
-.el-light .corner-tl, .el-light .corner-br, .el-light .card-value, .el-light .card-name { color: #d4b030; }
+.el-shadow .card-border { border-color: #7b1fa2; }
+.el-shadow .corner-tl, .el-shadow .corner-br, .el-shadow .card-value, .el-shadow .card-name { color: #7b1fa2; }
 
-.el-shadow .card-inner { background: #1a0a2d; }
-.el-shadow .card-border { border-color: #a86edb; }
-.el-shadow .corner-tl, .el-shadow .corner-br, .el-shadow .card-value, .el-shadow .card-name { color: #a86edb; }
+.el-nature .card-border { border-color: #2e7d32; }
+.el-nature .corner-tl, .el-nature .corner-br, .el-nature .card-value, .el-nature .card-name { color: #2e7d32; }
 
-.el-nature .card-inner { background: #0a2d15; }
-.el-nature .card-border { border-color: #3ddc84; }
-.el-nature .corner-tl, .el-nature .corner-br, .el-nature .card-value, .el-nature .card-name { color: #3ddc84; }
-
-/* Print settings */
 @media print {
   body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .page { page-break-after: always; }
@@ -122,8 +115,8 @@ body { font-family:'Cinzel',serif; background:#fff; }
 <body>
 
 <div class="instructions">
-  <b>Drink or Die — Printable Cards</b> | 90 cards (10 pages of 9) | Poker size: 63.5 × 88.9 mm<br>
-  Print at 100% scale on A4, then cut along the borders. For best results, print on cardstock.
+  <b>Drink or Die — Low Ink Printable Cards</b> | 90 cards (10 pages of 9) | Poker size: 63.5 × 88.9 mm<br>
+  White background, minimal ink usage. Print at 100% scale on A4, cut along borders.
 </div>
 
 <script>
@@ -135,21 +128,15 @@ const elements = [
   { id:'nature', name:'Nature', emoji:'🌿' },
 ];
 
-// Build all 90 cards: 18 per element (6×1, 6×2, 6×3)
 const cards = [];
-for (const el of elements) {
-  for (const v of [1,2,3]) {
-    for (let i = 0; i < 6; i++) {
+for (const el of elements)
+  for (const v of [1,2,3])
+    for (let i = 0; i < 6; i++)
       cards.push({ el, v });
-    }
-  }
-}
 
-// Generate HTML
 let html = '';
 for (let i = 0; i < cards.length; i++) {
   if (i % 9 === 0) html += '<div class="page">';
-  
   const c = cards[i];
   html += `
     <div class="card el-${c.el.id}">
@@ -169,14 +156,10 @@ for (let i = 0; i < cards.length; i++) {
           <span class="card-name">${c.el.name}</span>
         </div>
       </div>
-    </div>
-  `;
-  
+    </div>`;
   if (i % 9 === 8 || i === cards.length - 1) html += '</div>';
 }
-
 document.body.insertAdjacentHTML('beforeend', html);
-</script> 
-
+</script>
 </body>
 </html>
