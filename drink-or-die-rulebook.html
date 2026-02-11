@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Drink or Die — Rulebook</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+rel="stylesheet">
 <style>
 @page { size: A4; margin: 18mm 20mm; }
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -164,7 +164,7 @@ li { margin:4px 0; }
 <p>The Final Round plays exactly like a normal round with two key differences:</p>
 <ol>
   <li><b>Starting a potion:</b> the creator places only <b>1 card</b> (either face-down or face-up — their choice), instead of the usual 2.</li>
-  <li><b>Hand size:</b> players start with 4 cards instead of 6. The 4-card forced drink rule is applied instead the 6.</li>
+  <li><b>Hand size:</b> players start with 4 cards instead of 6. The 6-card forced drink rule still applies as normal.</li>
 </ol>
 
 <p>Once every player has drunk in the Final Round, the game ends and players calculate their final scores.</p>
@@ -412,6 +412,100 @@ li { margin:4px 0; }
 </div>
 
 <p>All other rules (6-card forced drink, balance rule, scoring, post-drink participation) remain identical.</p>
+
+<h2 class="page-break">10. Expansion: Special Cards</h2>
+
+<p>The expansion adds <b>24 special cards</b> to the base deck. Shuffle them into the main deck before dealing. Special cards follow the same rules as normal cards: they are added to the cauldron face-up or face-down, and collected when someone drinks. <b>They are never played directly from your hand</b> — you can only gain them by drinking a potion that contains them.</p>
+
+<p>Special cards come in two types: <b>Permanent</b> cards (solid border) stay in your cauldron and are scored at end of game. <b>One-shot</b> cards (dashed border) are used once for their effect and then discarded from the game.</p>
+
+<h3>Permanent cards</h3>
+
+<table class="tbl">
+  <tr><th style="text-align:left">Card</th><th>Copies</th><th style="text-align:left">Effect</th></tr>
+  <tr>
+    <td style="text-align:left"><b>⚡ Amplifier</b><br><span style="font-size:9pt;color:#666">One per element</span></td>
+    <td>2 × 5</td>
+    <td style="text-align:left">At end of game, <b>+1 point for each card</b> of the matching element in your cauldron. Exists for all 5 elements: <span class="ci cf">🔥</span> <span class="ci cc">🧊</span> <span class="ci cl">✨</span> <span class="ci cs">💀</span> <span class="ci cn">🌿</span></td>
+  </tr>
+  <tr>
+    <td style="text-align:left"><b>🧪 Poison</b></td>
+    <td>2</td>
+    <td style="text-align:left">Worth <b>−2 points</b>. Additionally, <b>Nature no longer reduces your Delta</b>. Your Final Delta equals your raw Delta, ignoring all Nature cards.</td>
+  </tr>
+  <tr>
+    <td style="text-align:left"><b>🦹 Thief</b></td>
+    <td>2</td>
+    <td style="text-align:left">When you drink a potion containing this card, <b>immediately steal 1 card</b> from any opponent's cauldron. Then discard the Thief. Must be used on drink — cannot be saved.</td>
+  </tr>
+  <tr>
+    <td style="text-align:left"><b>💧 Distillate</b></td>
+    <td>2</td>
+    <td style="text-align:left">Worth <b>0 points</b>. At end of game, <b>remove any one card</b> of your choice from your cauldron. Both the Distillate and the removed card are discarded.</td>
+  </tr>
+  <tr>
+    <td style="text-align:left"><b>💣 Time Bomb</b></td>
+    <td>2</td>
+    <td style="text-align:left">If your Final Delta is <b>exactly 0</b>: worth <b>+6 points</b>. Otherwise: worth <b>−3 points</b>.</td>
+  </tr>
+</table>
+
+<h3>One-shot cards <span style="font-size:10pt;color:#888;font-weight:400">(dashed border — use once, then discard)</span></h3>
+
+<table class="tbl">
+  <tr><th style="text-align:left">Card</th><th>Copies</th><th style="text-align:left">Effect</th></tr>
+  <tr>
+    <td style="text-align:left"><b>🤫 Smuggle</b></td>
+    <td>2</td>
+    <td style="text-align:left">On your turn, <b>place 2 cards from your hand directly into your cauldron</b>. This is free — you still take your normal turn action after. Then discard the Smuggle card.</td>
+  </tr>
+  <tr>
+    <td style="text-align:left"><b>👁️ Alchemist's Eye</b></td>
+    <td>2</td>
+    <td style="text-align:left"><b>Look at all face-down cards</b> in the cauldron. Put them back face-down. Then continue your turn normally (add or drink). Then discard the Eye.</td>
+  </tr>
+  <tr>
+    <td style="text-align:left"><b>🔄 Swap</b></td>
+    <td>2</td>
+    <td style="text-align:left"><b>Exchange one card</b> from your personal cauldron with one card from the current potion. Then discard the Swap card.</td>
+  </tr>
+</table>
+
+<div class="ex">
+  <h4>Expansion scoring example</h4>
+  <p>Alice's cauldron at end of game contains: <span class="ci cf">🔥 3</span> <span class="ci cf">🔥 2</span> <span class="ci cf">🔥 1</span> <span class="ci cc">🧊 2</span> <span class="ci cn">🌿 2</span> + ⚡ Fire Amplifier + 💣 Time Bomb. She also drank a 🦹 Thief earlier and stole Bob's <span class="ci cc">🧊 3</span>.</p>
+  <p class="m" style="font-family:monospace;font-size:10pt;line-height:1.9;color:#333;">
+    Fire=6, Ice=5, Light=0, Shadow=0, Nature=2<br>
+    <b>Raw</b> = 6+5+0+0 − 2 = <b>9</b><br>
+    <b>Delta</b> = |6−5| + |0−0| = <b>1</b><br>
+    <b>Final Δ</b> = |1−2| = <b>1</b> → Penalty = 1×3 = <b>−3</b><br>
+    <b>Amplifier (Fire)</b>: 3 Fire cards → <b>+3</b><br>
+    <b>Time Bomb</b>: Final Δ = 1 (not 0) → <b>−3</b><br>
+    <b>Score = 9 − 3 + 3 − 3 = 6 points</b>
+  </p>
+  <p class="note" style="font-style:italic;color:#555;margin-top:4px;">The Thief was key — stealing Bob's Ice 3 nearly balanced her Fire/Ice pair. Without it, Delta would be 4 and the Time Bomb would still fail. Smart theft!</p>
+</div>
+
+<div class="ex">
+  <h4>Poison example</h4>
+  <p>Bob has: <span class="ci cf">🔥 3</span> <span class="ci cc">🧊 1</span> <span class="ci cn">🌿 2</span> + ☠️ Poison</p>
+  <p class="m" style="font-family:monospace;font-size:10pt;line-height:1.9;color:#333;">
+    <b>Raw</b> = 3+1 − 2 = <b>2</b><br>
+    <b>Delta</b> = |3−1| = <b>2</b><br>
+    <b>Poison effect</b>: Nature does NOT reduce Delta!<br>
+    <b>Final Δ</b> = 2 (not |2−2|=0) → Penalty = 2×3 = <b>−6</b><br>
+    <b>Poison PV</b>: <b>−2</b><br>
+    <b>Score = 2 − 6 − 2 = −6 points</b>
+  </p>
+  <p class="note" style="font-style:italic;color:#555;margin-top:4px;">Without Poison, Bob's Nature would zero out his Delta: score = 2 − 0 = 2. The Poison turned a +2 into a −6. Devastating.</p>
+</div>
+
+<h3>Expansion setup</h3>
+<ul>
+  <li><b>Full expansion (24 cards):</b> shuffle all 24 special cards into the base deck (114 cards total). Recommended for 4–5 players.</li>
+  <li><b>Light expansion:</b> use only 1 copy of each card (12 cards, 102 total). Good for 2–3 players or a first game with the expansion.</li>
+  <li>Scale the deck to player count as usual (~20–25 cards per player).</li>
+</ul>
 
 <div class="footer">Drink or Die — A game of potions, bluff & alchemy — 2–5 players — 20–40 minutes</div>
 
