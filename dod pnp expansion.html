@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>dod pnp expansion</title>
+<title>Drink or Die — Expansion Cards (Low Ink)</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 @page { size: A4; margin: 10mm; }
@@ -139,7 +139,7 @@ const amps = [
 for (const a of amps) {
   add(2, {
     icon: a.emoji, cornerIcon: '⚡', title: 'Amplifier', sub: a.el,
-    desc: `+1 point for each ${a.el} card in your cauldron at end of game.`,
+    desc: `+1 Victory point for each ${a.el} card (not value) in your cauldron at end of game.`,
     clr: a.clr, oneshot: false, tag: 'PERMANENT', pts: ''
   });
 }
@@ -175,14 +175,14 @@ add(2, {
 // 6. POISON ×2
 add(2, {
   icon: '🧪', cornerIcon: '🧪', title: 'Poison', sub: '',
-  desc: "Worth −2 PV. When you drink this card, your Nature does NOT reduce your Delta for this game. Final Δ = Delta (ignore Nature).",
+  desc: "Worth −2 PV at the end of the game",
   clr: '#4a148c', oneshot: false, tag: 'PERMANENT · −2 PV', pts: '−2'
 });
 
 // 7. DISTILLATE ×2
 add(2, {
   icon: '💧', cornerIcon: '💧', title: 'Distillate', sub: '',
-  desc: 'Worth 0 points. At end of game, remove any one card from your cauldron (your choice). Then discard both.',
+  desc: 'At end of game, remove any one card from your cauldron (your choice). Then discard both.',
   clr: '#00695c', oneshot: false, tag: 'PERMANENT · 0 PV', pts: '0'
 });
 
