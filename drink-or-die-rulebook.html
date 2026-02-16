@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Drink or Die — Rulebook</title>
-rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 @page { size: A4; margin: 18mm 20mm; }
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -137,7 +137,7 @@ li { margin:4px 0; }
   <li><b>Drink the potion</b> — Take ALL cards from the cauldron into your personal collection. You can only drink <b>once per round</b>.</li>
 </ol>
 
-<p><b>Critical rule:</b> Players who have already drunk this round <b>must still add cards</b> on their turn. They cannot drink again, but they continue to influence the potion for the remaining players.</p>
+<p><b>Critical rule:</b> Players who have already drunk this round <b>must (if he can) still add cards</b> on their turn. They cannot drink again, but they continue to influence the potion for the remaining players.</p>
 
 <div class="ex">
   <h4>Example: Post-drink influence</h4>
@@ -164,7 +164,7 @@ li { margin:4px 0; }
 <p>The Final Round plays exactly like a normal round with two key differences:</p>
 <ol>
   <li><b>Starting a potion:</b> the creator places only <b>1 card</b> (either face-down or face-up — their choice), instead of the usual 2.</li>
-  <li><b>Hand size:</b> players start with 4 cards instead of 6. The 6-card forced drink rule still applies as normal.</li>
+  <li><b>Hand size:</b> players start with 4 cards instead of 6. A player is forced drink with 4 cards this round.</li>
 </ol>
 
 <p>Once every player has drunk in the Final Round, the game ends and players calculate their final scores.</p>
@@ -419,19 +419,18 @@ li { margin:4px 0; }
 
 <p>Special cards come in two types: <b>Permanent</b> cards (solid border) stay in your cauldron and are scored at end of game. <b>One-shot</b> cards (dashed border) are used once for their effect and then discarded from the game.</p>
 
-<h3>Permanent cards</h3>
 
 <table class="tbl">
   <tr><th style="text-align:left">Card</th><th>Copies</th><th style="text-align:left">Effect</th></tr>
   <tr>
     <td style="text-align:left"><b>⚡ Amplifier</b><br><span style="font-size:9pt;color:#666">One per element</span></td>
     <td>2 × 5</td>
-    <td style="text-align:left">At end of game, <b>+1 point for each card</b> of the matching element in your cauldron. Exists for all 5 elements: <span class="ci cf">🔥</span> <span class="ci cc">🧊</span> <span class="ci cl">✨</span> <span class="ci cs">💀</span> <span class="ci cn">🌿</span></td>
+    <td style="text-align:left">At end of game, <b>+1 victory point for each card</b> of the matching element in your cauldron. Exists for all 5 elements: <span class="ci cf">🔥</span> <span class="ci cc">🧊</span> <span class="ci cl">✨</span> <span class="ci cs">💀</span> <span class="ci cn">🌿</span></td>
   </tr>
   <tr>
     <td style="text-align:left"><b>🧪 Poison</b></td>
     <td>2</td>
-    <td style="text-align:left">Worth <b>−2 points</b>. Additionally, <b>Nature no longer reduces your Delta</b>. Your Final Delta equals your raw Delta, ignoring all Nature cards.</td>
+    <td style="text-align:left">Worth <b>−2 victory points</b>.</td>
   </tr>
   <tr>
     <td style="text-align:left"><b>🦹 Thief</b></td>
@@ -441,18 +440,14 @@ li { margin:4px 0; }
   <tr>
     <td style="text-align:left"><b>💧 Distillate</b></td>
     <td>2</td>
-    <td style="text-align:left">Worth <b>0 points</b>. At end of game, <b>remove any one card</b> of your choice from your cauldron. Both the Distillate and the removed card are discarded.</td>
+    <td style="text-align:left"> At end of game, <b>remove any one card</b> of your choice from your cauldron. Both the Distillate and the removed card are discarded.</td>
   </tr>
   <tr>
     <td style="text-align:left"><b>💣 Time Bomb</b></td>
     <td>2</td>
     <td style="text-align:left">If your Final Delta is <b>exactly 0</b>: worth <b>+6 points</b>. Otherwise: worth <b>−3 points</b>.</td>
   </tr>
-</table>
 
-<h3>One-shot cards <span style="font-size:10pt;color:#888;font-weight:400">(dashed border — use once, then discard)</span></h3>
-
-<table class="tbl">
   <tr><th style="text-align:left">Card</th><th>Copies</th><th style="text-align:left">Effect</th></tr>
   <tr>
     <td style="text-align:left"><b>🤫 Smuggle</b></td>
@@ -504,10 +499,10 @@ li { margin:4px 0; }
 <ul>
   <li><b>Full expansion (24 cards):</b> shuffle all 24 special cards into the base deck (114 cards total). Recommended for 4–5 players.</li>
   <li><b>Light expansion:</b> use only 1 copy of each card (12 cards, 102 total). Good for 2–3 players or a first game with the expansion.</li>
-  <li>Scale the deck to player count as usual (~20–25 cards per player).</li>
+  <li>Scale the deck to player count 23 cards per player.</li>
 </ul>
 
-<div class="footer">Drink or Die — A game of potions, bluff & alchemy — 2–5 players — 20–40 minutes</div>
+<div class="footer">Drink or Die — A game of potions, bluff & alchemy — 2–5 players — 15-20 minutes</div>
 
 </body>
 </html>
