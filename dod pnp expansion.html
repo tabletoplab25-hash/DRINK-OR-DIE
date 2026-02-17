@@ -117,7 +117,7 @@ body { font-family:'Cinzel',serif; background:#fff; }
 <body>
 
 <div class="instructions">
-  <b>Drink or Die — Expansion Cards (Low Ink)</b> | 24 special cards (3 pages) | Poker size: 63.5 × 88.9 mm<br>
+  <b>Drink or Die — Expansion Cards (Low Ink)</b> | 26 special cards (3 pages) | Poker size: 63.5 × 88.9 mm<br>
   <b>Dashed border</b> = One-shot (use &amp; discard). <b>Solid border</b> = Permanent (stays in cauldron).<br>
   Print at 100% scale on A4, cut along borders. Shuffle into main deck.
 </div>
@@ -162,7 +162,7 @@ add(2, {
 add(2, {
   icon: '🦹', cornerIcon: '🦹', title: 'Thief', sub: '',
   desc: 'When you drink a potion containing this card, immediately steal 1 card from any opponent\'s cauldron. Then discard the Thief.',
-  clr: '#37474f', oneshot: false, tag: 'ON DRINK · DISCARD', pts: ''
+  clr: '#37474f', oneshot: true, tag: 'ON DRINK · DISCARD', pts: ''
 });
 
 // 5. SWAP ×2
@@ -191,6 +191,13 @@ add(2, {
   icon: '💣', cornerIcon: '💣', title: 'Time Bomb', sub: '',
   desc: 'If your Final Delta is exactly 0: worth +6 points. Otherwise: worth −3 points.',
   clr: '#bf8f00', oneshot: false, tag: 'PERMANENT · +6 / −3', pts: '±'
+});
+
+// 9. PURIFIER ×2
+add(2, {
+  icon: '✳️', cornerIcon: '✳️', title: 'Purifier', sub: '',
+  desc: 'At end of game, Nature cards do NOT subtract from your Raw score. Nature still reduces Delta as normal.',
+  clr: '#00897b', oneshot: false, tag: 'PERMANENT', pts: ''
 });
 
 // Generate HTML
