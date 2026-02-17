@@ -184,35 +184,46 @@ li { margin:4px 0; }
 
 <p>Fire and Ice are opposites. Light and Shadow are opposites. When you collect cards from both sides of a pair, their values work toward balance. What matters is not how much you have of each element, but <b>how far apart the opposing totals are</b>.</p>
 
+<p>For each pair, you calculate the imbalance by taking the <b>higher total minus the lower total</b>. It doesn't matter which element is higher — only the gap counts. If you have more Ice than Fire, or more Shadow than Light, the calculation works exactly the same way.</p>
+
 <div class="ex">
   <h4>Example: Balanced pair</h4>
   <p>You have <span class="ci cf">🔥 3</span> <span class="ci cf">🔥 2</span> and <span class="ci cc">🧊 3</span> <span class="ci cc">🧊 2</span></p>
-  <p class="m">Fire total = 5 &nbsp;&nbsp; Ice total = 5 &nbsp;&nbsp; → &nbsp;&nbsp; |5 − 5| = <b>0</b> imbalance ✓</p>
+  <p class="m">Fire total = 5 &nbsp;&nbsp; Ice total = 5 &nbsp;&nbsp; → &nbsp;&nbsp; higher − lower = 5 − 5 = <b>0</b> imbalance ✓</p>
   <p class="note">Perfectly balanced! These 4 cards contribute 10 raw points and 0 penalty.</p>
 </div>
 
 <div class="ex">
-  <h4>Example: Unbalanced pair</h4>
+  <h4>Example: More Fire than Ice</h4>
   <p>You have <span class="ci cf">🔥 3</span> <span class="ci cf">🔥 3</span> <span class="ci cf">🔥 2</span> and <span class="ci cc">🧊 1</span></p>
-  <p class="m">Fire total = 8 &nbsp;&nbsp; Ice total = 1 &nbsp;&nbsp; → &nbsp;&nbsp; |8 − 1| = <b>7</b> imbalance!</p>
+  <p class="m">Fire total = 8 &nbsp;&nbsp; Ice total = 1 &nbsp;&nbsp; → &nbsp;&nbsp; higher − lower = 8 − 1 = <b>7</b> imbalance!</p>
   <p class="note">This pair alone would cost 7 × 3 = 21 penalty points. The raw value is only 9. Devastating.</p>
+</div>
+
+<div class="ex">
+  <h4>Example: More Shadow than Light</h4>
+  <p>You have <span class="ci cs">💀 3</span> <span class="ci cs">💀 3</span> <span class="ci cs">💀 2</span> and <span class="ci cl">✨ 1</span></p>
+  <p class="m">Shadow total = 8 &nbsp;&nbsp; Light total = 1 &nbsp;&nbsp; → &nbsp;&nbsp; higher − lower = 8 − 1 = <b>7</b> imbalance!</p>
+  <p class="note">Same result — it doesn't matter which side is higher. Shadow > Light works exactly like Fire > Ice.</p>
 </div>
 
 <h3>The Delta: total imbalance</h3>
 
-<p>Your <b>Delta</b> is the sum of both pairs' imbalances:</p>
+<p>Your <b>Delta</b> is the sum of both pairs' imbalances. For each pair, subtract the lower total from the higher total (this is what the absolute value notation means — it's always a positive number):</p>
 
 <div class="key">
   <h4>Delta formula</h4>
   <p class="f">Delta = |Fire − Ice| + |Light − Shadow|</p>
+  <p style="text-align:center;font-size:9.5pt;color:#555;margin-top:4px;">The | | bars mean "absolute value": always take the higher total minus the lower total.<br>It doesn't matter which element in a pair is bigger — only the gap matters.</p>
 </div>
 
 <p>Each point of Delta costs you <b>3 points</b>. So even a small imbalance adds up quickly.</p>
 
 <div class="ex">
   <h4>Example: Two unbalanced pairs</h4>
-  <p>Fire = 6, Ice = 3, Light = 5, Shadow = 1</p>
-  <p class="m">Delta = |6−3| + |5−1| = 3 + 4 = <b>7</b><br>Penalty = 7 × 3 = <b>−21 points</b></p>
+  <p>Fire = 6, Ice = 3, Light = 1, Shadow = 5</p>
+  <p class="m">Fire/Ice pair: Fire is higher → 6 − 3 = 3<br>Light/Shadow pair: Shadow is higher → 5 − 1 = 4<br>Delta = 3 + 4 = <b>7</b><br>Penalty = 7 × 3 = <b>−21 points</b></p>
+  <p class="note">Notice that in the second pair, Shadow is higher than Light — that's fine. You always subtract the smaller from the larger.</p>
 </div>
 
 <h3>Nature: the corrective element</h3>
@@ -258,6 +269,7 @@ li { margin:4px 0; }
     <b>Step 2:</b> Delta = |🔥−🧊| + |✨−💀| &nbsp;&nbsp; → &nbsp;&nbsp; Final Δ = |Delta − 🌿|<br>
     <b>Step 3:</b> Score = Raw − (Final Δ × 3)
   </p>
+  <p style="text-align:center;font-size:9pt;color:#555;margin-top:4px;">Remember: | | means "higher minus lower" — always a positive number. It doesn't matter which element in a pair has the bigger total.</p>
 </div>
 
 <div class="ex">
@@ -283,18 +295,18 @@ li { margin:4px 0; }
   <p>
     <span class="ci cf">🔥 3</span> <span class="ci cf">🔥 3</span> <span class="ci cf">🔥 2</span>
     <span class="ci cc">🧊 1</span>
-    <span class="ci cl">✨ 3</span>
-    <span class="ci cs">💀 1</span>
+    <span class="ci cs">💀 3</span>
+    <span class="ci cl">✨ 1</span>
     <span class="ci cn">🌿 3</span>
   </p>
   <p class="m">
-    Fire=8, Ice=1, Light=3, Shadow=1, Nature=3<br>
-    <b>Raw</b> = 8+1+3+1 − 3 = <b>10</b><br>
-    <b>Delta</b> = |8−1| + |3−1| = 7 + 2 = <b>9</b><br>
+    Fire=8, Ice=1, Light=1, Shadow=3, Nature=3<br>
+    <b>Raw</b> = 8+1+1+3 − 3 = <b>10</b><br>
+    <b>Delta</b>: Fire > Ice → 8−1 = 7. Shadow > Light → 3−1 = 2. Total = 7 + 2 = <b>9</b><br>
     <b>Final Δ</b> = |9 − 3| = <b>6</b> → Penalty = 6 × 3 = <b>18</b><br>
     <b>Score = 10 − 18 = −8 points</b> 💀
   </p>
-  <p class="note">Without Nature: Raw would be 13, Delta 9, Penalty 27. Score = 13−27 = −14. Nature saved 6 points (cost 3 raw, saved 9 penalty).</p>
+  <p class="note">Notice that here Shadow is higher than Light — you always subtract the smaller from the larger. Without Nature: Raw would be 13, Delta 9, Penalty 27. Score = 13−27 = −14. Nature saved 6 points (cost 3 raw, saved 9 penalty).</p>
 </div>
 
 <div class="ex">
@@ -379,6 +391,7 @@ li { margin:4px 0; }
     <p style="font-family:monospace;font-size:10pt;line-height:1.8;">
       Raw = 🔥+🧊+✨+💀 <b>minus</b> 🌿<br>
       Delta = |🔥−🧊| + |✨−💀|<br>
+      <span style="font-family:sans-serif;font-size:8.5pt;color:#666;">( | | = higher minus lower, always positive )</span><br>
       Final Δ = |Delta − 🌿|<br>
       <b>Score = Raw − (Final Δ × 3)</b>
     </p>
@@ -445,16 +458,17 @@ li { margin:4px 0; }
   <tr>
     <td style="text-align:left"><b>💣 Time Bomb</b></td>
     <td>2</td>
-    <td style="text-align:left">If your Final Delta is <b>exactly 0</b>: worth <b>+6 points</b>. Otherwise: worth <b>−3 points</b>.</td>
-  </tr>
 
-  <tr><th style="text-align:left">Card</th><th>Copies</th><th style="text-align:left">Effect</th></tr>
+
+    <td style="text-align:left">If your Final Delta is <b>exactly 0</b>: worth <b>+6 points</b>. Otherwise: worth <b>−3 points</b>.</td>
+ </tr>
   <tr>
     <td style="text-align:left"><b>🤫 Smuggle</b></td>
     <td>2</td>
     <td style="text-align:left">On your turn, <b>place 2 cards from your hand directly into your cauldron</b>. This is free — you still take your normal turn action after. Then discard the Smuggle card.</td>
   </tr>
   <tr>
+
     <td style="text-align:left"><b>👁️ Alchemist's Eye</b></td>
     <td>2</td>
     <td style="text-align:left"><b>Look at all face-down cards</b> in the cauldron. Put them back face-down. Then continue your turn normally (add or drink). Then discard the Eye.</td>
@@ -466,34 +480,7 @@ li { margin:4px 0; }
   </tr>
 </table>
 
-<div class="ex">
-  <h4>Expansion scoring example</h4>
-  <p>Alice's cauldron at end of game contains: <span class="ci cf">🔥 3</span> <span class="ci cf">🔥 2</span> <span class="ci cf">🔥 1</span> <span class="ci cc">🧊 2</span> <span class="ci cn">🌿 2</span> + ⚡ Fire Amplifier + 💣 Time Bomb. She also drank a 🦹 Thief earlier and stole Bob's <span class="ci cc">🧊 3</span>.</p>
-  <p class="m" style="font-family:monospace;font-size:10pt;line-height:1.9;color:#333;">
-    Fire=6, Ice=5, Light=0, Shadow=0, Nature=2<br>
-    <b>Raw</b> = 6+5+0+0 − 2 = <b>9</b><br>
-    <b>Delta</b> = |6−5| + |0−0| = <b>1</b><br>
-    <b>Final Δ</b> = |1−2| = <b>1</b> → Penalty = 1×3 = <b>−3</b><br>
-    <b>Amplifier (Fire)</b>: 3 Fire cards → <b>+3</b><br>
-    <b>Time Bomb</b>: Final Δ = 1 (not 0) → <b>−3</b><br>
-    <b>Score = 9 − 3 + 3 − 3 = 6 points</b>
-  </p>
-  <p class="note" style="font-style:italic;color:#555;margin-top:4px;">The Thief was key — stealing Bob's Ice 3 nearly balanced her Fire/Ice pair. Without it, Delta would be 4 and the Time Bomb would still fail. Smart theft!</p>
-</div>
 
-<div class="ex">
-  <h4>Poison example</h4>
-  <p>Bob has: <span class="ci cf">🔥 3</span> <span class="ci cc">🧊 1</span> <span class="ci cn">🌿 2</span> + ☠️ Poison</p>
-  <p class="m" style="font-family:monospace;font-size:10pt;line-height:1.9;color:#333;">
-    <b>Raw</b> = 3+1 − 2 = <b>2</b><br>
-    <b>Delta</b> = |3−1| = <b>2</b><br>
-    <b>Poison effect</b>: Nature does NOT reduce Delta!<br>
-    <b>Final Δ</b> = 2 (not |2−2|=0) → Penalty = 2×3 = <b>−6</b><br>
-    <b>Poison PV</b>: <b>−2</b><br>
-    <b>Score = 2 − 6 − 2 = −6 points</b>
-  </p>
-  <p class="note" style="font-style:italic;color:#555;margin-top:4px;">Without Poison, Bob's Nature would zero out his Delta: score = 2 − 0 = 2. The Poison turned a +2 into a −6. Devastating.</p>
-</div>
 
 <h3>Expansion setup</h3>
 <ul>
