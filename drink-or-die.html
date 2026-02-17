@@ -2,521 +2,494 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>drink-or-die</title>
+<title>Drink or Die — Rulebook</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#07060b;--surface:rgba(255,255,255,0.025);--border:rgba(255,255,255,0.07);--text:#ddd5c4;--muted:#7a7060;--gold:#e8b84b;--gold-dim:rgba(232,184,75,0.15);--green:#3ddc84;--red:#e74c3c}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);background-image:radial-gradient(ellipse at 15% 50%,rgba(232,75,75,.04) 0%,transparent 50%),radial-gradient(ellipse at 85% 30%,rgba(75,163,232,.04) 0%,transparent 50%),radial-gradient(ellipse at 50% 90%,rgba(61,220,132,.03) 0%,transparent 40%);color:var(--text);font-family:'EB Garamond',Georgia,serif;min-height:100vh;overflow-x:hidden}
-h1,.cinzel{font-family:'Cinzel',serif}
-.screen{display:none;min-height:100vh;padding:16px}.screen.active{display:flex;flex-direction:column}
-#menu{align-items:center;justify-content:center;text-align:center}
-#menu h1{font-size:clamp(2.5rem,8vw,4rem);font-weight:900;letter-spacing:6px;background:linear-gradient(135deg,#e8b84b,#e74c3c,#a86edb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 40px rgba(232,184,75,.2))}
-.tagline{font-size:1.15rem;color:var(--muted);font-style:italic;margin:12px 0 28px}
-.felems{font-size:2.4rem;display:flex;gap:18px;justify-content:center;margin:24px 0}
-.felems span{animation:bob 3s ease-in-out infinite;display:inline-block}
-.felems span:nth-child(2){animation-delay:.4s}.felems span:nth-child(3){animation-delay:.8s}.felems span:nth-child(4){animation-delay:1.2s}.felems span:nth-child(5){animation-delay:1.6s}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-.btn{font-family:'Cinzel',serif;font-size:1.15rem;padding:14px 44px;background:linear-gradient(135deg,#92400e,#78350f);color:#fef3c7;border:2px solid var(--gold);border-radius:8px;cursor:pointer;letter-spacing:3px;transition:all .3s;text-transform:uppercase}
-.btn:hover{background:linear-gradient(135deg,#b45309,#92400e);box-shadow:0 0 30px var(--gold-dim);transform:translateY(-2px)}
-.rules{max-width:440px;margin:24px auto 0;color:#5a5248;font-size:.88rem;line-height:1.7;text-align:left}.rules b{color:var(--muted)}
-#game{gap:10px}
-.top-bar{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px}
-.ri{font-family:'Cinzel',serif;font-size:.82rem;color:var(--muted);letter-spacing:1px}
-.tm{font-size:.88rem;color:var(--gold);font-style:italic;text-align:right;max-width:62%}
-.air{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.ab{padding:9px 11px;background:var(--surface);border:1px solid var(--border);border-radius:10px;transition:all .3s}
-.ab.act{border-color:var(--gold);box-shadow:0 0 14px var(--gold-dim)}.ab.out{opacity:.45}
-.an{font-family:'Cinzel',serif;font-size:.82rem;font-weight:700;margin-bottom:3px}
-.am{font-size:.78rem;color:var(--muted);display:flex;gap:8px;margin-bottom:3px}
-.am .dr{color:var(--green);font-style:italic}
-.chips{display:flex;flex-wrap:wrap;gap:3px;margin:3px 0}
-.chip{display:inline-flex;align-items:center;gap:2px;padding:1px 7px;border-radius:10px;font-size:.72rem;border:1px solid;background:rgba(0,0,0,.3)}
-.pts{font-family:'Cinzel',serif;font-size:.82rem;color:var(--gold)}
-.ctr{background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:14px;text-align:center;min-height:135px}
-.ct{font-family:'Cinzel',serif;font-size:.95rem;color:var(--muted);margin-bottom:8px;letter-spacing:2px}
-.cbl{font-size:.78rem;color:#4a4238;margin-left:6px}
-.ccs{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;min-height:88px;align-items:center}
-.ce{color:#3a3428;font-style:italic}
-.bd{font-family:'Cinzel',serif;font-size:.95rem;padding:9px 28px;margin-top:10px;background:linear-gradient(135deg,#065f46,#064e3b);color:#a7f3d0;border:2px solid var(--green);border-radius:8px;cursor:pointer;transition:all .3s;letter-spacing:1px}
-.bd:hover{background:linear-gradient(135deg,#3ddc84,#065f46);box-shadow:0 0 22px rgba(61,220,132,.25)}
-.mc{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:9px 12px}
-.ml{font-family:'Cinzel',serif;font-size:.82rem;color:var(--muted);margin-bottom:3px;letter-spacing:1px}
-.sr{display:flex;flex-wrap:wrap;gap:7px;font-size:.73rem;color:#5a5248}
-.st{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold);font-weight:700}
-.hl{font-family:'Cinzel',serif;font-size:.82rem;color:var(--muted);margin-bottom:6px;letter-spacing:1px}
-.hc{display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
-.hs{display:flex;flex-direction:column;align-items:center;gap:3px}
-.cbs{display:flex;gap:3px}
-.cbt{font-size:.82rem;padding:2px 9px;border-radius:5px;cursor:pointer;transition:all .2s;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#b0a890}
-.cbt:hover{background:rgba(255,255,255,.1);transform:translateY(-1px)}
-.cbt.cv{border-color:rgba(168,110,219,.3)}.cbt.uv{border-color:rgba(232,184,75,.3)}
-.card{width:62px;height:88px;border-radius:7px;display:flex;align-items:center;justify-content:center;transition:all .2s;animation:ci .3s ease-out;flex-shrink:0}
-@keyframes ci{from{opacity:0;transform:scale(.85) translateY(8px)}to{opacity:1;transform:none}}
-.card.clk{cursor:pointer}.card.clk:hover{transform:translateY(-4px)}
-.card.sel{box-shadow:0 0 14px rgba(232,184,75,.5);transform:translateY(-5px)}
-.card-b{background:linear-gradient(135deg,#181325,#2a1d45);border:2px solid #3d2d5e}
-.card-bi{font-family:'Cinzel',serif;font-size:1.4rem;color:#5c4a80;opacity:.6}
-.cf{width:100%;height:100%;border-radius:7px;border:2px solid;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:3px}
-.cf .em{font-size:1.35rem}.cf .vl{font-family:'Cinzel',serif;font-size:1.25rem;font-weight:900}.cf .nm{font-size:.5rem;letter-spacing:1px;text-transform:uppercase}
-.log{padding:7px 11px;background:rgba(0,0,0,.3);border-radius:7px;border:1px solid rgba(255,255,255,.03);max-height:105px;overflow-y:auto;flex-shrink:0}
-.ll{font-size:.78rem;color:var(--muted);padding:1px 0;border-bottom:1px solid rgba(255,255,255,.015)}
-#gameover{align-items:center;justify-content:center;text-align:center;gap:20px}
-#gameover h1{font-size:clamp(2rem,6vw,2.8rem);font-weight:900;color:var(--gold);filter:drop-shadow(0 0 20px var(--gold-dim))}
-.fs{width:100%;max-width:480px;display:flex;flex-direction:column;gap:9px}
-.fr{display:flex;align-items:center;gap:10px;padding:11px 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px}
-.fr.w{border-color:var(--gold);background:var(--gold-dim)}.fr.me{box-shadow:inset 0 0 0 1px rgba(61,220,132,.25)}
-.fk{font-size:1.2rem;width:34px;text-align:center}
-.fn{font-family:'Cinzel',serif;font-weight:700;font-size:.95rem;min-width:90px;text-align:left}
-.fd{display:flex;gap:7px;font-size:.72rem;color:#5a5248;flex:1;flex-wrap:wrap}
-.fp{font-family:'Cinzel',serif;font-size:1.15rem;color:var(--gold);font-weight:700}
-@media(max-width:600px){.air{grid-template-columns:1fr}.card{width:54px;height:76px}.cf .em{font-size:1.05rem}.cf .vl{font-size:1rem}.fd{display:none}}
+@page { size: A4; margin: 18mm 20mm; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'EB Garamond',Georgia,serif; font-size:11.5pt; color:#1a1a1a; line-height:1.65; }
+h1,h2,h3 { font-family:'Cinzel',serif; }
+h1 { font-size:28pt; text-align:center; margin:0 0 4px; letter-spacing:4px; }
+.subtitle { text-align:center; font-style:italic; color:#555; font-size:13pt; margin-bottom:20px; }
+h2 { font-size:16pt; margin:24px 0 8px; border-bottom:2px solid #333; padding-bottom:4px; }
+h3 { font-size:13pt; margin:14px 0 6px; color:#444; }
+p { margin:6px 0; text-align:justify; }
+ul, ol { margin:6px 0 6px 24px; }
+li { margin:4px 0; }
+
+.ci {
+  display:inline-flex; align-items:center; gap:2px; padding:1px 6px;
+  border-radius:4px; font-size:10pt; font-weight:600; border:1.5px solid;
+  vertical-align:middle; white-space:nowrap;
+}
+.cf { background:#2d0a0a; color:#e74c3c; border-color:#e74c3c; }
+.cc { background:#0a1a2d; color:#4ba3e8; border-color:#4ba3e8; }
+.cl { background:#2d2a0a; color:#d4b030; border-color:#d4b030; }
+.cs { background:#1a0a2d; color:#a86edb; border-color:#a86edb; }
+.cn { background:#0a2d15; color:#3ddc84; border-color:#3ddc84; }
+
+.ex {
+  background:#f5f0e8; border:1px solid #d0c8b0; border-radius:8px;
+  padding:12px 16px; margin:10px 0; page-break-inside:avoid;
+}
+.ex h4 { font-family:'Cinzel',serif; font-size:11pt; margin-bottom:6px; color:#333; }
+.ex .m { font-family:monospace; font-size:10pt; color:#333; margin:4px 0; line-height:1.9; }
+.ex .note { font-style:italic; color:#555; margin-top:4px; }
+
+.tbl { width:100%; border-collapse:collapse; margin:10px 0; font-size:10.5pt; }
+.tbl th { background:#333; color:#fff; padding:6px 10px; text-align:center; font-family:'Cinzel',serif; font-size:10pt; }
+.tbl td { padding:5px 10px; border-bottom:1px solid #ddd; text-align:center; }
+.tbl tr:nth-child(even) { background:#f8f5ef; }
+
+.key {
+  background:#eee8d5; border:2px solid #a08050; border-radius:8px;
+  padding:14px 18px; margin:14px 0; page-break-inside:avoid;
+}
+.key h4 { font-family:'Cinzel',serif; font-size:12pt; margin-bottom:8px; color:#333; text-align:center; }
+.key .f { font-family:monospace; font-size:12pt; text-align:center; margin:6px 0; color:#1a1a1a; line-height:1.8; }
+
+.two-col { display:flex; gap:16px; margin:8px 0; }
+.two-col > div { flex:1; }
+.page-break { page-break-before:always; }
+
+.element-row { display:flex; gap:10px; justify-content:center; margin:12px 0; flex-wrap:wrap; }
+.element-badge { display:flex; align-items:center; gap:4px; padding:4px 12px; border-radius:6px; font-size:11pt; font-weight:600; border:2px solid; }
+
+.footer { text-align:center; color:#999; font-size:9pt; margin-top:30px; border-top:1px solid #ddd; padding-top:8px; }
+
+.arrow { font-size:14pt; }
 </style>
 </head>
 <body>
-<div id="menu" class="screen active">
-  <h1>Drink or Die</h1>
-  <p class="tagline">A game of potions, bluff & alchemy</p>
-  <div class="felems"><span>🔥</span><span>🧊</span><span>✨</span><span>💀</span><span>🌿</span></div>
-  <button class="btn" onclick="startGame()">Start Game</button>
-  <p style="color:#4a4238;margin-top:14px;font-size:.85rem">You vs Morgana, Merlin & Circe — 90 cards</p>
-  <div class="rules">
-    <b>How to play:</b> Create potions (1 face-down + 1 face-up). All players take turns adding a card or drinking. Whoever drinks takes all cards, then creates the next potion. Drunk players still add cards!<br>
-    <b>6-card limit:</b> If the cauldron reaches 6, next non-drunk player must drink.<br>
-    <b>Scoring:</b> Raw = 🔥+🧊+✨+💀 minus 🌿. Penalty = |imbalance − 🌿| × 3. Nature costs 1 pt but saves 3 per point of imbalance!
+
+<!-- ========== PAGE 1 ========== -->
+
+<h1>☠️ Drink or Die ☠️</h1>
+<p class="subtitle">A game of potions, bluff & alchemy for 2–5 players</p>
+
+<h2>1. Overview</h2>
+<p><b>Drink or Die</b> is a card game where rival alchemists brew mysterious potions and dare each other to drink them. Each turn you add ingredients to a shared cauldron — but eventually someone has to drink it. The potion's cards go into your personal collection. At the end of the game, you score points based on how many element cards you've collected and how well-balanced your opposing elements are.</p>
+<p>The core tension: you want high-value element cards, but collecting too many of one element without its opposite costs you 3 points per imbalance. Nature cards are a double-edged sword — each one reduces your imbalance by 1, but also reduces your raw score by 1.</p>
+
+<h2>2. Components</h2>
+<p>The game uses a deck of <b>90 cards</b> across 5 elements:</p>
+
+<div class="element-row">
+  <span class="element-badge cf">🔥 Fire</span>
+  <span class="element-badge cc">🧊 Ice</span>
+  <span class="element-badge cl">✨ Light</span>
+  <span class="element-badge cs">💀 Shadow</span>
+  <span class="element-badge cn">🌿 Nature</span>
+</div>
+
+<p>Elements form <b>two opposing pairs</b> plus one <b>neutral</b>:</p>
+<ul>
+  <li><span class="ci cf">🔥 Fire</span> opposes <span class="ci cc">🧊 Ice</span></li>
+  <li><span class="ci cl">✨ Light</span> opposes <span class="ci cs">💀 Shadow</span></li>
+  <li><span class="ci cn">🌿 Nature</span> is neutral — reduces imbalance at a cost</li>
+</ul>
+
+<p>Each element has <b>18 cards</b> with values 1, 2, or 3:</p>
+
+<table class="tbl">
+  <tr><th>Element</th><th>×1</th><th>×2</th><th>×3</th><th>Total cards</th><th>Total value</th></tr>
+  <tr><td>🔥 Fire</td><td>6</td><td>6</td><td>6</td><td>18</td><td>36</td></tr>
+  <tr><td>🧊 Ice</td><td>6</td><td>6</td><td>6</td><td>18</td><td>36</td></tr>
+  <tr><td>✨ Light</td><td>6</td><td>6</td><td>6</td><td>18</td><td>36</td></tr>
+  <tr><td>💀 Shadow</td><td>6</td><td>6</td><td>6</td><td>18</td><td>36</td></tr>
+  <tr><td>🌿 Nature</td><td>6</td><td>6</td><td>6</td><td>18</td><td>36</td></tr>
+  <tr><td><b>Total</b></td><td>30</td><td>30</td><td>30</td><td><b>90</b></td><td><b>180</b></td></tr>
+</table>
+
+<h3>Scaling for player count</h3>
+<p>Use approximately <b>20 cards per player</b>, drawn randomly from the shuffled deck:</p>
+<ul>
+  <li>2 players: 40 cards &nbsp;|&nbsp; 3 players: 60 cards &nbsp;|&nbsp; 4 players: 80 cards &nbsp;|&nbsp; 5 players: all 90 cards</li>
+</ul>
+
+<h2>3. Setup</h2>
+<ol>
+  <li>Shuffle the full deck, then remove cards to match your player count.</li>
+  <li>Deal <b>6 cards</b> face-down to each player. Place the rest face-down as the draw pile.</li>
+  <li>Choose a starting player randomly.</li>
+</ol>
+
+<!-- ========== PAGE 2 ========== -->
+
+<h2 class="page-break">4. How to Play</h2>
+
+<h3>Round structure</h3>
+<p>The game is played over multiple rounds. A round ends when <b>every player has drunk exactly once</b>. Then hands are refilled to 6 cards from the draw pile and a new round begins.</p>
+
+<h3>Creating a potion</h3>
+<p>At the start of each potion, the designated creator places <b>2 cards</b> from their hand into the center: <b>1 face-down</b> (hidden) and <b>1 face-up</b> (visible to all). This is the new cauldron.</p>
+
+<div class="ex">
+  <h4>Example: Creating a potion</h4>
+  <p>Alice places <span class="ci cf">🔥 3</span> face-up and one card face-down (🂠). Everyone can see the Fire 3 but not the hidden card — it could be anything.</p>
+</div>
+
+<h3>Taking turns</h3>
+<p>Starting from the player after the creator and going clockwise, <b>every player with cards</b> must do one of the following:</p>
+
+<ol>
+  <li><b>Add a card</b> — Place 1 card from your hand onto the cauldron, either face-up or face-down, respecting the <b>balance rule</b>: face-down and face-up counts must never differ by more than 1. If there are more face-down cards, you must play face-up, and vice versa. If they're equal, you choose.</li>
+  <li><b>Drink the potion</b> — Take ALL cards from the cauldron into your personal collection. You can only drink <b>once per round</b>.</li>
+</ol>
+
+<p><b>Critical rule:</b> Players who have already drunk this round <b>must (if he can) still add cards</b> on their turn. They cannot drink again, but they continue to influence the potion for the remaining players.</p>
+
+<div class="ex">
+  <h4>Example: Post-drink influence</h4>
+  <p>Bob already drank earlier. The cauldron has 3 cards. On his turn, Bob adds <span class="ci cs">💀 3</span> face-down (🂠). Carol, who hasn't drunk yet, now faces a dangerous unknown card — she must decide whether to drink or add and hope someone else gets stuck with it.</p>
+</div>
+
+<h3>The 6-card rule</h3>
+<p>If the cauldron reaches <b>6 cards</b>, the next player who hasn't drunk yet is <b>forced to drink</b> immediately. This is a powerful weapon — you can deliberately push the cauldron to 6 to force an opponent to drink a poisoned potion.</p>
+
+<div class="ex">
+  <h4>Example: Forced drink</h4>
+  <p>The cauldron has 5 cards. Bob (who already drank) adds a 6th card. Carol is the next player who hasn't drunk — she is forced to take all 6 cards, good or bad!</p>
+</div>
+
+<h3>After someone drinks</h3>
+<p>The player who drank <b>creates the next potion</b> by placing 2 cards (1 face-down + 1 face-up). If they have fewer than 2 cards, the next player with enough cards creates it instead. Play continues until all players have drunk once.</p>
+
+<h3>End of round</h3>
+<p>When all players have drunk, the round ends. Each player <b>refills to 6 cards</b> from the draw pile. The starting player for the next round rotates clockwise.</p>
+
+<h3>End of game: the Final Round</h3>
+<p>When the draw pile runs out during the refill phase, the <b>Final Round</b> begins. Gather any cards that were removed during setup and shuffle them. Deal from this pool so that each player has exactly <b>4 cards</b> in hand.</p>
+
+<p>The Final Round plays exactly like a normal round with two key differences:</p>
+<ol>
+  <li><b>Starting a potion:</b> the creator places only <b>1 card</b> (either face-down or face-up — their choice), instead of the usual 2.</li>
+  <li><b>Hand size:</b> players start with 4 cards instead of 6. A player is forced drink with 4 cards this round.</li>
+</ol>
+
+<p>Once every player has drunk in the Final Round, the game ends and players calculate their final scores.</p>
+
+<div class="ex">
+  <h4>Example: Entering the Final Round</h4>
+  <p>At the end of round 7, the draw pile has only 9 cards left but 4 players need 24 cards to refill to 6. The draw pile is exhausted mid-refill — this triggers the Final Round. The 10 cards removed at setup are shuffled and used to top up everyone to 4 cards each. Alice starts by placing a single <span class="ci cf">🔥 2</span> face-down into the cauldron. Play proceeds normally from there.</p>
+</div>
+
+<!-- ========== PAGE 3: THE BALANCE SYSTEM ========== -->
+
+<h2 class="page-break">5. The Balance System</h2>
+
+<p>This is the heart of Drink or Die. Understanding how elements interact is essential to winning.</p>
+
+<h3>Opposing elements cancel each other</h3>
+
+<p>Fire and Ice are opposites. Light and Shadow are opposites. When you collect cards from both sides of a pair, their values work toward balance. What matters is not how much you have of each element, but <b>how far apart the opposing totals are</b>.</p>
+
+<p>For each pair, you calculate the imbalance by taking the <b>higher total minus the lower total</b>. It doesn't matter which element is higher — only the gap counts. If you have more Ice than Fire, or more Shadow than Light, the calculation works exactly the same way.</p>
+
+<div class="ex">
+  <h4>Example: Balanced pair</h4>
+  <p>You have <span class="ci cf">🔥 3</span> <span class="ci cf">🔥 2</span> and <span class="ci cc">🧊 3</span> <span class="ci cc">🧊 2</span></p>
+  <p class="m">Fire total = 5 &nbsp;&nbsp; Ice total = 5 &nbsp;&nbsp; → &nbsp;&nbsp; higher − lower = 5 − 5 = <b>0</b> imbalance ✓</p>
+  <p class="note">Perfectly balanced! These 4 cards contribute 10 raw points and 0 penalty.</p>
+</div>
+
+<div class="ex">
+  <h4>Example: More Fire than Ice</h4>
+  <p>You have <span class="ci cf">🔥 3</span> <span class="ci cf">🔥 3</span> <span class="ci cf">🔥 2</span> and <span class="ci cc">🧊 1</span></p>
+  <p class="m">Fire total = 8 &nbsp;&nbsp; Ice total = 1 &nbsp;&nbsp; → &nbsp;&nbsp; higher − lower = 8 − 1 = <b>7</b> imbalance!</p>
+  <p class="note">This pair alone would cost 7 × 3 = 21 penalty points. The raw value is only 9. Devastating.</p>
+</div>
+
+<div class="ex">
+  <h4>Example: More Shadow than Light</h4>
+  <p>You have <span class="ci cs">💀 3</span> <span class="ci cs">💀 3</span> <span class="ci cs">💀 2</span> and <span class="ci cl">✨ 1</span></p>
+  <p class="m">Shadow total = 8 &nbsp;&nbsp; Light total = 1 &nbsp;&nbsp; → &nbsp;&nbsp; higher − lower = 8 − 1 = <b>7</b> imbalance!</p>
+  <p class="note">Same result — it doesn't matter which side is higher. Shadow > Light works exactly like Fire > Ice.</p>
+</div>
+
+<h3>The Delta: total imbalance</h3>
+
+<p>Your <b>Delta</b> is the sum of both pairs' imbalances. For each pair, subtract the lower total from the higher total (this is what the absolute value notation means — it's always a positive number):</p>
+
+<div class="key">
+  <h4>Delta formula</h4>
+  <p class="f">Delta = |Fire − Ice| + |Light − Shadow|</p>
+  <p style="text-align:center;font-size:9.5pt;color:#555;margin-top:4px;">The | | bars mean "absolute value": always take the higher total minus the lower total.<br>It doesn't matter which element in a pair is bigger — only the gap matters.</p>
+</div>
+
+<p>Each point of Delta costs you <b>3 points</b>. So even a small imbalance adds up quickly.</p>
+
+<div class="ex">
+  <h4>Example: Two unbalanced pairs</h4>
+  <p>Fire = 6, Ice = 3, Light = 1, Shadow = 5</p>
+  <p class="m">Fire/Ice pair: Fire is higher → 6 − 3 = 3<br>Light/Shadow pair: Shadow is higher → 5 − 1 = 4<br>Delta = 3 + 4 = <b>7</b><br>Penalty = 7 × 3 = <b>−21 points</b></p>
+  <p class="note">Notice that in the second pair, Shadow is higher than Light — that's fine. You always subtract the smaller from the larger.</p>
+</div>
+
+<h3>Nature: the corrective element</h3>
+
+<p><span class="ci cn">🌿 Nature</span> is the only tool to reduce your Delta. Each point of Nature reduces your Delta by 1. However, Nature also <b>subtracts from your raw score</b> — each point of Nature costs 1 raw point.</p>
+
+<p>The trade-off is clear: <b>1 Nature point costs 1 but saves 3</b> (by reducing Delta by 1, which saves 3 penalty points). This makes Nature extremely valuable when you're unbalanced — but worthless (and harmful!) when you're already balanced.</p>
+
+<div class="key">
+  <h4>Nature correction</h4>
+  <p class="f">Final Delta = |Delta − Nature|</p>
+</div>
+
+<p><b>Warning:</b> Nature uses absolute value! If your Delta is 2 and you have 5 Nature, your Final Delta is |2 − 5| = 3, not 0. Excess Nature <b>creates new imbalance</b>. You need exactly the right amount.</p>
+
+<div class="ex">
+  <h4>Example: Nature saves the day</h4>
+  <p>Delta = 5, Nature = <span class="ci cn">🌿 3</span> <span class="ci cn">🌿 2</span> = 5</p>
+  <p class="m">Final Delta = |5 − 5| = <b>0</b> &nbsp;&nbsp; → &nbsp;&nbsp; Penalty = 0 × 3 = <b>0</b></p>
+  <p class="note">Nature perfectly zeroes out the Delta. You pay 5 raw points instead of 15 penalty points — a net gain of 10!</p>
+</div>
+
+<div class="ex">
+  <h4>Example: Too much Nature</h4>
+  <p>Delta = 2, Nature = <span class="ci cn">🌿 3</span> <span class="ci cn">🌿 2</span> <span class="ci cn">🌿 1</span> = 6</p>
+  <p class="m">Final Delta = |2 − 6| = <b>4</b> &nbsp;&nbsp; → &nbsp;&nbsp; Penalty = 4 × 3 = <b>−12</b></p>
+  <p class="note">The 6 Nature points cost 6 raw AND create a new imbalance of 4, costing 12 more! Total cost: 18 points for having too much Nature.</p>
+</div>
+
+<h3>The golden rule</h3>
+<p>The ideal amount of Nature is <b>exactly equal to your Delta</b>. Less than that, and you're still paying 3 per point of remaining imbalance. More than that, and the excess Nature creates its own imbalance at the same ×3 rate — plus you're already losing the raw points.</p>
+
+<!-- ========== PAGE 4: FINAL SCORING ========== -->
+
+<h2 class="page-break">6. Final Scoring</h2>
+
+<p>At the end of the game, each player calculates their score in 3 steps:</p>
+
+<div class="key">
+  <h4>Complete scoring formula</h4>
+  <p class="f">
+    <b>Step 1:</b> Raw = 🔥 + 🧊 + ✨ + 💀 − 🌿<br>
+    <b>Step 2:</b> Delta = |🔥−🧊| + |✨−💀| &nbsp;&nbsp; → &nbsp;&nbsp; Final Δ = |Delta − 🌿|<br>
+    <b>Step 3:</b> Score = Raw − (Final Δ × 3)
+  </p>
+  <p style="text-align:center;font-size:9pt;color:#555;margin-top:4px;">Remember: | | means "higher minus lower" — always a positive number. It doesn't matter which element in a pair has the bigger total.</p>
+</div>
+
+<div class="ex">
+  <h4>Scoring Example A: Well-balanced, no Nature needed</h4>
+  <p>
+    <span class="ci cf">🔥 3</span> <span class="ci cf">🔥 2</span>
+    <span class="ci cc">🧊 3</span> <span class="ci cc">🧊 2</span>
+    <span class="ci cl">✨ 3</span> <span class="ci cl">✨ 1</span>
+    <span class="ci cs">💀 2</span> <span class="ci cs">💀 2</span>
+  </p>
+  <p class="m">
+    Fire=5, Ice=5, Light=4, Shadow=4, Nature=0<br>
+    <b>Raw</b> = 5+5+4+4 − 0 = <b>18</b><br>
+    <b>Delta</b> = |5−5| + |4−4| = 0 + 0 = <b>0</b><br>
+    <b>Final Δ</b> = |0 − 0| = <b>0</b> → Penalty = 0<br>
+    <b>Score = 18 − 0 = 18 points</b> ✨
+  </p>
+  <p class="note">Perfectly balanced! Every point of raw score is kept.</p>
+</div>
+
+<div class="ex">
+  <h4>Scoring Example B: Unbalanced, partially rescued by Nature</h4>
+  <p>
+    <span class="ci cf">🔥 3</span> <span class="ci cf">🔥 3</span> <span class="ci cf">🔥 2</span>
+    <span class="ci cc">🧊 1</span>
+    <span class="ci cs">💀 3</span>
+    <span class="ci cl">✨ 1</span>
+    <span class="ci cn">🌿 3</span>
+  </p>
+  <p class="m">
+    Fire=8, Ice=1, Light=1, Shadow=3, Nature=3<br>
+    <b>Raw</b> = 8+1+1+3 − 3 = <b>10</b><br>
+    <b>Delta</b>: Fire > Ice → 8−1 = 7. Shadow > Light → 3−1 = 2. Total = 7 + 2 = <b>9</b><br>
+    <b>Final Δ</b> = |9 − 3| = <b>6</b> → Penalty = 6 × 3 = <b>18</b><br>
+    <b>Score = 10 − 18 = −8 points</b> 💀
+  </p>
+  <p class="note">Notice that here Shadow is higher than Light — you always subtract the smaller from the larger. Without Nature: Raw would be 13, Delta 9, Penalty 27. Score = 13−27 = −14. Nature saved 6 points (cost 3 raw, saved 9 penalty).</p>
+</div>
+
+<div class="ex">
+  <h4>Scoring Example C: Perfect use of Nature</h4>
+  <p>
+    <span class="ci cf">🔥 3</span> <span class="ci cf">🔥 2</span>
+    <span class="ci cc">🧊 2</span>
+    <span class="ci cl">✨ 3</span> <span class="ci cl">✨ 2</span>
+    <span class="ci cs">💀 1</span>
+    <span class="ci cn">🌿 2</span> <span class="ci cn">🌿 1</span>
+  </p>
+  <p class="m">
+    Fire=5, Ice=2, Light=5, Shadow=1, Nature=3<br>
+    <b>Raw</b> = 5+2+5+1 − 3 = <b>10</b><br>
+    <b>Delta</b> = |5−2| + |5−1| = 3 + 4 = <b>7</b><br>
+    <b>Final Δ</b> = |7 − 3| = <b>4</b> → Penalty = 4 × 3 = <b>12</b><br>
+    <b>Score = 10 − 12 = −2 points</b>
+  </p>
+  <p class="note">If she'd had Nature = 7 (exactly matching delta), she'd pay only 7 raw (Raw=6) and Penalty=0, scoring 6. Nature is a precision tool!</p>
+</div>
+
+<div class="ex">
+  <h4>Scoring Example D: Too much Nature — negative spiral</h4>
+  <p>
+    <span class="ci cf">🔥 1</span>
+    <span class="ci cc">🧊 1</span>
+    <span class="ci cn">🌿 3</span> <span class="ci cn">🌿 3</span> <span class="ci cn">🌿 2</span>
+  </p>
+  <p class="m">
+    Fire=1, Ice=1, Light=0, Shadow=0, Nature=8<br>
+    <b>Raw</b> = 1+1+0+0 − 8 = <b>−6</b><br>
+    <b>Delta</b> = |1−1| + |0−0| = <b>0</b><br>
+    <b>Final Δ</b> = |0 − 8| = <b>8</b> → Penalty = 8 × 3 = <b>24</b><br>
+    <b>Score = −6 − 24 = −30 points</b> ☠️
+  </p>
+  <p class="note">Already balanced, Nature was completely unnecessary. Raw goes negative AND excess Nature creates massive phantom imbalance.</p>
+</div>
+
+<!-- ========== PAGE 5 ========== -->
+
+<h2 class="page-break">7. Strategy Tips</h2>
+
+<h3>Bluffing with face-down cards</h3>
+<p>When you place a card face-down, only you know what it is. You can say "don't worry, it's just a <span class="ci cn">🌿 1</span>" when it's really a <span class="ci cf">🔥 3</span>. Or pretend danger to scare someone into drinking early, when the potion is actually mild.</p>
+
+<h3>Timing your drink</h3>
+<p>Drinking early = fewer cards (lower raw) but safer balance. Waiting = more cards (higher raw potential) but more risk. Count the face-up cards and estimate the hidden ones — the balance between known and unknown is where the game lives.</p>
+
+<h3>The 6-card weapon</h3>
+<p>If an opponent is badly imbalanced, load the cauldron with elements that worsen their collection, then push it to 6 cards. They'll be forced to drink poison.</p>
+
+<h3>Post-drink sabotage</h3>
+<p>You've drunk, but you still add cards. This means you can "poison" future potions for opponents. Add high-value cards of elements you know will hurt them, or sneak in Nature to make a potion deceptively balanced.</p>
+
+<h3>Nature precision</h3>
+<p>The ideal Nature equals your Delta exactly. Track your Fire/Ice and Light/Shadow gaps during the game. If your Delta is 4, you need exactly <span class="ci cn">🌿 4</span> in Nature — no more, no less. Treat Nature collection as a surgical operation.</p>
+
+<h3>Reading the table</h3>
+<p>Pay attention to what face-up cards other players collect. If someone has lots of Fire, they'll want Ice to balance — or Nature as insurance. Deny them those cards by adding them to potions you know others will drink.</p>
+
+<h2>8. Quick Reference Card</h2>
+
+<div class="two-col">
+  <div>
+    <h3>Turn actions</h3>
+    <ul>
+      <li><b>Add:</b> 1 card, face-up or face-down (respect balance rule)</li>
+      <li><b>Drink:</b> take all (once per round only)</li>
+      <li><b>Already drank?</b> Must still add cards</li>
+    </ul>
+    <h3>Key rules</h3>
+    <ul>
+      <li>6 cards in cauldron → forced drink</li>
+      <li>Drinker creates the next potion</li>
+      <li>Round ends when all have drunk</li>
+      <li>Refill to 6 cards each round</li>
+      <li>Final Round: hand = 4, potion starts with 1 card</li>
+    </ul>
+  </div>
+  <div>
+    <h3>Scoring formula</h3>
+    <p style="font-family:monospace;font-size:10pt;line-height:1.8;">
+      Raw = 🔥+🧊+✨+💀 <b>minus</b> 🌿<br>
+      Delta = |🔥−🧊| + |✨−💀|<br>
+      <span style="font-family:sans-serif;font-size:8.5pt;color:#666;">( | | = higher minus lower, always positive )</span><br>
+      Final Δ = |Delta − 🌿|<br>
+      <b>Score = Raw − (Final Δ × 3)</b>
+    </p>
+    <h3>Nature trade-off</h3>
+    <p style="font-size:10.5pt;">1 Nature = −1 raw but −3 penalty<br>
+    Ideal: Nature = Delta exactly<br>
+    Excess Nature creates new imbalance!</p>
   </div>
 </div>
-<div id="game" class="screen">
-  <div class="top-bar"><div class="ri" id="ri"></div><div class="tm" id="tm"></div></div>
-  <div class="air" id="air"></div>
-  <div class="ctr"><div class="ct">🧪 The Cauldron <span class="cbl" id="cbal"></span></div><div class="ccs" id="ccards"></div><div id="dw"></div></div>
-  <div class="mc" id="myc"></div>
-  <div><div class="hl" id="hl"></div><div class="hc" id="hcards"></div></div>
-  <div class="log" id="logb"></div>
+
+<h2 class="page-break">9. Variant: 5 Players</h2>
+
+<p>When playing with 5 players, all 90 cards are used (no cards are removed during setup). The following adjustments apply:</p>
+
+<table class="tbl">
+  <tr><th>Rule</th><th>2–4 Players</th><th>5 Players</th></tr>
+  <tr><td>Cards in deck</td><td>~40–80 (see scaling)</td><td>All 90</td></tr>
+  <tr><td>Hand size</td><td>6 cards</td><td><b>5 cards</b></td></tr>
+  <tr><td>Final Round trigger</td><td>Deck empty, refill to 4</td><td>Deck cannot give everyone <b>3 cards</b></td></tr>
+  <tr><td>Final Round hand size</td><td>4 cards</td><td><b>3 cards</b></td></tr>
+  <tr><td>Potion start (normal)</td><td>2 cards (1🂠 + 1🃏)</td><td>2 cards (1🂠 + 1🃏)</td></tr>
+  <tr><td>Potion start (final)</td><td>1 card</td><td>1 card</td></tr>
+</table>
+
+<h3>Why the smaller hand?</h3>
+<p>With 5 players, 90 cards must stretch across more rounds. A hand of 5 cards means 25 cards are dealt each refill (vs 24 for 4 players with 6-card hands), keeping the game balanced while ensuring enough rounds of play. The Final Round triggers when the remaining cards (deck + removed) cannot fill every player to 3 cards, ensuring the last round still has meaningful decisions.</p>
+
+<div class="ex">
+  <h4>Example: 5-player Final Round</h4>
+  <p>At end of round 5, the deck has 4 cards left. After dealing, some players have 3–5 cards. Since the deck is now empty and there are no removed cards to draw from, the game checks: can everyone reach 3 cards? If not, this is the Final Round. Players keep what they have (minimum 3 if possible), and the potion starts with a single card.</p>
 </div>
-<div id="gameover" class="screen">
-  <h1>Game Over!</h1>
-  <div class="fs" id="fsc"></div>
-  <button class="btn" onclick="startGame()">New Game</button>
-</div>
 
-<script>
-const EL={
-  fire:{n:"Fire",e:"🔥",c:"#e74c3c",b:"#2d0a0a"},
-  ice:{n:"Ice",e:"🧊",c:"#4ba3e8",b:"#0a1a2d"},
-  light:{n:"Light",e:"✨",c:"#f0d04a",b:"#2d2a0a"},
-  shadow:{n:"Shadow",e:"💀",c:"#a86edb",b:"#1a0a2d"},
-  nature:{n:"Nature",e:"🌿",c:"#3ddc84",b:"#0a2d15"}
-};
-const PC=4, HS=6, NM=["You","Morgana 🧙‍♀️","Merlin 🧙","Circe 🔮"];
-let G={};
+<p>All other rules (6-card forced drink, balance rule, scoring, post-drink participation) remain identical.</p>
 
-/* ===== DECK ===== */
-function mkDeck(){
-  const d=[];
-  for(const e of["fire","ice","light","shadow","nature"])
-    for(const v of[1,2,3])
-      for(let i=0;i<6;i++) d.push({el:e,v,id:e+v+"_"+i});
-  return d; // 90 cards
-}
-function shuf(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=0|Math.random()*(i+1);const t=r[i];r[i]=r[j];r[j]=t;}return r;}
+<h2 class="page-break">10. Expansion: Special Cards</h2>
 
-/* ===== SCORE: Raw = elem - nature, penalty = |delta-nature|*3 ===== */
-function calc(cld){
-  if(!cld||!cld.length)return{raw:0,delta:0,nat:0,dF:0,total:0,sums:{}};
-  const s={fire:0,ice:0,light:0,shadow:0,nature:0};
-  for(const c of cld) if(c&&c.el) s[c.el]+=c.v;
-  const raw=s.fire+s.ice+s.light+s.shadow-s.nature;
-  const delta=Math.abs(s.fire-s.ice)+Math.abs(s.light-s.shadow);
-  const dF=Math.abs(delta-s.nature);
-  return{raw,delta,nat:s.nature,dF,total:raw-dF*3,sums:s};
-}
+<p>The expansion adds <b>24 special cards</b> to the base deck. Shuffle them into the main deck before dealing. Special cards follow the same rules as normal cards: they are added to the cauldron face-up or face-down, and collected when someone drinks. <b>They are never played directly from your hand</b> — you can only gain them by drinking a potion that contains them.</p>
 
-/* ===== AI DECISION ===== */
-function aiPick(hand,cenCards,myCld){
-  if(!hand||!hand.length)return{act:"d"};
-  const cur=calc(myCld), pot=calc([...myCld,...cenCards]);
-  const imp=pot.total-cur.total;
-  // Want to drink?
-  if(cenCards.length>=2&&(imp>=3||(cenCards.length>=4&&imp>=1)||(cenCards.length>=6&&imp>=0)||cenCards.length>=8))
-    return{act:"d"};
-  // Pick card to add
-  let bi=0,bs=-1e9;
-  for(let i=0;i<hand.length;i++){
-    const h=calc([...myCld,hand[i]]);
-    const sc=cur.total-h.total+(4-hand[i].v)*0.3+Math.random()*1.5;
-    if(sc>bs){bs=sc;bi=i;}
-  }
-  return{act:"a",ci:Math.min(bi,hand.length-1)};
-}
+<p>Special cards come in two types: <b>Permanent</b> cards (solid border) stay in your cauldron and are scored at end of game. <b>One-shot</b> cards (dashed border) are used once for their effect and then discarded from the game.</p>
 
-/* ===== HELPERS ===== */
-function nxtWithCards(from){
-  for(let i=1;i<=PC;i++){const n=(from+i)%PC;if(G.h[n].length>0)return n;}
-  return-1;
-}
-function nxtNotDrunk(from){
-  for(let i=1;i<=PC;i++){const n=(from+i)%PC;if(!G.dr[n])return n;}
-  return-1;
-}
-function aL(m){G.log.push(m);if(G.log.length>30)G.log=G.log.slice(-30);}
-function showScr(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
-function desc(c){return(c&&c.el)?EL[c.el].e+c.v:'?';}
-function covUncCount(){return{cc:G.cn.filter(c=>c.cov).length,uc:G.cn.filter(c=>!c.cov).length};}
-function pickCovUnc(pref){
-  const{cc,uc}=covUncCount();
-  if(uc>cc)return true;   // must covered
-  if(cc>uc)return false;  // must uncovered
-  return pref!==undefined?pref:(Math.random()>0.5);
-}
 
-/* ===== HTML helpers ===== */
-function cbH(){return'<div class="card card-b"><div class="card-bi">?</div></div>';}
-function cfH(c){if(!c||!c.el)return'';const e=EL[c.el];return`<div class="card"><div class="cf" style="background:${e.b};border-color:${e.c}"><span class="em">${e.e}</span><span class="vl" style="color:${e.c}">${c.v}</span><span class="nm" style="color:${e.c}">${e.n}</span></div></div>`;}
-function ciH(c){if(!c||!c.el)return'<div class="cf" style="background:#111;border-color:#333"><span class="em">?</span></div>';const e=EL[c.el];return`<div class="cf" style="background:${e.b};border-color:${e.c}"><span class="em">${e.e}</span><span class="vl" style="color:${e.c}">${c.v}</span><span class="nm" style="color:${e.c}">${e.n}</span></div>`;}
-function cpH(sums){let h='';if(!sums)return h;for(const[e,v]of Object.entries(sums))if(v>0&&EL[e])h+=`<span class="chip" style="border-color:${EL[e].c};background:${EL[e].b}">${EL[e].e} ${v}</span>`;return h;}
+<table class="tbl">
+  <tr><th style="text-align:left">Card</th><th>Copies</th><th style="text-align:left">Effect</th></tr>
+  <tr>
+    <td style="text-align:left"><b>⚡ Amplifier</b><br><span style="font-size:9pt;color:#666">One per element</span></td>
+    <td>2 × 5</td>
+    <td style="text-align:left">At end of game, <b>+1 victory point for each card</b> of the matching element in your cauldron. Exists for all 5 elements: <span class="ci cf">🔥</span> <span class="ci cc">🧊</span> <span class="ci cl">✨</span> <span class="ci cs">💀</span> <span class="ci cn">🌿</span></td>
+  </tr>
+  <tr>
+    <td style="text-align:left"><b>🧪 Poison</b></td>
+    <td>2</td>
+    <td style="text-align:left">Worth <b>−2 victory points</b>.</td>
+  </tr>
+  <tr>
+    <td style="text-align:left"><b>🦹 Thief</b></td>
+    <td>2</td>
+    <td style="text-align:left">When you drink a potion containing this card, <b>immediately steal 1 card</b> from any opponent's cauldron. Then discard the Thief. Must be used on drink — cannot be saved.</td>
+  </tr>
+  <tr>
+    <td style="text-align:left"><b>💧 Distillate</b></td>
+    <td>2</td>
+    <td style="text-align:left"> At end of game, <b>remove any one card</b> of your choice from your cauldron. Both the Distillate and the removed card are discarded.</td>
+  </tr>
+  <tr>
+    <td style="text-align:left"><b>💣 Time Bomb</b></td>
+    <td>2</td>
 
-/* ===== PASS TURN TO NEXT ===== */
-function passTurn(from){
-  const nx=nxtWithCards(from);
-  if(nx===-1||nx===0){G.cp=0;G.ani=false;ren();return;}
-  G.cp=nx;G.ani=false;ren();
-  setTimeout(()=>aiTurn(nx),700);
-}
 
-/* ===== DRINK (shared logic) ===== */
-function doDrink(p){
-  const cards=G.cn.filter(c=>c&&c.card).map(c=>c.card);
-  G.cl[p]=[...G.cl[p],...cards];
-  G.dr[p]=true;
-  aL(`${NM[p]} drinks! [${cards.map(desc).join(' ')}]`);
-  G.cn=[]; G.nn=true; G.ani=false;
-}
+    <td style="text-align:left">If your Final Delta is <b>exactly 0</b>: worth <b>+6 points</b>. Otherwise: worth <b>−3 points</b>.</td>
+ </tr>
+  <tr>
+    <td style="text-align:left"><b>🤫 Smuggle</b></td>
+    <td>2</td>
+    <td style="text-align:left">On your turn, <b>place 2 cards from your hand directly into your cauldron</b>. This is free — you still take your normal turn action after. Then discard the Smuggle card.</td>
+  </tr>
+  <tr>
 
-/* ===== FORCE DRINK (6-card rule) ===== */
-function forceDrink(fromP){
-  const p=nxtNotDrunk(fromP);
-  if(p===-1){ren();setTimeout(endRound,600);return;}
-  aL(`⚠️ 6 cards! ${NM[p]} must drink!`);
-  doDrink(p);
-  afterDrink(p);
-}
+    <td style="text-align:left"><b>👁️ Alchemist's Eye</b></td>
+    <td>2</td>
+    <td style="text-align:left"><b>Look at all face-down cards</b> in the cauldron. Put them back face-down. Then continue your turn normally (add or drink). Then discard the Eye.</td>
+  </tr>
+  <tr>
+    <td style="text-align:left"><b>🔄 Swap</b></td>
+    <td>2</td>
+    <td style="text-align:left"><b>Exchange one card</b> from your personal cauldron with one card from the current potion. Then discard the Swap card.</td>
+  </tr>
+</table>
 
-/* ===== AFTER SOMEONE DRINKS ===== */
-function afterDrink(drinkerP){
-  if(G.dr.every(d=>d)){ren();setTimeout(endRound,600);return;}
-  const minCards=G.final?1:2;
-  if(G.h[drinkerP].length>=minCards){
-    G.crM=true;G.crP=drinkerP;G.nn=true;G.cp=drinkerP;ren();
-    if(drinkerP!==0)setTimeout(()=>aiCreatePotion(drinkerP),700);
-    return;
-  }
-  for(let i=1;i<=PC;i++){
-    const n=(drinkerP+i)%PC;
-    if(G.h[n].length>=minCards){
-      G.crM=true;G.crP=n;G.nn=true;G.cp=n;ren();
-      if(n!==0)setTimeout(()=>aiCreatePotion(n),700);
-      return;
-    }
-  }
-  setTimeout(endRound,600);
-}
 
-/* ===== AI: CREATE POTION ===== */
-function aiCreatePotion(p){
-  G.ani=true;ren();
-  const h=G.h[p];
-  
-  if(G.final){
-    // Final round: place 1 card only
-    if(!h||h.length<1){G.ani=false;ren();return;}
-    const ci=0|Math.random()*h.length;
-    const card=h[ci];
-    if(!card){G.ani=false;ren();return;}
-    h.splice(ci,1);
-    const cv=Math.random()>0.5;
-    G.cn=[{card,cov:cv,by:p}];
-    G.nn=false;G.crM=false;G.ani=false;
-    aL(`${NM[p]} brews: ${cv?"🂠":desc(card)}`);
-    passTurn(p);
-    return;
-  }
-  
-  // Normal round: place 2 cards
-  if(!h||h.length<2){G.ani=false;ren();return;}
-  const i1=0|Math.random()*h.length;
-  let i2=0|Math.random()*(h.length-1);
-  if(i2>=i1)i2++;
-  if(i2>=h.length)i2=0;
-  if(i1===i2)i2=(i1+1)%h.length;
-  const c1=h[i1],c2=h[i2];
-  if(!c1||!c2){G.ani=false;ren();return;}
-  [i1,i2].sort((a,b)=>b-a).forEach(i=>h.splice(i,1));
-  const cv=Math.random()>0.5;
-  G.cn=[{card:c1,cov:cv,by:p},{card:c2,cov:!cv,by:p}];
-  G.nn=false;G.crM=false;G.ani=false;
-  aL(`${NM[p]} brews: ${cv?"🂠":desc(c1)} + ${!cv?"🂠":desc(c2)}`);
-  passTurn(p);
-}
 
-/* ===== AI: NORMAL TURN (add or drink) ===== */
-function aiTurn(p){
-  if(p===0){G.ani=false;ren();return;}
-  // No cards? Skip.
-  if(!G.h[p]||G.h[p].length===0){passTurn(p);return;}
-  // No potion on table? Something wrong, bail.
-  if(G.nn||G.cn.length===0){G.ani=false;G.cp=0;ren();return;}
+<h3>Expansion setup</h3>
+<ul>
+  <li><b>Full expansion (24 cards):</b> shuffle all 24 special cards into the base deck (114 cards total). Recommended for 4–5 players.</li>
+  <li><b>Light expansion:</b> use only 1 copy of each card (12 cards, 102 total). Good for 2–3 players or a first game with the expansion.</li>
+  <li>Scale the deck to player count 23 cards per player.</li>
+</ul>
 
-  G.ani=true;ren();
-  const h=G.h[p];
-  const cenCards=G.cn.map(c=>c.card).filter(Boolean);
+<div class="footer">Drink or Die — A game of potions, bluff & alchemy — 2–5 players — 15-20 minutes</div>
 
-  // Non-drunk: can choose drink or add
-  if(!G.dr[p]){
-    const dec=aiPick(h,cenCards,G.cl[p]);
-    if(dec.act==="d"){
-      doDrink(p);
-      afterDrink(p);
-      return;
-    }
-  }
-
-  // Add a card (drunk or chose to add)
-  const dec=aiPick(h,cenCards,G.cl[p]);
-  let ci=(dec.ci!==undefined&&dec.ci>=0&&dec.ci<h.length)?dec.ci:0;
-  const card=h[ci];
-  if(!card){G.ani=false;passTurn(p);return;}
-  h.splice(ci,1);
-
-  const cv=pickCovUnc();
-  G.cn.push({card,cov:cv,by:p});
-  aL(`${NM[p]} adds ${cv?'face-down 🂠':desc(card)}`);
-  G.ani=false;
-
-  // 6-card rule
-  if(G.cn.length>=6){forceDrink(p);return;}
-  passTurn(p);
-}
-
-/* ===== START GAME ===== */
-function startGame(){
-  G={dk:[],h:[[],[],[],[]],cl:[[],[],[],[]],cn:[],
-    cp:0,st:0,dr:[false,false,false,false],
-    nn:true,log:[],rn:1,ani:false,fc:null,crM:false,crP:-1,
-    final:false,removed:[]};
-  const all=shuf(mkDeck());
-  // Deal 6 to each player, keep rest as deck. With 4 players from 90: 24 dealt, 66 in deck
-  const rem=[...all];
-  for(let p=0;p<PC;p++) G.h[p]=rem.splice(0,HS);
-  G.dk=rem;
-  aL("Game starts! Create the first potion.");
-  showScr('game');ren();
-}
-
-/* ===== PLAYER: CREATE POTION ===== */
-function onPS(idx){
-  if(G.ani)return;
-  const ok=(G.crM&&G.crP===0)||(G.cp===0&&G.nn&&!G.dr[0]);
-  
-  if(G.final){
-    // Final round: select 1 card, fc stores it, then player uses onFCr buttons
-    if(!ok||G.h[0].length<1)return;
-    G.fc=idx;ren();
-    return;
-  }
-  
-  // Normal round: 2 cards
-  if(!ok||G.h[0].length<2)return;
-  if(G.fc===null){G.fc=idx;ren();return;}
-  if(G.fc===idx){G.fc=null;ren();return;}
-  const c1=G.h[0][G.fc],c2=G.h[0][idx];
-  if(!c1||!c2)return;
-  [G.fc,idx].sort((a,b)=>b-a).forEach(i=>G.h[0].splice(i,1));
-  G.cn=[{card:c1,cov:true,by:0},{card:c2,cov:false,by:0}];
-  G.nn=false;G.fc=null;G.crM=false;
-  aL(`You brew: 🂠 + ${desc(c2)}`);
-  passTurn(0);
-}
-
-/* ===== PLAYER: FINAL ROUND CREATE (choose cov/unc) ===== */
-function onFCr(cov){
-  if(G.fc===null||G.fc>=G.h[0].length)return;
-  const card=G.h[0][G.fc];
-  if(!card)return;
-  G.h[0].splice(G.fc,1);
-  G.cn=[{card,cov,by:0}];
-  G.nn=false;G.fc=null;G.crM=false;
-  aL(`You brew: ${cov?'🂠':desc(card)}`);
-  passTurn(0);
-}
-
-/* ===== PLAYER: ADD CARD ===== */
-function onA(idx,cov){
-  if(G.cp!==0||G.ani||G.nn||!G.cn.length)return;
-  if(idx<0||idx>=G.h[0].length)return;
-  const{cc,uc}=covUncCount();
-  if(uc>cc&&!cov){aL("Must play face-down!");ren();return;}
-  if(cc>uc&&cov){aL("Must play face-up!");ren();return;}
-  const card=G.h[0][idx];
-  if(!card)return;
-  G.h[0].splice(idx,1);
-  G.cn.push({card,cov,by:0});
-  aL(`You add ${cov?'face-down 🂠':desc(card)}`);
-  if(G.cn.length>=6){forceDrink(0);return;}
-  passTurn(0);
-}
-
-/* ===== PLAYER: DRINK ===== */
-function onD(){
-  if(G.cp!==0||G.ani||G.dr[0]||!G.cn.length||G.nn)return;
-  doDrink(0);
-  afterDrink(0);
-}
-
-/* ===== END ROUND ===== */
-function endRound(){
-  const FHS=4; // final hand size
-  
-  if(G.final){
-    // Final round just ended → game over
-    aL("Game over!");showGO();return;
-  }
-  
-  // Normal refill to 6
-  for(let p=0;p<PC;p++)
-    while(G.h[p].length<HS&&G.dk.length>0) G.h[p].push(G.dk.pop());
-  
-  // Check if deck ran out during refill
-  if(G.dk.length===0){
-    // Enter FINAL ROUND
-    G.final=true;
-    // Collect all cards still in players' hands into a temporary pool + removed cards
-    // Actually: the removed cards are what we use to top up to 4
-    // "removed" cards = cards not used at start. But we didn't remove any with 4 players/90 cards.
-    // The rule says: if deck empties during deal, use removed cards to fill to 4.
-    // With 90 cards / 4 players, no cards are removed. So we just top up from nothing?
-    // Let's interpret: any cards that couldn't be dealt (deck ran out mid-refill) means
-    // we gather ALL remaining undealt potential and redistribute so everyone has exactly 4.
-    // If players have MORE than 4, they keep what they have.
-    // If players have LESS than 4, we can't do anything (no source).
-    // Actually re-reading: "pescano le carte da quelle rimosse all'inizio della partita"
-    // This implies some cards WERE removed. Let's support variable player count removal.
-    // For now: use G.removed to top up to 4.
-    const pool=shuf([...G.removed]);
-    for(let p=0;p<PC;p++)
-      while(G.h[p].length<FHS&&pool.length>0) G.h[p].push(pool.pop());
-    
-    G.dr=[false,false,false,false];G.nn=true;G.fc=null;G.crM=false;G.crP=-1;
-    const ns=(G.st+1)%PC;
-    G.st=ns;G.cp=ns;G.rn++;
-    aL(`🏁 FINAL ROUND! Hands: ${FHS} cards. Potion starts with 1 card.`);
-    ren();
-    if(ns!==0){G.crM=true;G.crP=ns;setTimeout(()=>aiCreatePotion(ns),700);}
-    return;
-  }
-  
-  // Normal next round
-  G.dr=[false,false,false,false];G.nn=true;G.fc=null;G.crM=false;G.crP=-1;
-  const ns=(G.st+1)%PC;
-  G.st=ns;G.cp=ns;G.rn++;
-  aL(`--- Round ${G.rn} --- Deck: ${G.dk.length}`);
-  ren();
-  if(ns!==0){G.crM=true;G.crP=ns;setTimeout(()=>aiCreatePotion(ns),700);}
-}
-
-/* ===== GAME OVER ===== */
-function showGO(){
-  const sc=G.cl.map((c,i)=>({p:i,s:calc(c)})).sort((a,b)=>b.s.total-a.s.total);
-  let h='';
-  sc.forEach((x,r)=>{
-    h+=`<div class="fr ${r===0?'w':''} ${x.p===0?'me':''}">
-      <span class="fk">${r===0?'👑':'#'+(r+1)}</span>
-      <span class="fn">${NM[x.p]}</span>
-      <div class="fd"><span>Raw: ${x.s.raw}</span><span>Δ: ${x.s.delta}−🌿${x.s.nat}=${x.s.dF}</span><span>Pen: −${x.s.dF*3}</span></div>
-      <span class="fp">${x.s.total} pts</span>
-    </div>`;
-  });
-  document.getElementById('fsc').innerHTML=h;showScr('gameover');
-}
-
-/* ===== RENDER ===== */
-function ren(){
-  const myT=G.cp===0&&!G.ani;
-  const isCr=G.crM&&G.crP===0;
-  const canCr=isCr||(myT&&G.nn&&!G.dr[0]);
-  const canDr=myT&&G.cn.length>0&&!G.nn&&!G.dr[0];
-  const canAd=myT&&!G.nn&&G.cn.length>0&&G.h[0].length>0;
-  const{cc,uc}=covUncCount();
-  const mC=uc>cc, mU=cc>uc;
-
-  document.getElementById('ri').textContent=`${G.final?'🏁 FINAL ':''}Round ${G.rn} — Deck: ${G.dk.length}`;
-
-  const minCr=G.final?1:2;
-  let msg=G.ani?"The wizards are thinking...":
-    (isCr&&G.dr[0])?(G.final?"You drank! Brew a potion (pick 1 card: 🂠 or 🃏)":"You drank! Now brew for the others (1st=🂠, 2nd=🃏)"):
-    (G.dr[0]&&canAd)?`You drank but still add cards! ${mC?"(must 🂠)":mU?"(must 🃏)":"(🂠/🃏)"}`:
-    (G.dr[0]&&!canAd)?"You drank! Waiting for round to end...":
-    canCr?(G.h[0].length>=minCr?(G.final?"Pick 1 card to start the potion (🂠 or 🃏)":"Select 2 cards: 1st=face-down 🂠, 2nd=face-up 🃏"):"Waiting..."):
-    canAd?`${G.cn.length>=5?'⚠️ 5 cards! ':''}Add card ${mC?"(must 🂠)":mU?"(must 🃏)":"(🂠/🃏)"}${canDr?' or drink 🍷':''}`:"Waiting...";
-  document.getElementById('tm').textContent=msg;
-
-  // AI boxes
-  let aiH='';
-  for(let p=1;p<PC;p++){
-    const s=calc(G.cl[p]);
-    aiH+=`<div class="ab ${G.cp===p?'act':''} ${G.dr[p]?'out':''}">
-      <div class="an">${NM[p]}</div>
-      <div class="am"><span>🃏 ${G.h[p].length}</span>${G.dr[p]?'<span class="dr">Drank!</span>':''}</div>
-      <div class="chips">${cpH(s.sums)}</div>
-      <span class="pts">${s.total} pts</span>
-    </div>`;
-  }
-  document.getElementById('air').innerHTML=aiH;
-
-  // Center
-  document.getElementById('cbal').textContent=G.cn.length?`(${cc}🂠 / ${uc}🃏)`:'';
-  let cenH='';
-  if(!G.cn.length) cenH=`<div class="ce">${G.nn?'Brew a new potion!':'Empty'}</div>`;
-  else for(const c of G.cn) cenH+=c.cov?cbH():cfH(c.card);
-  document.getElementById('ccards').innerHTML=cenH;
-  document.getElementById('dw').innerHTML=canDr?'<button class="bd" onclick="onD()">🍷 Drink the Potion!</button>':'';
-
-  // My cauldron
-  const ms=calc(G.cl[0]);
-  document.getElementById('myc').innerHTML=`
-    <div class="ml">Your Cauldron</div>
-    <div class="chips">${cpH(ms.sums)}</div>
-    <div class="sr"><span>Raw: ${ms.raw} (elem−🌿${ms.nat})</span><span>Δ: ${ms.delta}−🌿${ms.nat}=${ms.dF}</span><span>Pen: −${ms.dF*3}</span></div>
-    <div class="st">Total: ${ms.total}</div>`;
-
-  // Hand
-  document.getElementById('hl').textContent=`Your Hand (${G.h[0].length} cards)`;
-  const finalCrSel=G.final&&canCr&&G.fc!==null; // final round create, card selected
-  let hH='';
-  for(let i=0;i<G.h[0].length;i++){
-    const c=G.h[0][i];
-    if(!c)continue;
-    const sel=G.fc===i?'sel':'';
-    const clk=canCr?`onclick="onPS(${i})"`:'';
-    let btns='';
-    if(canAd){
-      if(!mU)btns+=`<button class="cbt cv" onclick="onA(${i},true)">🂠</button>`;
-      if(!mC)btns+=`<button class="cbt uv" onclick="onA(${i},false)">🃏</button>`;
-    }
-    // Final round create: show cov/unc buttons on selected card
-    if(finalCrSel&&G.fc===i){
-      btns=`<button class="cbt cv" onclick="onFCr(true)">🂠</button><button class="cbt uv" onclick="onFCr(false)">🃏</button>`;
-    }
-    hH+=`<div class="hs"><div class="card ${sel} ${clk?'clk':''}" ${clk}>${ciH(c)}</div>${btns?`<div class="cbs">${btns}</div>`:''}</div>`;
-  }
-  document.getElementById('hcards').innerHTML=hH;
-
-  // Log
-  const ll=G.log.slice(-8);let lH='';
-  for(let i=0;i<ll.length;i++) lH+=`<div class="ll" style="opacity:${(.4+i/12).toFixed(2)}">${ll[i]}</div>`;
-  document.getElementById('logb').innerHTML=lH;
-}
-</script>
 </body>
 </html>
