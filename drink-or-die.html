@@ -84,7 +84,7 @@ h1,.cinzel{font-family:'Cinzel',serif}
   <div class="rules">
     <b>How to play:</b> Create potions (1 face-down + 1 face-up). All players take turns adding a card or drinking. Whoever drinks takes all cards, then creates the next potion. Drunk players still add cards!<br>
     <b>6-card limit:</b> If the cauldron reaches 6, next non-drunk player must drink.<br>
-    <b>Scoring:</b> Raw = 🔥+🧊+✨+💀 minus 🌿. Penalty = |imbalance − 🌿| × 3. Nature costs 1 pt but saves 3 per point of imbalance!
+    <b>Scoring:</b> Raw = 🔥+🧊+✨+💀 (🌿 = 0 pts). Penalty = |imbalance − 🌿| × 3. Nature reduces imbalance for free!
   </div>
 </div>
 <div id="game" class="screen">
@@ -122,12 +122,12 @@ function mkDeck(){
 }
 function shuf(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=0|Math.random()*(i+1);const t=r[i];r[i]=r[j];r[j]=t;}return r;}
 
-/* ===== SCORE: Raw = elem - nature, penalty = |delta-nature|*3 ===== */
+/* ===== SCORE: Raw = elem (nature=0), penalty = |delta-nature|*3 ===== */
 function calc(cld){
   if(!cld||!cld.length)return{raw:0,delta:0,nat:0,dF:0,total:0,sums:{}};
   const s={fire:0,ice:0,light:0,shadow:0,nature:0};
   for(const c of cld) if(c&&c.el) s[c.el]+=c.v;
-  const raw=s.fire+s.ice+s.light+s.shadow-s.nature;
+  const raw=s.fire+s.ice+s.light+s.shadow;
   const delta=Math.abs(s.fire-s.ice)+Math.abs(s.light-s.shadow);
   const dF=Math.abs(delta-s.nature);
   return{raw,delta,nat:s.nature,dF,total:raw-dF*3,sums:s};
@@ -487,7 +487,7 @@ function ren(){
   document.getElementById('myc').innerHTML=`
     <div class="ml">Your Cauldron</div>
     <div class="chips">${cpH(ms.sums)}</div>
-    <div class="sr"><span>Raw: ${ms.raw} (elem−🌿${ms.nat})</span><span>Δ: ${ms.delta}−🌿${ms.nat}=${ms.dF}</span><span>Pen: −${ms.dF*3}</span></div>
+    <div class="sr"><span>Raw: ${ms.raw}</span><span>Δ: ${ms.delta}−🌿${ms.nat}=${ms.dF}</span><span>Pen: −${ms.dF*3}</span></div>
     <div class="st">Total: ${ms.total}</div>`;
 
   // Hand
