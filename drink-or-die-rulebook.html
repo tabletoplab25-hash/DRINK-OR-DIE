@@ -69,7 +69,7 @@ li { margin:4px 0; }
 
 <h2>1. Overview</h2>
 <p><b>Drink or Die</b> is a card game where rival alchemists brew mysterious potions and dare each other to drink them. Each turn you add ingredients to a shared cauldron — but eventually someone has to drink it. The potion's cards go into your personal collection. At the end of the game, you score points based on how many element cards you've collected and how well-balanced your opposing elements are.</p>
-<p>The core tension: you want high-value element cards, but collecting too many of one element without its opposite costs you 3 points per imbalance. Nature cards are a double-edged sword — each one reduces your imbalance by 1, but also reduces your raw score by 1.</p>
+<p>The core tension: you want high-value element cards, but collecting too many of one element without its opposite costs you 3 points per imbalance. Nature cards are worth 0 raw points but reduce your imbalance — making them purely a balancing tool.</p>
 
 <h2>2. Components</h2>
 <p>The game uses a deck of <b>90 cards</b> across 5 elements:</p>
@@ -86,7 +86,7 @@ li { margin:4px 0; }
 <ul>
   <li><span class="ci cf">🔥 Fire</span> opposes <span class="ci cc">🧊 Ice</span></li>
   <li><span class="ci cl">✨ Light</span> opposes <span class="ci cs">💀 Shadow</span></li>
-  <li><span class="ci cn">🌿 Nature</span> is neutral — reduces imbalance at a cost</li>
+  <li><span class="ci cn">🌿 Nature</span> is neutral — worth 0 raw points, but reduces imbalance</li>
 </ul>
 
 <p>Each element has <b>18 cards</b> with values 1, 2, or 3:</p>
@@ -228,9 +228,9 @@ li { margin:4px 0; }
 
 <h3>Nature: the corrective element</h3>
 
-<p><span class="ci cn">🌿 Nature</span> is the only tool to reduce your Delta. Each point of Nature reduces your Delta by 1. However, Nature also <b>subtracts from your raw score</b> — each point of Nature costs 1 raw point.</p>
+<p><span class="ci cn">🌿 Nature</span> is the only tool to reduce your Delta. Each point of Nature reduces your Delta by 1. Nature is worth <b>0 raw points</b> — it doesn't add to your score, but it doesn't subtract from it either. Its only purpose is to correct imbalance.</p>
 
-<p>The trade-off is clear: <b>1 Nature point costs 1 but saves 3</b> (by reducing Delta by 1, which saves 3 penalty points). This makes Nature extremely valuable when you're unbalanced — but worthless (and harmful!) when you're already balanced.</p>
+<p>This makes Nature a <b>pure balancing tool</b>: each point of Nature saves 3 penalty points (by reducing Delta by 1). Nature is extremely valuable when you're unbalanced — but useless when you're already balanced, and harmful if you have too much (see below).</p>
 
 <div class="key">
   <h4>Nature correction</h4>
@@ -250,7 +250,7 @@ li { margin:4px 0; }
   <h4>Example: Too much Nature</h4>
   <p>Delta = 2, Nature = <span class="ci cn">🌿 3</span> <span class="ci cn">🌿 2</span> <span class="ci cn">🌿 1</span> = 6</p>
   <p class="m">Final Delta = |2 − 6| = <b>4</b> &nbsp;&nbsp; → &nbsp;&nbsp; Penalty = 4 × 3 = <b>−12</b></p>
-  <p class="note">The 6 Nature points cost 6 raw AND create a new imbalance of 4, costing 12 more! Total cost: 18 points for having too much Nature.</p>
+  <p class="note">Excess Nature creates a new imbalance of 4, costing 12 penalty points! Nature is free for your raw score, but overshooting your Delta is just as bad as undershooting.</p>
 </div>
 
 <h3>The golden rule</h3>
@@ -265,7 +265,7 @@ li { margin:4px 0; }
 <div class="key">
   <h4>Complete scoring formula</h4>
   <p class="f">
-    <b>Step 1:</b> Raw = 🔥 + 🧊 + ✨ + 💀 − 🌿<br>
+    <b>Step 1:</b> Raw = 🔥 + 🧊 + ✨ + 💀 &nbsp; <span style="font-size:9pt;color:#666">(🌿 = 0 points)</span><br>
     <b>Step 2:</b> Delta = |🔥−🧊| + |✨−💀| &nbsp;&nbsp; → &nbsp;&nbsp; Final Δ = |Delta − 🌿|<br>
     <b>Step 3:</b> Score = Raw − (Final Δ × 3)
   </p>
@@ -282,7 +282,7 @@ li { margin:4px 0; }
   </p>
   <p class="m">
     Fire=5, Ice=5, Light=4, Shadow=4, Nature=0<br>
-    <b>Raw</b> = 5+5+4+4 − 0 = <b>18</b><br>
+    <b>Raw</b> = 5+5+4+4 = <b>18</b><br>
     <b>Delta</b> = |5−5| + |4−4| = 0 + 0 = <b>0</b><br>
     <b>Final Δ</b> = |0 − 0| = <b>0</b> → Penalty = 0<br>
     <b>Score = 18 − 0 = 18 points</b> ✨
@@ -301,12 +301,12 @@ li { margin:4px 0; }
   </p>
   <p class="m">
     Fire=8, Ice=1, Light=1, Shadow=3, Nature=3<br>
-    <b>Raw</b> = 8+1+1+3 − 3 = <b>10</b><br>
+    <b>Raw</b> = 8+1+1+3 = <b>13</b><br>
     <b>Delta</b>: Fire > Ice → 8−1 = 7. Shadow > Light → 3−1 = 2. Total = 7 + 2 = <b>9</b><br>
     <b>Final Δ</b> = |9 − 3| = <b>6</b> → Penalty = 6 × 3 = <b>18</b><br>
-    <b>Score = 10 − 18 = −8 points</b> 💀
+    <b>Score = 13 − 18 = −5 points</b> 💀
   </p>
-  <p class="note">Notice that here Shadow is higher than Light — you always subtract the smaller from the larger. Without Nature: Raw would be 13, Delta 9, Penalty 27. Score = 13−27 = −14. Nature saved 6 points (cost 3 raw, saved 9 penalty).</p>
+  <p class="note">Notice that here Shadow is higher than Light — you always subtract the smaller from the larger. Without Nature: Delta would be 9, Penalty 27. Score = 13−27 = −14. Nature saved 9 penalty points for free!</p>
 </div>
 
 <div class="ex">
@@ -320,12 +320,12 @@ li { margin:4px 0; }
   </p>
   <p class="m">
     Fire=5, Ice=2, Light=5, Shadow=1, Nature=3<br>
-    <b>Raw</b> = 5+2+5+1 − 3 = <b>10</b><br>
+    <b>Raw</b> = 5+2+5+1 = <b>13</b><br>
     <b>Delta</b> = |5−2| + |5−1| = 3 + 4 = <b>7</b><br>
     <b>Final Δ</b> = |7 − 3| = <b>4</b> → Penalty = 4 × 3 = <b>12</b><br>
-    <b>Score = 10 − 12 = −2 points</b>
+    <b>Score = 13 − 12 = 1 point</b>
   </p>
-  <p class="note">If she'd had Nature = 7 (exactly matching delta), she'd pay only 7 raw (Raw=6) and Penalty=0, scoring 6. Nature is a precision tool!</p>
+  <p class="note">If she'd had Nature = 7 (exactly matching Delta), Penalty = 0 and Score = 13. Nature reduces imbalance for free — the key is having exactly the right amount!</p>
 </div>
 
 <div class="ex">
@@ -337,12 +337,12 @@ li { margin:4px 0; }
   </p>
   <p class="m">
     Fire=1, Ice=1, Light=0, Shadow=0, Nature=8<br>
-    <b>Raw</b> = 1+1+0+0 − 8 = <b>−6</b><br>
+    <b>Raw</b> = 1+1+0+0 = <b>2</b><br>
     <b>Delta</b> = |1−1| + |0−0| = <b>0</b><br>
     <b>Final Δ</b> = |0 − 8| = <b>8</b> → Penalty = 8 × 3 = <b>24</b><br>
-    <b>Score = −6 − 24 = −30 points</b> ☠️
+    <b>Score = 2 − 24 = −22 points</b> ☠️
   </p>
-  <p class="note">Already balanced, Nature was completely unnecessary. Raw goes negative AND excess Nature creates massive phantom imbalance.</p>
+  <p class="note">Already balanced, Nature was completely unnecessary. Excess Nature creates a massive phantom imbalance of 8, costing 24 penalty points against only 2 raw!</p>
 </div>
 
 <!-- ========== PAGE 5 ========== -->
@@ -389,14 +389,14 @@ li { margin:4px 0; }
   <div>
     <h3>Scoring formula</h3>
     <p style="font-family:monospace;font-size:10pt;line-height:1.8;">
-      Raw = 🔥+🧊+✨+💀 <b>minus</b> 🌿<br>
+      Raw = 🔥+🧊+✨+💀 &nbsp; <span style="font-size:8pt">(🌿 = 0 pts)</span><br>
       Delta = |🔥−🧊| + |✨−💀|<br>
       <span style="font-family:sans-serif;font-size:8.5pt;color:#666;">( | | = higher minus lower, always positive )</span><br>
       Final Δ = |Delta − 🌿|<br>
       <b>Score = Raw − (Final Δ × 3)</b>
     </p>
-    <h3>Nature trade-off</h3>
-    <p style="font-size:10.5pt;">1 Nature = −1 raw but −3 penalty<br>
+    <h3>Nature</h3>
+    <p style="font-size:10.5pt;">🌿 = 0 raw points, but saves 3 per Delta<br>
     Ideal: Nature = Delta exactly<br>
     Excess Nature creates new imbalance!</p>
   </div>
