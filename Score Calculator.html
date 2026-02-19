@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drink or Die — Score Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07060b;--surface:rgba(255,255,255,0.025);--border:rgba(255,255,255,0.07);--text:#ddd5c4;--muted:#7a7060;--gold:#e8b84b;--gold-dim:rgba(232,184,75,0.15);--green:#3ddc84;--red:#e74c3c}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);background-image:radial-gradient(ellipse at 15% 50%,rgba(232,75,75,.04) 0%,transparent 50%),radial-gradient(ellipse at 85% 30%,rgba(75,163,232,.04) 0%,transparent 50%),radial-gradient(ellipse at 50% 90%,rgba(61,220,132,.03) 0%,transparent 40%);color:var(--text);font-family:'EB Garamond',Georgia,serif;min-height:100vh;padding:16px}
+h1{font-family:'Cinzel',serif;font-size:clamp(1.8rem,5vw,2.6rem);font-weight:900;letter-spacing:4px;background:linear-gradient(135deg,#e8b84b,#e74c3c,#a86edb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:4px}
+.subtitle{text-align:center;color:var(--muted);font-style:italic;font-size:.95rem;margin-bottom:18px}
+
+/* Player count selector */
+.pc-bar{display:flex;justify-content:center;gap:8px;margin-bottom:18px}
+.pc-btn{font-family:'Cinzel',serif;font-size:.9rem;padding:7px 18px;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;color:var(--muted);cursor:pointer;transition:all .2s;letter-spacing:1px}
+.pc-btn:hover{border-color:var(--gold);color:var(--gold)}
+.pc-btn.active{background:var(--gold-dim);border-color:var(--gold);color:var(--gold)}
+
+/* Players grid */
+.players{display:flex;flex-direction:column;gap:12px;max-width:700px;margin:0 auto}
+
+.player-card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;transition:all .3s}
+.player-card.winner{border-color:var(--gold);box-shadow:0 0 20px var(--gold-dim)}
+
+.player-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.player-name-wrap{display:flex;align-items:center;gap:8px}
+.player-rank{font-family:'Cinzel',serif;font-size:1.1rem;min-width:28px}
+.player-name{font-family:'Cinzel',serif;font-size:.95rem;font-weight:700;background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--text);padding:2px 4px;width:120px;letter-spacing:1px}
+.player-name:focus{outline:none;border-color:var(--gold)}
+.player-total{font-family:'Cinzel',serif;font-size:1.4rem;font-weight:900;color:var(--gold)}
+.player-total.negative{color:var(--red)}
+
+/* Element inputs row */
+.elem-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.elem-input{display:flex;flex-direction:column;align-items:center;gap:2px}
+.elem-label{font-size:1.1rem}
+.elem-field{width:42px;height:36px;text-align:center;font-family:'Cinzel',serif;font-size:1rem;font-weight:700;border-radius:6px;border:1.5px solid;background:rgba(0,0,0,.3);color:var(--text);outline:none;transition:all .2s}
+.elem-field:focus{box-shadow:0 0 8px rgba(255,255,255,.1)}
+.elem-field.fire{border-color:#e74c3c;color:#e74c3c}
+.elem-field.ice{border-color:#4ba3e8;color:#4ba3e8}
+.elem-field.light{border-color:#f0d04a;color:#f0d04a}
+.elem-field.shadow{border-color:#a86edb;color:#a86edb}
+.elem-field.nature{border-color:#3ddc84;color:#3ddc84}
+
+/* Score breakdown */
+.breakdown{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;font-size:.78rem;color:#5a5248}
+.breakdown span{display:flex;align-items:center;gap:3px}
+.bd-label{color:var(--muted)}
+
+/* Podium */
+.podium{display:flex;justify-content:center;gap:12px;margin-top:20px;padding:14px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;max-width:700px;margin-left:auto;margin-right:auto}
+.podium-slot{text-align:center;min-width:80px}
+.podium-rank{font-size:1.6rem}
+.podium-name{font-family:'Cinzel',serif;font-size:.85rem;color:var(--text);margin-top:2px}
+.podium-score{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:900;color:var(--gold)}
+
+/* Reset */
+.reset-wrap{text-align:center;margin-top:16px}
+.reset-btn{font-family:'Cinzel',serif;font-size:.85rem;padding:8px 24px;background:transparent;border:1.5px solid var(--border);border-radius:8px;color:var(--muted);cursor:pointer;transition:all .2s;letter-spacing:1px}
+.reset-btn:hover{border-color:var(--red);color:var(--red)}
+
+/* Footer */
+.footer{text-align:center;color:#3a3428;font-size:.78rem;margin-top:20px}
+
+@media(max-width:500px){
+  .elem-field{width:36px;height:32px;font-size:.9rem}
+  .player-name{width:90px;font-size:.85rem}
+  .breakdown{font-size:.7rem}
+}
+</style>
+</head>
+<body>
+
+<h1>🧪 Score Calculator</h1>
+<p class="subtitle">Drink or Die — Final Scoring Tool</p>
+
+<div class="pc-bar" id="pcBar"></div>
+<div class="players" id="players"></div>
+<div class="podium" id="podium"></div>
+<div class="reset-wrap"><button class="reset-btn" onclick="resetAll()">🗑️ Reset All</button></div>
+<div class="footer">Drink or Die — Score Calculator<br>Raw = 🔥+🧊+✨+💀 (🌿 = 0 pts) &nbsp;|&nbsp; Delta = |🔥−🧊| + |✨−💀| &nbsp;|&nbsp; Score = Raw − |Delta−🌿| × 3</div>
+
+<script>
+const ELEMS = [
+  {id:'fire',emoji:'🔥',cls:'fire'},
+  {id:'ice',emoji:'🧊',cls:'ice'},
+  {id:'light',emoji:'✨',cls:'light'},
+  {id:'shadow',emoji:'💀',cls:'shadow'},
+  {id:'nature',emoji:'🌿',cls:'nature'},
+];
+const DEFAULTS = ['Player 1','Player 2','Player 3','Player 4','Player 5'];
+let numPlayers = 4;
+let names = [...DEFAULTS];
+
+function init(){
+  // Player count buttons
+  let bh='';
+  for(let n=2;n<=5;n++){
+    bh+=`<button class="pc-btn ${n===numPlayers?'active':''}" onclick="setPlayers(${n})">${n} Players</button>`;
+  }
+  document.getElementById('pcBar').innerHTML=bh;
+  buildPlayers();
+}
+
+function setPlayers(n){
+  numPlayers=n;
+  init();
+}
+
+function buildPlayers(){
+  let h='';
+  for(let p=0;p<numPlayers;p++){
+    h+=`<div class="player-card" id="pc${p}">
+      <div class="player-header">
+        <div class="player-name-wrap">
+          <span class="player-rank" id="rank${p}"></span>
+          <input class="player-name" id="name${p}" value="${names[p]}" oninput="names[${p}]=this.value" spellcheck="false">
+        </div>
+        <span class="player-total" id="total${p}">0</span>
+      </div>
+      <div class="elem-row">`;
+    for(const el of ELEMS){
+      h+=`<div class="elem-input">
+        <span class="elem-label">${el.emoji}</span>
+        <input class="elem-field ${el.cls}" id="v${p}_${el.id}" type="number" min="0" value="0" oninput="calc()">
+      </div>`;
+    }
+    h+=`</div>
+      <div class="breakdown" id="bd${p}"></div>
+    </div>`;
+  }
+  document.getElementById('players').innerHTML=h;
+  calc();
+}
+
+function getVal(p,el){
+  const v=parseInt(document.getElementById(`v${p}_${el}`).value);
+  return isNaN(v)?0:Math.max(0,v);
+}
+
+function calcPlayer(p){
+  const f=getVal(p,'fire'), i=getVal(p,'ice'), l=getVal(p,'light'), s=getVal(p,'shadow'), n=getVal(p,'nature');
+  const raw=f+i+l+s;
+  const delta=Math.abs(f-i)+Math.abs(l-s);
+  const dF=Math.abs(delta-n);
+  const total=raw-dF*3;
+  return {raw,f,i,l,s,n,delta,dF,total};
+}
+
+function calc(){
+  const results=[];
+  for(let p=0;p<numPlayers;p++){
+    results.push({p,...calcPlayer(p)});
+  }
+
+  // Sort for ranking
+  const sorted=[...results].sort((a,b)=>b.total-a.total);
+  const ranks={};
+  sorted.forEach((r,i)=>{ranks[r.p]=i;});
+
+  // Update each player card
+  for(let p=0;p<numPlayers;p++){
+    const r=results[p];
+    const rank=ranks[p];
+    const medal=rank===0?'👑':rank===1?'🥈':rank===2?'🥉':'#'+(rank+1);
+
+    document.getElementById(`rank${p}`).textContent=medal;
+    const totalEl=document.getElementById(`total${p}`);
+    totalEl.textContent=r.total+' pts';
+    totalEl.className='player-total'+(r.total<0?' negative':'');
+
+    const card=document.getElementById(`pc${p}`);
+    card.className='player-card'+(rank===0?' winner':'');
+
+    // Breakdown
+    const fiPair=r.f>=r.i?`🔥${r.f}−🧊${r.i}=${r.f-r.i}`:`🧊${r.i}−🔥${r.f}=${r.i-r.f}`;
+    const lsPair=r.l>=r.s?`✨${r.l}−💀${r.s}=${r.l-r.s}`:`💀${r.s}−✨${r.l}=${r.s-r.l}`;
+    document.getElementById(`bd${p}`).innerHTML=
+      `<span><span class="bd-label">Raw:</span> ${r.raw}</span>`+
+      `<span><span class="bd-label">${fiPair}</span></span>`+
+      `<span><span class="bd-label">${lsPair}</span></span>`+
+      `<span><span class="bd-label">Δ:</span> ${r.delta}−🌿${r.n}=${r.dF}</span>`+
+      `<span><span class="bd-label">Pen:</span> −${r.dF*3}</span>`;
+  }
+
+  // Podium
+  let ph='';
+  const medals=['🥇','🥈','🥉','4th','5th'];
+  sorted.forEach((r,i)=>{
+    ph+=`<div class="podium-slot">
+      <div class="podium-rank">${medals[i]}</div>
+      <div class="podium-name">${names[r.p]||DEFAULTS[r.p]}</div>
+      <div class="podium-score">${r.total}</div>
+    </div>`;
+  });
+  document.getElementById('podium').innerHTML=ph;
+}
+
+function resetAll(){
+  names=[...DEFAULTS];
+  buildPlayers();
+}
+
+init();
+</script>
+</body>
+</html>
