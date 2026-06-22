@@ -65,11 +65,11 @@ li { margin:4px 0; }
 <!-- ========== PAGE 1 ========== -->
 
 <h1>☠️ Drink or Die ☠️</h1>
-<p class="subtitle">A game of potions, bluff & alchemy for 2–5 players</p>
+<p class="subtitle">A game of elements, balance & alchemy for 2–5 players</p>
 
 <h2>1. Overview</h2>
-<p><b>Drink or Die</b> is a card game where rival alchemists brew mysterious potions and dare each other to drink them. Each turn you add ingredients to a shared cauldron — but eventually someone has to drink it. The potion's cards go into your personal collection. At the end of the game, you score points based on how many element cards you've collected and how well-balanced your opposing elements are.</p>
-<p>The core tension: you want high-value element cards, but collecting too many of one element without its opposite costs you 3 points per imbalance. Nature cards are worth 0 raw points but reduce your imbalance — making them purely a balancing tool.</p>
+<p><b>Drink or Die</b> is a card game where rival alchemists gather ingredients from a shared market to brew the most potent — and best balanced — collection of elements. On your turn you sweep cards from the market into your personal cauldron, taking everything of one element or everything of one value at once. At the end of the game, you score points based on the element cards you've collected and how well-balanced your opposing elements are.</p>
+<p>The core tension: you want high-value element cards, but collecting too many of one element without its opposite costs you 3 points per imbalance. Nature cards are worth 0 raw points but reduce your imbalance — making them purely a balancing tool. Everything is face-up: there is no hidden information, so the whole game is about reading the market and timing your grabs.</p>
 
 <h2>2. Components</h2>
 <p>The game uses a deck of <b>90 cards</b> across 5 elements:</p>
@@ -110,68 +110,41 @@ li { margin:4px 0; }
 <h2>3. Setup</h2>
 <ol>
   <li>Shuffle the full deck, then remove cards to match your player count.</li>
-  <li>Deal <b>6 cards</b> face-down to each player. Place the rest face-down as the draw pile.</li>
-  <li>Choose a starting player randomly.</li>
+  <li>Deal <b>5 cards face-up</b> in a row in the center of the table — this is the <b>Market</b>.</li>
+  <li>Place the rest of the deck face-down as the <b>draw pile</b>.</li>
+  <li>Choose a starting player randomly. Each player has their own <b>cauldron</b> (a personal pile of collected cards), empty at the start.</li>
 </ol>
 
 <!-- ========== PAGE 2 ========== -->
 
 <h2 class="page-break">4. How to Play</h2>
 
-<h3>Round structure</h3>
-<p>The game is played over multiple rounds. A round ends when <b>every player has drunk exactly once</b>. Then hands are refilled to 6 cards from the draw pile and a new round begins.</p>
-
-<h3>Creating a potion</h3>
-<p>At the start of each potion, the designated creator places <b>2 cards</b> from their hand into the center: <b>1 face-down</b> (hidden) and <b>1 face-up</b> (visible to all). This is the new cauldron.</p>
-
-<div class="ex">
-  <h4>Example: Creating a potion</h4>
-  <p>Alice places <span class="ci cf">🔥 3</span> face-up and one card face-down (🂠). Everyone can see the Fire 3 but not the hidden card — it could be anything.</p>
-</div>
-
-<h3>Taking turns</h3>
-<p>Starting from the player after the creator and going clockwise, <b>every player with cards</b> must do one of the following:</p>
+<h3>Your turn: take from the Market</h3>
+<p>On your turn you take cards from the 5-card Market using <b>one</b> of these two methods:</p>
 
 <ol>
-  <li><b>Add a card</b> — Place 1 card from your hand onto the cauldron, either face-up or face-down, respecting the <b>balance rule</b>: face-down and face-up counts must never differ by more than 1. If there are more face-down cards, you must play face-up, and vice versa. If they're equal, you choose.</li>
-  <li><b>Drink the potion</b> — Take ALL cards from the cauldron into your personal collection. You can only drink <b>once per round</b>.</li>
+  <li><b>Take by element</b> — Choose one element and take <b>every card of that element</b> currently in the Market (for example, all the Fire cards).</li>
+  <li><b>Take by value</b> — Choose one value (1, 2, or 3) and take <b>every card of that value</b> currently in the Market, regardless of element (for example, all the 2s).</li>
 </ol>
 
-<p><b>Critical rule:</b> Players who have already drunk this round <b>must (if he can) still add cards</b> on their turn. They cannot drink again, but they continue to influence the potion for the remaining players.</p>
+<p>You must take <b>at least one card</b>. All the cards you take go straight into your personal cauldron, face-up for everyone to see. You cannot mix methods — it's either one element or one value, not both.</p>
 
 <div class="ex">
-  <h4>Example: Post-drink influence</h4>
-  <p>Bob already drank earlier. The cauldron has 3 cards. On his turn, Bob adds <span class="ci cs">💀 3</span> face-down (🂠). Carol, who hasn't drunk yet, now faces a dangerous unknown card — she must decide whether to drink or add and hope someone else gets stuck with it.</p>
+  <h4>Example: Taking from the Market</h4>
+  <p>The Market shows <span class="ci cf">🔥 2</span> <span class="ci cc">🧊 2</span> <span class="ci cf">🔥 1</span> <span class="ci cl">✨ 3</span> <span class="ci cn">🌿 2</span></p>
+  <p class="note">If you <b>take by element "Fire"</b>, you collect <span class="ci cf">🔥 2</span> and <span class="ci cf">🔥 1</span> (2 cards). If instead you <b>take by value "2"</b>, you collect <span class="ci cf">🔥 2</span>, <span class="ci cc">🧊 2</span> and <span class="ci cn">🌿 2</span> (3 cards). You decide which grab serves your balance best.</p>
 </div>
 
-<h3>The 6-card rule</h3>
-<p>If the cauldron reaches <b>6 cards</b>, the next player who hasn't drunk yet is <b>forced to drink</b> immediately. This is a powerful weapon — you can deliberately push the cauldron to 6 to force an opponent to drink a poisoned potion.</p>
+<h3>Refill the Market</h3>
+<p>After you take, <b>refill the Market back to 5 cards</b> from the draw pile. Then play passes clockwise to the next player.</p>
+<p>If the draw pile runs out, keep playing with whatever cards remain in the Market — it simply gets smaller as players take from it.</p>
+
+<h3>End of the game</h3>
+<p>The game ends when the <b>draw pile is empty and the Market is empty</b> — there are no more cards to take. Each player then calculates their final score from the cards in their cauldron (see sections 5 and 6).</p>
 
 <div class="ex">
-  <h4>Example: Forced drink</h4>
-  <p>The cauldron has 5 cards. Bob (who already drank) adds a 6th card. Carol is the next player who hasn't drunk — she is forced to take all 6 cards, good or bad!</p>
-</div>
-
-<h3>After someone drinks</h3>
-<p>The player who drank <b>creates the next potion</b> by placing 2 cards (1 face-down + 1 face-up). If they have fewer than 2 cards, the next player with enough cards creates it instead. Play continues until all players have drunk once.</p>
-
-<h3>End of round</h3>
-<p>When all players have drunk, the round ends. Each player <b>refills to 6 cards</b> from the draw pile. The starting player for the next round rotates clockwise.</p>
-
-<h3>End of game: the Final Round</h3>
-<p>When the draw pile runs out during the refill phase, the <b>Final Round</b> begins. Gather any cards that were removed during setup and shuffle them. Deal from this pool so that each player has exactly <b>4 cards</b> in hand.</p>
-
-<p>The Final Round plays exactly like a normal round with two key differences:</p>
-<ol>
-  <li><b>Starting a potion:</b> the creator places only <b>1 card</b> (either face-down or face-up — their choice), instead of the usual 2.</li>
-  <li><b>Hand size:</b> players start with 4 cards instead of 6. A player is forced drink with 4 cards this round.</li>
-</ol>
-
-<p>Once every player has drunk in the Final Round, the game ends and players calculate their final scores.</p>
-
-<div class="ex">
-  <h4>Example: Entering the Final Round</h4>
-  <p>At the end of round 7, the draw pile has only 9 cards left but 4 players need 24 cards to refill to 6. The draw pile is exhausted mid-refill — this triggers the Final Round. The 10 cards removed at setup are shuffled and used to top up everyone to 4 cards each. Alice starts by placing a single <span class="ci cf">🔥 2</span> face-down into the cauldron. Play proceeds normally from there.</p>
+  <h4>Why all information is open</h4>
+  <p>Every card in the Market and in every cauldron is face-up at all times. There is no bluffing and no hidden hand — the challenge is purely tactical: which element or value to sweep, when to grab Nature to fix your balance, and how to deny useful cards to your opponents before they can take them.</p>
 </div>
 
 <!-- ========== PAGE 3: THE BALANCE SYSTEM ========== -->
@@ -349,23 +322,23 @@ li { margin:4px 0; }
 
 <h2 class="page-break">7. Strategy Tips</h2>
 
-<h3>Bluffing with face-down cards</h3>
-<p>When you place a card face-down, only you know what it is. You can say "don't worry, it's just a <span class="ci cn">🌿 1</span>" when it's really a <span class="ci cf">🔥 3</span>. Or pretend danger to scare someone into drinking early, when the potion is actually mild.</p>
+<h3>Element grab vs value grab</h3>
+<p>Taking by element gives you many cards of the same type — great for fueling one side of a pair, dangerous if you can't balance it later. Taking by value lets you scoop high-value cards across several elements at once. A single "take all 3s" can be worth far more raw points than a pile of 1s.</p>
 
-<h3>Timing your drink</h3>
-<p>Drinking early = fewer cards (lower raw) but safer balance. Waiting = more cards (higher raw potential) but more risk. Count the face-up cards and estimate the hidden ones — the balance between known and unknown is where the game lives.</p>
-
-<h3>The 6-card weapon</h3>
-<p>If an opponent is badly imbalanced, load the cauldron with elements that worsen their collection, then push it to 6 cards. They'll be forced to drink poison.</p>
-
-<h3>Post-drink sabotage</h3>
-<p>You've drunk, but you still add cards. This means you can "poison" future potions for opponents. Add high-value cards of elements you know will hurt them, or sneak in Nature to make a potion deceptively balanced.</p>
+<h3>Balance as you go</h3>
+<p>Every grab shifts your Delta. Before sweeping all the Fire, ask yourself whether you'll be able to find matching Ice later. It's often better to take a smaller, balanced grab than a big lopsided one that you'll pay 3 points per imbalance for.</p>
 
 <h3>Nature precision</h3>
-<p>The ideal Nature equals your Delta exactly. Track your Fire/Ice and Light/Shadow gaps during the game. If your Delta is 4, you need exactly <span class="ci cn">🌿 4</span> in Nature — no more, no less. Treat Nature collection as a surgical operation.</p>
+<p>The ideal Nature equals your Delta exactly. Track your Fire/Ice and Light/Shadow gaps as you collect. If your Delta is 4, you want exactly <span class="ci cn">🌿 4</span> in Nature — no more, no less. Grab Nature when the Market offers it and you're imbalanced; skip it when you're already even.</p>
 
-<h3>Reading the table</h3>
-<p>Pay attention to what face-up cards other players collect. If someone has lots of Fire, they'll want Ice to balance — or Nature as insurance. Deny them those cards by adding them to potions you know others will drink.</p>
+<h3>Deny the Market</h3>
+<p>Since everything is face-up, you can see exactly what your opponents need. If a rival is loaded with Fire and desperate for Ice, take the Ice yourself — even if you don't need it much — to keep them imbalanced. Denial is as powerful as collection.</p>
+
+<h3>Watch the refill</h3>
+<p>Taking many cards triggers a big refill, handing fresh options to the next player. Sometimes a small, surgical grab that barely changes the Market is better than a greedy sweep that sets up your opponent.</p>
+
+<h3>Count the endgame</h3>
+<p>As the draw pile thins, plan your last grabs carefully. The final cards in the Market can't be replaced — make sure your closing takes leave your cauldron balanced rather than chasing raw points you'll lose to penalties.</p>
 
 <h2>8. Quick Reference Card</h2>
 
@@ -373,17 +346,17 @@ li { margin:4px 0; }
   <div>
     <h3>Turn actions</h3>
     <ul>
-      <li><b>Add:</b> 1 card, face-up or face-down (respect balance rule)</li>
-      <li><b>Drink:</b> take all (once per round only)</li>
-      <li><b>Already drank?</b> Must still add cards</li>
+      <li><b>Take by element:</b> all cards of one element in the Market</li>
+      <li><b>Take by value:</b> all cards of one value in the Market</li>
+      <li>Take at least 1 card; cards go to your cauldron</li>
     </ul>
     <h3>Key rules</h3>
     <ul>
-      <li>6 cards in cauldron → forced drink</li>
-      <li>Drinker creates the next potion</li>
-      <li>Round ends when all have drunk</li>
-      <li>Refill to 6 cards each round</li>
-      <li>Final Round: hand = 4, potion starts with 1 card</li>
+      <li>Everything is face-up — no hidden info</li>
+      <li>Refill the Market to 5 after each turn</li>
+      <li>Play passes clockwise</li>
+      <li>Game ends when draw pile &amp; Market are empty</li>
+      <li>Score your collected cauldron</li>
     </ul>
   </div>
   <div>
@@ -402,81 +375,72 @@ li { margin:4px 0; }
   </div>
 </div>
 
-<h2 class="page-break">9. Variant: Open Cauldron </h2>
+<h2 class="page-break">9. Expansion: Special Cards</h2>
 
-<p>For players who prefer full information and pure strategy over bluffing.
+<p>The expansion adds <b>33 special cards</b> to the deck. Shuffle them into the main deck before dealing, so they appear in the Market alongside normal element cards.</p>
 
-In this variant, all cards added to the cauldron are placed face-up. There are no face-down cards. The covered/uncovered balance rule is removed — simply add one card per turn, always face-up.
+<h3>Taking special cards</h3>
+<p>When one or more special cards are in the Market, you gain a <b>third way to take</b> on your turn:</p>
+<ul>
+  <li><b>Take all bonuses</b> — instead of taking by element or by value, you may take <b>every special card</b> currently in the Market at once. If you choose this, you take them <b>all</b> (you cannot take just some). Normal element cards are not taken with this option.</li>
+</ul>
+<p>As always, refill the Market to 5 afterward. You still take only once per turn — element, value, <i>or</i> bonuses.</p>
 
-When creating a potion, the first player places 2 cards face-up (or 1 in the Final Round). Every card in the cauldron is visible to all players at all times.
-
-All other rules remain unchanged.</p>
-
-
-<h2 class="page-break">10. Expansion: Special Cards</h2>
-
-<p>The expansion adds <b>24 special cards</b> to the base deck. Shuffle them into the main deck before dealing. Special cards follow the same rules as normal cards: they are added to the cauldron face-up or face-down, and collected when someone drinks. <b>They are never played directly from your hand</b> — you can only gain them by drinking a potion that contains them.</p>
-
-<p>Special cards come in two types: <b>Permanent</b> cards (solid border) stay in your cauldron and are scored at end of game. <b>One-shot</b> cards (dashed border) are used once for their effect and then discarded from the game.</p>
-
+<h3>Two types of special card</h3>
+<p><b>Permanent</b> cards (solid border) go into your cauldron and are scored at the end of the game. <b>One-shot</b> cards (dashed border) trigger their effect the moment you take them, then are discarded from the game.</p>
 
 <table class="tbl">
   <tr><th style="text-align:left">Card</th><th>Copies</th><th style="text-align:left">Effect</th></tr>
   <tr>
     <td style="text-align:left"><b>⚡ Amplifier</b><br><span style="font-size:9pt;color:#666">One per element</span></td>
-    <td>2 × 5</td>
-    <td style="text-align:left">At end of game, <b>+1 victory point for each card</b> of the matching element in your cauldron. Exists for all 5 elements: <span class="ci cf">🔥</span> <span class="ci cc">🧊</span> <span class="ci cl">✨</span> <span class="ci cs">💀</span> <span class="ci cn">🌿</span></td>
+    <td>3 × 5</td>
+    <td style="text-align:left"><b>Permanent.</b> At end of game, <b>+1 victory point for each card</b> of the matching element in your cauldron (counting cards, not their values). Exists for all 5 elements: <span class="ci cf">🔥</span> <span class="ci cc">🧊</span> <span class="ci cl">✨</span> <span class="ci cs">💀</span> <span class="ci cn">🌿</span></td>
   </tr>
   <tr>
     <td style="text-align:left"><b>🧪 Poison</b></td>
-    <td>2</td>
-    <td style="text-align:left">Worth <b>−2 victory points</b>.</td>
-  </tr>
-  <tr>
-    <td style="text-align:left"><b>🦹 Thief</b></td>
-    <td>2</td>
-    <td style="text-align:left">When you drink a potion containing this card, <b>immediately steal 1 card</b> from any opponent's cauldron. Then discard the Thief. Must be used on drink — cannot be saved.</td>
-  </tr>
-  <tr>
-    <td style="text-align:left"><b>💧 Distillate</b></td>
-    <td>2</td>
-    <td style="text-align:left"> At end of game, <b>remove any one card</b> of your choice from your cauldron. Both the Distillate and the removed card are discarded.</td>
+    <td>3</td>
+    <td style="text-align:left"><b>Permanent.</b> Worth <b>−1 victory point</b> at end of game.</td>
   </tr>
   <tr>
     <td style="text-align:left"><b>💣 Time Bomb</b></td>
-    <td>2</td>
-
-
-    <td style="text-align:left">If your Final Delta is <b>exactly 0</b>: worth <b>+6 points</b>. Otherwise: worth <b>−3 points</b>.</td>
- </tr>
-  <tr>
-    <td style="text-align:left"><b>🤫 Smuggle</b></td>
-    <td>2</td>
-    <td style="text-align:left">On your turn, <b>place 2 cards from your hand directly into your cauldron</b>. This is free — you still take your normal turn action after. Then discard the Smuggle card.</td>
+    <td>3</td>
+    <td style="text-align:left"><b>Permanent.</b> If your Final Delta is <b>exactly 0</b>: worth <b>+4 points</b>. Otherwise: worth <b>−2 points</b>.</td>
   </tr>
   <tr>
-
-    <td style="text-align:left"><b>👁️ Alchemist's Eye</b></td>
-    <td>2</td>
-    <td style="text-align:left"><b>Look at all face-down cards</b> in the cauldron. Put them back face-down. Then continue your turn normally (add or drink). Then discard the Eye.</td>
+    <td style="text-align:left"><b>💧 Distillate</b></td>
+    <td>3</td>
+    <td style="text-align:left"><b>Permanent.</b> At end of game, you <b>may</b> remove any one card of your choice from your cauldron. The Distillate and the removed card are both discarded.</td>
+  </tr>
+  <tr>
+    <td style="text-align:left"><b>✳️ Purifier</b></td>
+    <td>3</td>
+    <td style="text-align:left"><b>Permanent.</b> At end of game, <b>reduce your Delta by 1 for free</b> (before applying Nature).</td>
+  </tr>
+  <tr>
+    <td style="text-align:left"><b>🦹 Thief</b></td>
+    <td>3</td>
+    <td style="text-align:left"><b>One-shot.</b> When you take this card, <b>immediately steal 1 card</b> from any opponent's cauldron and add it to yours. Then discard the Thief.</td>
   </tr>
   <tr>
     <td style="text-align:left"><b>🔄 Swap</b></td>
-    <td>2</td>
-    <td style="text-align:left"><b>Exchange one card</b> from your personal cauldron with one card from the current potion. Then discard the Swap card.</td>
+    <td>3</td>
+    <td style="text-align:left"><b>One-shot.</b> When you take this card, <b>exchange one card</b> in your cauldron with one card currently in the Market. Then discard the Swap.</td>
   </tr>
 </table>
 
-
+<div class="ex">
+  <h4>Example: Taking the bonuses</h4>
+  <p>The Market shows <span class="ci cf">🔥 2</span> ⚡ <span class="ci cc">🧊 1</span> 💣 🦹. Instead of taking by element or value, you choose <b>take all bonuses</b>: you collect the ⚡ Amplifier, the 💣 Time Bomb and the 🦹 Thief. The Amplifier and Time Bomb go into your cauldron; the Thief triggers immediately (steal a card), then is discarded. Refill the Market to 5.</p>
+</div>
 
 <h3>Expansion setup</h3>
 <ul>
-  <li><b>Full expansion (24 cards):</b> shuffle all 24 special cards into the base deck (114 cards total). Recommended for 4–5 players.</li>
-  <li><b>Light expansion:</b> use only 1 copy of each card (12 cards, 102 total). Good for 2–3 players or a first game with the expansion.</li>
-  <li>Scale the deck to player count 23 cards per player.</li>
+  <li><b>Full expansion (33 cards):</b> shuffle all 33 special cards into the deck. Recommended for 4–5 players.</li>
+  <li><b>Light expansion:</b> use only 1 copy of each card for a gentler introduction.</li>
+  <li>Scale the combined deck to roughly 23–25 cards per player.</li>
 </ul>
 
-<div class="footer">Drink or Die — A game of potions, bluff & alchemy — 2–5 players — 15-20 minutes</div>
+<div class="footer">Drink or Die — A game of elements, balance & alchemy — 2–5 players — 15–20 minutes</div>
 
 </body>
 </html>
