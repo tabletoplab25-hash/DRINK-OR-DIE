@@ -117,7 +117,7 @@ body { font-family:'Cinzel',serif; background:#fff; }
 <body>
 
 <div class="instructions">
-  <b>Drink or Die — Expansion Cards (Low Ink)</b> | 26 special cards (3 pages) | Poker size: 63.5 × 88.9 mm<br>
+  <b>Drink or Die — Expansion Cards (Low Ink)</b> | 33 special cards (4 pages) | Poker size: 63.5 × 88.9 mm<br>
   <b>Dashed border</b> = One-shot (use &amp; discard). <b>Solid border</b> = Permanent (stays in cauldron).<br>
   Print at 100% scale on A4, cut along borders. Shuffle into main deck.
 </div>
@@ -128,7 +128,7 @@ const cards = [];
 // Helper to push N copies
 function add(n, data) { for (let i = 0; i < n; i++) cards.push({...data}); }
 
-// 1. AMPLIFIERS — 5 elements × 2 copies = 10
+// 1. AMPLIFIERS — 5 elements × 3 copies = 15
 const amps = [
   { el:'Fire', emoji:'🔥', clr:'#d32f2f' },
   { el:'Ice', emoji:'🧊', clr:'#1976d2' },
@@ -137,67 +137,53 @@ const amps = [
   { el:'Nature', emoji:'🌿', clr:'#2e7d32' },
 ];
 for (const a of amps) {
-  add(2, {
+  add(3, {
     icon: a.emoji, cornerIcon: '⚡', title: 'Amplifier', sub: a.el,
     desc: `+1 Victory point for each ${a.el} card (not value) in your cauldron at end of game.`,
     clr: a.clr, oneshot: false, tag: 'PERMANENT', pts: ''
   });
 }
 
-// 2. SMUGGLE ×2
-add(2, {
-  icon: '🤫', cornerIcon: '🤫', title: 'Smuggle', sub: '',
-  desc: 'On your turn, place 2 cards from your hand directly into your cauldron. Then discard this card.',
-  clr: '#555', oneshot: true, tag: 'ONE-SHOT', pts: ''
-});
-
-// 3. ALCHEMIST'S EYE ×2
-add(2, {
-  icon: '👁️', cornerIcon: '👁️', title: "Alchemist's Eye", sub: '',
-  desc: 'Look at all face-down cards in the cauldron. Put them back face-down. Then continue your turn normally.Then discard this card.',
-  clr: '#0277bd', oneshot: true, tag: 'ONE-SHOT', pts: ''
-});
-
-// 4. THIEF ×2
-add(2, {
+// 2. THIEF ×3
+add(3, {
   icon: '🦹', cornerIcon: '🦹', title: 'Thief', sub: '',
   desc: 'When you drink a potion containing this card, immediately steal 1 card from any opponent\'s cauldron. Then discard this card.',
   clr: '#37474f', oneshot: true, tag: 'ONE-SHOT', pts: ''
 });
 
-// 5. SWAP ×2
-add(2, {
+// 3. SWAP ×3
+add(3, {
   icon: '🔄', cornerIcon: '🔄', title: 'Swap', sub: '',
   desc: 'Exchange one card from your cauldron with one card from the current potion. Then discard this card.',
   clr: '#e65100', oneshot: true, tag: 'ONE-SHOT', pts: ''
 });
 
-// 6. POISON ×2
-add(2, {
+// 4. POISON ×3
+add(3, {
   icon: '🧪', cornerIcon: '🧪', title: 'Poison', sub: '',
-  desc: "Worth −2 PV at the end of the game",
-  clr: '#4a148c', oneshot: false, tag: 'PERMANENT · −2 PV', pts: '−2'
+  desc: "Worth −1 PV at the end of the game.",
+  clr: '#4a148c', oneshot: false, tag: 'PERMANENT · −1 PV', pts: '−1'
 });
 
-// 7. DISTILLATE ×2
-add(2, {
+// 5. DISTILLATE ×3
+add(3, {
   icon: '💧', cornerIcon: '💧', title: 'Distillate', sub: '',
-  desc: 'At end of game, You MUST remove any one card from your cauldron (your choice). Then discard both.',
+  desc: 'At end of game, you CAN remove any one card from your cauldron (your choice). Then discard both.',
   clr: '#00695c', oneshot: false, tag: 'PERMANENT · 0 PV', pts: '0'
 });
 
-// 8. TIME BOMB ×2
-add(2, {
-  icon: '💣', cornerIcon: '💣', title: 'Time Bomb', sub: '',
-  desc: 'If your Final Delta is exactly 0: worth +6 points. Otherwise: worth −3 points.',
-  clr: '#bf8f00', oneshot: false, tag: 'PERMANENT · +6 / −3', pts: '±'
+// 6. PURIFIER ×3
+add(3, {
+  icon: '✳️', cornerIcon: '✳️', title: 'Purifier', sub: '',
+  desc: 'At end of game, you can reduce your Delta by 1 point for free.',
+  clr: '#00897b', oneshot: false, tag: 'PERMANENT', pts: ''
 });
 
-// 9. PURIFIER ×2
-add(2, {
-  icon: '✳️', cornerIcon: '✳️', title: 'Purifier', sub: '',
-  desc: 'At end of game, You can reduce your delta by 1 point for free.',
-  clr: '#00897b', oneshot: false, tag: 'PERMANENT', pts: ''
+// 7. TIME BOMB ×3
+add(3, {
+  icon: '💣', cornerIcon: '💣', title: 'Time Bomb', sub: '',
+  desc: 'If your Final Delta is exactly 0: worth +4 points. Otherwise: worth −2 points.',
+  clr: '#bf8f00', oneshot: false, tag: 'PERMANENT · +4 / −2', pts: '±'
 });
 
 // Generate HTML
